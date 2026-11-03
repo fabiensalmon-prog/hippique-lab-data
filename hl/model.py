@@ -129,6 +129,7 @@ def fit_harville(p_list, orders, grid=None):
 # ---------- rapport placé attendu ----------
 def fit_sp_dividend(samples):
     """samples : (odds_ref, n_partants, dividende placé) des chevaux placés -> coefficients log-linéaires."""
+    samples = [s for s in samples if s[2] and s[2] > 0 and s[0] and s[0] > 1 and s[1] and s[1] > 1]
     if len(samples) < 50:
         return [0.15, 0.45, 0.0]
     A = np.array([[1.0, math.log(o), math.log(n)] for o, n, _ in samples])

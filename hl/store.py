@@ -2,7 +2,7 @@
 import gzip, json, glob, os, re
 from datetime import date
 
-ROOT = os.path.join(os.path.dirname(__file__), "..", "data")
+ROOT = os.environ.get("HL_DATA") or os.path.join(os.path.dirname(__file__), "..", "data")
 DISC = {"ATTELE": "TROT", "MONTE": "TROT", "PLAT": "PLAT"}   # obstacle exclu du pilote
 
 
