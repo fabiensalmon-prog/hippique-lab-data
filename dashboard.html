@@ -267,6 +267,19 @@ function vToday(){
     ${S.races.length?raceList(S.races,true):'<div class="empty">Aucune course enregistrée pour cette journée.</div>'}
   </section>`;
 }
+function ticketResult(b){
+  const r=S.races.find(x=>x.id===`${b.date}_${b.race_id}`); const x=r?.result; if(!x?.arrivee) return '';
+  const nums=String(b.num).split('-').map(Number);
+  const pos=nums.map(n=>{const i=x.arrivee.indexOf(n); return i>=0?(i===0?'1er':(i+1)+'e'):'non classé';});
+  const win=x.arrivee[0], wp=r.preds?.find(p=>p.num===win);
+  let alt='';
+  if(nums.length===1 && x.rapport_place){
+    const pl=x.rapport_place[String(b.num)];
+    const wd=x.arrivee[0]===b.num?x.rapport_gagnant:0;
+    alt=`<div class="status-line">Pour 1 € : joué gagnant <b class="mono">${wd?odd(wd)+' €':'0 €'}</b> · joué placé <b class="mono">${pl?odd(pl)+' €':'0 €'}</b></div>`;
+  }
+  return `<div class="notes" style="padding-top:0"><div><span class="label">Arrivée</span> ${nums.map((n,i)=>`N°${n} : <b>${pos[i]}</b>`).join(' · ')} · gagnant N°${win}${wp?' '+esc(wp.horse):''} (${odd(x.rapport_gagnant)} €)</div>${alt}</div>`;
+}
 function ticket(b){
   const s=b.settlement;
   return `<article class="ticket">
@@ -278,7 +291,8 @@ function ticket(b){
     <div class="notes">${b.pour?.length?`<div><span class="label">Pour</span><ul>${b.pour.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
     ${b.contre?.length?`<div><span class="label">Contre</span><ul>${b.contre.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
     ${b.experts?`<div><span class="label">Experts</span> ${esc(b.experts)}</div>`:''}${b.risk?`<div><span class="label">Risque principal</span> ${esc(b.risk)}</div>`:''}</div>
-    <div class="foot">${betPill(b)}<span class="mono">${s?(s.status==='WIN'||s.status==='LOSS'?`rapport ${odd(s.final_odds)} · <span class="${sgn(s.net_pnl)}">${s.net_pnl>=0?'+':''}${eur(s.net_pnl)}</span>`:esc(s.note||'')):'règlement à 23:00'}</span></div>
+    ${ticketResult(b)}
+    <div class="foot">${betPill(b)}<span class="mono">${s?(s.status==='WIN'||s.status==='LOSS'?`rapport ${odd(s.final_odds)} · <span class="${sgn(s.net_pnl)}">${s.net_pnl>=0?'+':''}${eur(s.net_pnl)}</span>`:esc(s.note||'')):'en attente du résultat'}</span></div>
   </article>`;
 }
 function labSummary(){
