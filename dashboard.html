@@ -1,0 +1,402 @@
+<title>Hippique Lab Live</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout : tableau de bord « programme officiel » — bandeau d'état, onglets, cartes de course façon programme, chiffres en mono tabulaire */
+:root{
+  --bg:#F2F4F1; --surface:#FFFFFF; --sunk:#E8ECE7; --fg:#15201A; --muted:#5B6A61; --line:#D3DBD4;
+  --accent:#1E5A3E; --accent-soft:#DCEBE1;
+  --bet:#9A5B00; --bet-soft:#F6E7CC; --pass:#4E5D66; --pass-soft:#E3E8EB; --part:#A8392A; --part-soft:#F5DDD8;
+  --win:#1E7A46; --loss:#A8392A;
+  --f-display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1411; --surface:#151D18; --sunk:#1B2520; --fg:#E2EAE4; --muted:#93A399; --line:#2A3730;
+  --accent:#5DB585; --accent-soft:#1D3328; --bet:#E3A341; --bet-soft:#3A2C14; --pass:#9AA9B2; --pass-soft:#222B30;
+  --part:#E87C6B; --part-soft:#3A1F1A; --win:#5DB585; --loss:#E87C6B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1411; --surface:#151D18; --sunk:#1B2520; --fg:#E2EAE4; --muted:#93A399; --line:#2A3730;
+  --accent:#5DB585; --accent-soft:#1D3328; --bet:#E3A341; --bet-soft:#3A2C14; --pass:#9AA9B2; --pass-soft:#222B30;
+  --part:#E87C6B; --part-soft:#3A1F1A; --win:#5DB585; --loss:#E87C6B; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+header.top{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding-block:12px 0}
+.brand{display:flex;align-items:baseline;gap:10px;flex:1 1 auto;min-width:0}
+.brand h1{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:.02em;margin:0;text-transform:uppercase}
+.brand .day{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.upd{font-size:12px;color:var(--muted)}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;width:100%;scrollbar-width:none}
+nav.tabs a{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:10px 12px;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs a[aria-current="page"]{color:var(--fg);border-bottom-color:var(--accent)}
+nav.tabs a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+main{padding-block:20px 48px;display:grid;gap:20px}
+h2{font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:.03em;text-transform:uppercase;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:16px;letter-spacing:.04em;text-transform:uppercase;margin:0}
+.label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px}
+.muted{color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.kpi{background:var(--surface);padding:14px 16px;display:grid;gap:4px;min-width:0}
+.kpi .v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:24px;font-weight:600;line-height:1.1}
+.kpi .s{font-size:12px;color:var(--muted)}
+.pos{color:var(--win)} .neg{color:var(--loss)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px}
+.runbox{display:grid;gap:10px}
+.runhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:3px;text-transform:uppercase;white-space:nowrap}
+.pill.bet{background:var(--bet-soft);color:var(--bet)} .pill.pass{background:var(--pass-soft);color:var(--pass)}
+.pill.part{background:var(--part-soft);color:var(--part)} .pill.ok{background:var(--accent-soft);color:var(--accent)}
+.pill.win{background:var(--accent-soft);color:var(--win)} .pill.loss{background:var(--part-soft);color:var(--loss)}
+.bar{height:8px;border-radius:4px;background:var(--sunk);overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted)}
+.legend b{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.closing{font-family:var(--f-mono);font-size:13px;border-top:1px dashed var(--line);padding-top:10px}
+.meeting{display:grid;gap:0}
+.meeting-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0 6px;border-bottom:2px solid var(--fg)}
+.race-row{display:grid;grid-template-columns:64px 52px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;color:inherit;font:inherit}
+.race-row:hover{background:var(--sunk)}
+.race-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.race-row .rc{font-family:var(--f-mono);font-weight:600}
+.race-row .why{font-size:12px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.race-row .tags{display:flex;gap:6px}
+.detail{padding:12px 0 16px;border-bottom:1px solid var(--line)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+th:first-child,td:first-child,th.l,td.l{text-align:left}
+td.horse{font-family:var(--f-body);font-weight:500}
+tr.sel td{background:var(--bet-soft)}
+.tickets{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:16px}
+.ticket{background:var(--surface);border:1px solid var(--line);border-radius:6px;display:grid;overflow:hidden}
+.ticket .th{padding:12px 14px;border-bottom:1px dashed var(--line);display:grid;gap:2px}
+.ticket .horse{font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:.02em;text-transform:uppercase}
+.ticket dl{margin:0;padding:10px 14px;display:grid;grid-template-columns:1fr auto;gap:4px 12px}
+.ticket dt{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.ticket dd{margin:0;text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.ticket .notes{padding:10px 14px;border-top:1px dashed var(--line);display:grid;gap:8px;font-size:13px}
+.ticket .notes ul{margin:2px 0 0;padding-left:18px}
+.ticket .foot{padding:10px 14px;background:var(--sunk);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:11px}
+.empty{padding:28px 16px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:6px}
+.insuf{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.prose{max-width:68ch;display:grid;gap:10px}
+.prose p{margin:0}
+.prose ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.status-line{font-size:12px;color:var(--muted)}
+select{font:inherit;font-family:var(--f-mono);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:4px 6px}
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+@media (max-width:560px){.race-row{grid-template-columns:52px 44px 1fr}.race-row .why{grid-column:1/-1;white-space:normal}.kpi .v{font-size:20px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><h1>Hippique Lab Live</h1><span class="day" id="dayLabel">Jour — / 30</span></div>
+    <span class="upd" id="updLabel">Connexion à la base…</span>
+    <nav class="tabs" id="tabs" aria-label="Sections">
+      <a href="#dashboard">Dashboard</a><a href="#aujourdhui">Aujourd'hui</a><a href="#tickets">Tickets</a>
+      <a href="#courses">Courses</a><a href="#modele">Modèle</a><a href="#backtest">Backtest</a><a href="#historique">Historique</a><a href="#methode">Méthode</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap" id="app">
+  <div class="empty" id="boot">Chargement du journal Hippique Lab… Le moteur écrit ici chaque matin (run de sélection) et chaque soir (clôture).</div>
+</main>
+
+<script>
+(function(){
+const $ = (s,el=document)=>el.querySelector(s);
+const app = $('#app');
+const S = {meta:null, days:[], bets:[], races:[], metrics:{}, reports:{}, date:null, loaded:false, err:null, open:{}};
+const eur = v => v==null||isNaN(v) ? '—' : (Math.round(v*100)/100).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const pct = (v,d=1) => v==null||isNaN(v) ? '—' : (v*100).toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d})+' %';
+const pts = v => v==null ? '—' : (v>=0?'+':'')+(v*100).toFixed(1).replace('.',',')+' pts';
+const sgn = v => v==null ? '' : (v>0?'pos':v<0?'neg':'');
+const odd = v => v==null ? '—' : Number(v).toFixed(1).replace('.',',');
+const esc = s => String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fdate = d => d ? new Date(d+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'2-digit'}) : '—';
+const ftime = iso => iso ? new Date(iso).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Paris'}) : '—';
+const VIEWS = ['dashboard','aujourdhui','tickets','courses','modele','backtest','historique','methode'];
+const view = () => { const h = location.hash.slice(1); return VIEWS.includes(h)?h:'dashboard'; };
+
+function statusPill(r){
+  if(r.status==='ANALYSEE') return r.decision==='BET' ? '<span class="pill bet">BET</span>' : '<span class="pill pass">PASS</span>';
+  if(r.status==='PARTIELLE') return '<span class="pill part">Partielle</span>';
+  return '<span class="pill part">Non analysée</span>';
+}
+function betPill(b){
+  const s=b.settlement?.status||b.status;
+  const m={WIN:'win',LOSS:'loss',CANCELLED:'pass',PENDING:'part',OPEN:'bet'};
+  const t={WIN:'Gagné',LOSS:'Perdu',CANCELLED:'Annulé',PENDING:'En attente',OPEN:'Ouvert'};
+  return `<span class="pill ${m[s]||'pass'}">${t[s]||s}</span>`;
+}
+
+// ---------- derived portfolio ----------
+function portfolio(){
+  const days=[...S.days].sort((a,b)=>a.date<b.date?-1:1);
+  const start = S.meta?.initial_capital ?? 500;
+  let cap=start, peak=start, mdd=0, pnlCum=0, staked=0, nb=0, wins=0, settled=0, streak=0, maxStreak=0;
+  const curve=[{date:days[0]?.date, cap:start, label:'Départ'}];
+  for(const d of days){
+    if(d.closing_capital!=null){ cap=d.closing_capital; curve.push({date:d.date,cap,label:'J'+d.day}); }
+    peak=Math.max(peak,cap); mdd=Math.max(mdd,(peak-cap)/peak);
+  }
+  const bets=[...S.bets].sort((a,b)=>(a.date+a.time)<(b.date+b.time)?-1:1);
+  for(const b of bets){
+    const st=b.settlement?.status;
+    if(st==='WIN'||st==='LOSS'){ settled++; staked+=b.stake; pnlCum+=b.settlement.net_pnl||0;
+      if(st==='WIN'){wins++; streak=0;} else {streak++; maxStreak=Math.max(maxStreak,streak);} }
+    if(b.status!=='CANCELLED') nb++;
+  }
+  const last=days[days.length-1];
+  return {start,cap:S.meta?.current_capital ?? cap,peak:Math.max(peak,S.meta?.current_capital??cap),mdd,pnlCum,staked,nb,wins,settled,streak,maxStreak,
+          roi: staked? pnlCum/staked : null, dd: peak? (peak-(S.meta?.current_capital??cap))/peak : 0, curve, last, days};
+}
+
+function curveSVG(curve){
+  const W=640,H=200,pl=52,pr=16,pt=14,pb=28, n=Math.max(curve.length,2);
+  const total=30;
+  const vals=curve.map(c=>c.cap); let lo=Math.min(...vals,480), hi=Math.max(...vals,520);
+  const pad=(hi-lo)*0.15; lo=Math.floor((lo-pad)/10)*10; hi=Math.ceil((hi+pad)/10)*10;
+  const x=i=>pl+(W-pl-pr)*i/total, y=v=>pt+(H-pt-pb)*(1-(v-lo)/(hi-lo));
+  let g='';
+  const steps=4; for(let k=0;k<=steps;k++){const v=lo+(hi-lo)*k/steps; g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${pl-6}" y="${y(v)+4}" text-anchor="end">${Math.round(v)}</text>`;}
+  for(const d of [0,5,10,15,20,25,30]) g+=`<text x="${x(d)}" y="${H-8}" text-anchor="middle">${d===0?'J0':'J'+d}</text>`;
+  g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(curve[0].cap)}" y2="${y(curve[0].cap)}" stroke="var(--muted)" stroke-dasharray="3 4" stroke-width="1"/>`;
+  const p=curve.map((c,i)=>[x(i),y(c.cap)]);
+  const line=p.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+','+q[1].toFixed(1)).join('');
+  const area=line+`L${p[p.length-1][0]},${H-pb}L${p[0][0]},${H-pb}Z`;
+  const last=p[p.length-1];
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Courbe du capital fictif, jour 0 à jour 30">${g}
+    <path d="${area}" fill="var(--accent-soft)" opacity=".7"/><path d="${line}" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <circle cx="${last[0]}" cy="${last[1]}" r="4" fill="var(--accent)"/></svg>`;
+}
+
+// ---------- views ----------
+function vDashboard(){
+  const P=portfolio(), d=P.last;
+  const cov=d?.coverage||{};
+  const tot=cov.expected||0;
+  const seg=(v,c)=> tot? `<i style="width:${100*v/tot}%;background:${c}"></i>`:'';
+  return `
+  <section class="kpis" aria-label="Indicateurs financiers">
+    <div class="kpi"><span class="label">Capital</span><span class="v">${eur(P.cap)}</span><span class="s">départ ${eur(P.start)} fictifs</span></div>
+    <div class="kpi"><span class="label">P&amp;L cumulé</span><span class="v ${sgn(P.pnlCum)}">${P.pnlCum>=0?'+':''}${eur(P.pnlCum)}</span><span class="s">${P.settled} ticket(s) réglé(s)</span></div>
+    <div class="kpi"><span class="label">ROI sur mises</span><span class="v ${sgn(P.roi)}">${P.roi==null?'—':pct(P.roi)}</span><span class="s">mises réglées ${eur(P.staked)}</span></div>
+    <div class="kpi"><span class="label">Peak</span><span class="v">${eur(P.peak)}</span><span class="s">drawdown actuel ${pct(P.dd)}</span></div>
+    <div class="kpi"><span class="label">Max drawdown</span><span class="v">${pct(P.mdd)}</span><span class="s">série de pertes max ${P.maxStreak}</span></div>
+  </section>
+  <section class="kpis" aria-label="Indicateurs du jour">
+    <div class="kpi"><span class="label">Exposition du jour</span><span class="v">${eur(d?.exposure??0)}</span><span class="s">plafond ${eur((d?.opening_capital??P.cap)*0.06)} (6 %)</span></div>
+    <div class="kpi"><span class="label">BET</span><span class="v">${d?.n_bet??0}</span><span class="s">tickets ouverts ce jour</span></div>
+    <div class="kpi"><span class="label">PASS</span><span class="v">${d?.n_pass??0}</span><span class="s">courses refusées</span></div>
+    <div class="kpi"><span class="label">Partielles</span><span class="v">${(cov.partial??0)+(cov.not_analyzed??0)}</span><span class="s">dont ${cov.not_analyzed??0} non analysée(s)</span></div>
+    <div class="kpi"><span class="label">Couverture</span><span class="v">${cov.analyzed??0}/${tot||'—'}</span><span class="s">courses décidables</span></div>
+  </section>
+  <section class="grid2">
+    <div class="panel runbox">
+      <div class="runhead"><h3>Matin · run de sélection</h3>${d? (d.status_morning==='COMPLETE'?'<span class="pill ok">Complet</span>':'<span class="pill part">Incomplet</span>'):''}</div>
+      ${d?`<div class="mono" style="font-size:18px;font-weight:600">RUN J${d.day} ${d.status_morning==='COMPLETE'?'COMPLET':'INCOMPLET'} — ${cov.analyzed}/${tot} analysées</div>
+      <div class="bar" aria-hidden="true">${seg(d.n_bet||0,'var(--bet)')}${seg(d.n_pass||0,'var(--pass)')}${seg(cov.partial||0,'var(--part)')}${seg(cov.not_analyzed||0,'var(--line)')}</div>
+      <div class="legend"><span><b style="background:var(--bet)"></b>${d.n_bet} BET</span><span><b style="background:var(--pass)"></b>${d.n_pass} PASS</span><span><b style="background:var(--part)"></b>${cov.partial} partielles</span><span><b style="background:var(--line)"></b>${cov.not_analyzed} non analysées</span></div>
+      <div class="status-line">Run du ${ftime(d.morning_at)} · capital d'ouverture ${eur(d.opening_capital)} · ${esc(d.morning_note||'')}</div>`:'<div class="muted">Aucun run enregistré.</div>'}
+    </div>
+    <div class="panel runbox">
+      <div class="runhead"><h3>Soir · clôture</h3>${d?.status_close==='DONE'?'<span class="pill ok">Terminée</span>':'<span class="pill pass">Prévue 23:00</span>'}</div>
+      ${d?.status_close==='DONE'?`<div class="mono" style="font-size:18px;font-weight:600">CLÔTURE TERMINÉE</div>
+        <div>${d.n_settled??0} ticket(s) réglé(s) · P&amp;L <span class="${sgn(d.pnl)} mono">${d.pnl>=0?'+':''}${eur(d.pnl)}</span></div>`:
+        `<div class="muted">Les tickets du matin seront réglés sur les rapports PMU officiels. Un résultat invérifiable reste « en attente », jamais estimé.</div>`}
+      <div class="closing">CAPITAL DE DÉPART DU PROCHAIN RUN = <b>${d?.closing_capital!=null?eur(d.closing_capital):'en attente de clôture'}</b></div>
+    </div>
+  </section>
+  <section class="panel chart"><div class="runhead" style="margin-bottom:8px"><h3>Courbe du capital</h3><span class="label">J0 → J30</span></div>${curveSVG(P.curve)}</section>`;
+}
+
+function dayPicker(){
+  const ds=[...S.days].sort((a,b)=>a.date<b.date?1:-1);
+  return `<select id="datePick" aria-label="Journée">${ds.map(d=>`<option value="${d.date}" ${d.date===S.date?'selected':''}>J${d.day} · ${fdate(d.date)}</option>`).join('')}</select>`;
+}
+function predTable(r){
+  const ps=[...(r.preds||[])].sort((a,b)=>b.p_hl-a.p_hl);
+  const hasM=ps.some(p=>p.p_mkt!=null); const hasP=ps.some(p=>p.p_place!=null);
+  return `<div class="tablewrap"><table><thead><tr><th>N°</th><th class="l">Cheval</th><th class="l">Driver / jockey</th><th>P fond.</th><th>P experts</th><th>P HL</th>${hasM?'<th>Rapport</th><th>P marché</th><th>P décision</th><th>Edge</th><th>EV basse</th>'+(hasP?'<th>P placé</th>':''):''}<th>Conf.</th></tr></thead><tbody>
+  ${ps.map(p=>`<tr class="${p.selected?'sel':''}"><td>${p.num}</td><td class="horse l">${esc(p.horse)}</td><td class="l" style="font-family:var(--f-body)">${esc(p.jockey||'')}</td><td>${pct(p.p_fund)}</td><td>${p.p_exp==null?'—':pct(p.p_exp)}</td><td><b>${pct(p.p_hl)}</b></td>
+  ${hasM?`<td>${odd(p.odds)}</td><td>${pct(p.p_mkt)}</td><td>${pct(p.p_dec)}</td><td class="${sgn(p.edge)}">${pts(p.edge)}</td><td class="${sgn(p.ev_low)}">${p.ev_low==null?'—':(p.ev_low>=0?'+':'')+Math.round(p.ev_low*100)+' %'}</td>${hasP?`<td>${p.p_place==null?'—':pct(p.p_place)}</td>`:''}`:''}<td>${esc(p.confidence||'')}</td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+function raceList(races, withDetail){
+  const byM={}; races.forEach(r=>{(byM[r.meeting]=byM[r.meeting]||[]).push(r)});
+  return Object.entries(byM).sort((a,b)=>a[1][0].r-b[1][0].r).map(([m,rs])=>{
+    rs.sort((a,b)=>a.c-b.c);
+    const an=rs.filter(r=>r.status==='ANALYSEE').length;
+    return `<div class="meeting"><div class="meeting-h"><h3>${esc(m)} · R${rs[0].r}</h3><span class="mono muted">${an}/${rs.length} analysées · ${esc(rs[0].disc.startsWith('PLAT')?'Plat':'Trot')}</span></div>
+    ${rs.map(r=>{const k=r.id; const open=withDetail&&S.open[k]; return `
+      <button class="race-row" data-k="${esc(k)}" aria-expanded="${open?'true':'false'}"><span class="rc">R${r.r}C${r.c}</span><span class="mono muted">${esc(r.time)}</span><span class="why">${esc(r.reason||'')}</span><span class="tags">${statusPill(r)}</span></button>
+      ${open?`<div class="detail"><div class="status-line" style="margin-bottom:8px">${esc(r.disc)} · ${r.dist} m · ${esc(r.cond||'')} · ${r.n_runners} partants${r.odds_time?` · cotes ${esc(r.odds_src||'')} capturées ${esc(r.odds_time)}`:''}${r.flags?.length?' · ⚠ '+esc(r.flags.join(' ; ')):''}</div>${r.preds?.length?predTable(r):'<div class="muted">Aucune prédiction : course partie avant le run.</div>'}
+      ${r.result?`<div class="status-line" style="margin-top:8px">Arrivée officielle : <b class="mono">${esc((r.result.arrivee||[]).join(' - '))}</b></div>`:''}</div>`:''}`}).join('')}</div>`;
+  }).join('');
+}
+function vToday(){
+  const d=S.days.find(x=>x.date===S.date); const cov=d?.coverage||{};
+  return `<section class="panel" style="display:grid;gap:14px">
+    <div class="toolbar"><div><h2>Programme du ${fdate(S.date)}</h2><div class="status-line">${cov.analyzed??0} / ${cov.expected??0} courses analysées · ${cov.partial??0} partielles · ${cov.not_analyzed??0} non analysées</div></div>${dayPicker()}</div>
+    <div class="bar">${cov.expected?`<i style="width:${100*(cov.analyzed||0)/cov.expected}%;background:var(--accent)"></i><i style="width:${100*(cov.partial||0)/cov.expected}%;background:var(--part)"></i>`:''}</div>
+    ${S.races.length?raceList(S.races,true):'<div class="empty">Aucune course enregistrée pour cette journée.</div>'}
+  </section>`;
+}
+function ticket(b){
+  const s=b.settlement;
+  return `<article class="ticket">
+    <div class="th"><span class="label">${esc(b.rc)} · ${esc(b.meeting)} · ${esc(b.time)}</span><span class="horse">N°${b.num} ${esc(b.horse)}</span><span class="label">${esc(b.market||'Simple gagnant')}</span></div>
+    <dl><dt>Rapport probable</dt><dd>${odd(b.odds)}</dd><dt>Capturé</dt><dd>${esc(b.odds_time||'—')}</dd>
+    <dt>P Hippique Lab</dt><dd>${pct(b.p_hl)}</dd><dt>P marché (gagnant)</dt><dd>${pct(b.p_mkt)}</dd><dt>${b.market_code==='SIMPLE_PLACE'?'P placé décision':'P décision'}</dt><dd>${pct(b.p_dec)}</dd>
+    <dt>Edge</dt><dd class="${sgn(b.edge)}">${pts(b.edge)}</dd><dt>EV basse</dt><dd class="${sgn(b.ev_low)}">${(b.ev_low>=0?'+':'')+Math.round(b.ev_low*100)} %</dd>
+    <dt>Confiance</dt><dd>${esc(b.confidence||'—')}</dd><dt>Mise</dt><dd><b>${eur(b.stake)}</b></dd>${b.market_code==='SIMPLE_PLACE'?`<dt>Dividende placé estimé</dt><dd>${odd(b.sp_div_exp)}</dd>`:`<dt>Rapport minimal</dt><dd>${odd(b.min_odds)}</dd>`}</dl>
+    <div class="notes">${b.pour?.length?`<div><span class="label">Pour</span><ul>${b.pour.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+    ${b.contre?.length?`<div><span class="label">Contre</span><ul>${b.contre.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+    ${b.experts?`<div><span class="label">Experts</span> ${esc(b.experts)}</div>`:''}${b.risk?`<div><span class="label">Risque principal</span> ${esc(b.risk)}</div>`:''}</div>
+    <div class="foot">${betPill(b)}<span class="mono">${s?(s.status==='WIN'||s.status==='LOSS'?`rapport ${odd(s.final_odds)} · <span class="${sgn(s.net_pnl)}">${s.net_pnl>=0?'+':''}${eur(s.net_pnl)}</span>`:esc(s.note||'')):'règlement à 23:00'}</span></div>
+  </article>`;
+}
+function vTickets(){
+  const bs=S.bets.filter(b=>b.date===S.date).sort((a,b)=>a.time<b.time?-1:1);
+  const tot=bs.reduce((s,b)=>s+b.stake,0);
+  return `<section style="display:grid;gap:14px"><div class="toolbar"><div><h2>Tickets du ${fdate(S.date)}</h2><div class="status-line">${bs.length} ticket(s) · exposition ${eur(tot)} · immuables après le départ</div></div>${dayPicker()}</div>
+  ${bs.length?`<div class="tickets">${bs.map(ticket).join('')}</div>`:'<div class="empty">Aucun BET ce jour. Zéro pari est un résultat normal quand aucune value ne résiste à l\'incertitude.</div>'}</section>`;
+}
+function vCourses(){
+  return `<section class="panel" style="display:grid;gap:14px"><div class="toolbar"><div><h2>Journal des prédictions</h2><div class="status-line">Probabilités de tous les partants, figées avant le départ. Cliquez une course pour le détail.</div></div>${dayPicker()}</div>
+  ${S.races.length?raceList(S.races,true):'<div class="empty">Aucune prédiction enregistrée pour cette journée.</div>'}</section>`;
+}
+function calibSVG(bins){
+  const W=360,H=240,p=36; const x=v=>p+(W-2*p)*v, y=v=>H-p-(H-2*p)*v; const mx=0.6;
+  let g=`<line x1="${x(0)}" y1="${y(0)}" x2="${x(1)}" y2="${y(1)}" stroke="var(--muted)" stroke-dasharray="3 4"/>`;
+  for(const t of [0,.2,.4,.6]){ g+=`<text x="${x(t/mx)}" y="${H-p+16}" text-anchor="middle">${t*100}%</text><text x="${p-6}" y="${y(t/mx)+4}" text-anchor="end">${t*100}%</text><line x1="${p}" x2="${W-p}" y1="${y(t/mx)}" y2="${y(t/mx)}" stroke="var(--line)"/>`; }
+  for(const b of bins){ if(!b.n) continue; g+=`<circle cx="${x(Math.min(b.p,mx)/mx)}" cy="${y(Math.min(b.freq,mx)/mx)}" r="${3+Math.min(8,Math.sqrt(b.n)/2)}" fill="var(--accent)" fill-opacity=".55" stroke="var(--accent)"/>`; }
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Calibration : probabilité annoncée contre fréquence observée">${g}</svg>`;
+}
+function vModele(){
+  const m=S.metrics.cumul; const min=300;
+  const row=(lbl,hl,mk,lowerBetter=true)=>{
+    const enough=m && m.n_races>=min;
+    const better = hl!=null&&mk!=null ? (lowerBetter? hl<mk : hl>mk) : null;
+    return `<tr><td class="l" style="font-family:var(--f-body)">${lbl}</td><td>${hl==null?'—':hl.toFixed(4)}</td><td>${mk==null?'—':mk.toFixed(4)}</td><td class="l">${!m?'<span class="insuf">Échantillon insuffisant</span>':!enough?`<span class="insuf">Échantillon insuffisant (${m.n_races}/${min} courses)</span>`:better?'<span class="pill win">HL meilleur</span>':'<span class="pill loss">Marché meilleur</span>'}</td></tr>`;};
+  const g=S.meta?.gate, bt=S.reports.backtest;
+  const gateBox=`<div class="panel" style="display:grid;gap:8px;grid-column:1/-1"><div class="runhead"><h2>Porte de validation</h2>${g?(g.passed?'<span class="pill win">Modèle validé</span>':'<span class="pill part">Non validé : observation</span>'):'<span class="pill pass">En attente</span>'}</div>
+    <div class="status-line">Le modèle ne prend part aux décisions que s'il améliore le marché hors échantillon : gain de ρ² ≥ ${g?.min_delta_rho??0.005} sur au moins ${g?.min_races??1000} courses. Sinon α = 0 : le marché décide seul et aucun ticket n'est pris.</div>
+    <div class="mono">${g?`Courses hors échantillon : ${g.n_races_oos??0} · gain de ρ² : ${g.delta_rho_oos==null?'—':(g.delta_rho_oos>=0?'+':'')+g.delta_rho_oos.toFixed(4)} · modèle ${esc(S.meta?.model||'')}`:'Premier entraînement après l\'import de l\'historique.'}</div>
+    ${bt?.top_features?Object.entries(bt.top_features).map(([gr,fs])=>`<div><span class="label">Variables les plus influentes · ${esc(gr)}</span><div class="mono" style="font-size:12px">${fs.slice(0,10).map(([f,w])=>`${esc(f)} ${w>=0?'+':''}${w}`).join(' · ')}</div></div>`).join(''):''}</div>`;
+  return `<section class="grid2">${gateBox}
+   <div class="panel" style="display:grid;gap:12px"><h2>Qualité prédictive</h2>
+    <div class="status-line">Mesurée sur tous les partants des courses réglées, gagnant uniquement. Référence : le marché PMU normalisé. Seuil de lecture : ${min} courses.</div>
+    <div class="tablewrap"><table><thead><tr><th class="l">Métrique (par course)</th><th>Hippique Lab</th><th>Marché</th><th class="l">Lecture</th></tr></thead><tbody>
+    ${row('Brier score multi-classe', m?.brier_hl, m?.brier_mkt)}${row('Log loss du gagnant', m?.logloss_hl, m?.logloss_mkt)}${row('Rang moyen du gagnant', m?.rank_hl, m?.rank_mkt)}
+    ${row('Log loss · P décision', m?.logloss_dec, m?.logloss_mkt)}</tbody></table></div>
+    <div class="status-line">${m?`${m.n_races} course(s), ${m.n_runners} partants réglés · mis à jour ${ftime(m.updated_at)}`:'Aucune course réglée.'}</div>
+   </div>
+   <div class="panel chart" style="display:grid;gap:10px"><h2>Calibration</h2><div class="status-line">Parmi les chevaux annoncés autour de X %, quelle part a gagné ? Diagonale = calibration parfaite. Taille des points = effectif.</div>
+    ${m?.calibration?.length?calibSVG(m.calibration):'<div class="insuf">Échantillon insuffisant</div>'}</div>
+   <div class="panel" style="display:grid;gap:10px"><h2>Désaccords modèle / marché</h2><div class="status-line">Chevaux où P HL dépasse le marché de plus de 10 pts. Si le marché gagne ces désaccords, le modèle se trompe.</div>
+    ${m?.disagree?`<div class="tablewrap"><table><thead><tr><th class="l">Segment</th><th>Chevaux</th><th>P HL moy.</th><th>P marché moy.</th><th>Taux de victoire</th></tr></thead><tbody>${m.disagree.map(s=>`<tr><td class="l">${esc(s.label)}</td><td>${s.n}</td><td>${pct(s.p_hl)}</td><td>${pct(s.p_mkt)}</td><td>${pct(s.freq)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="insuf">Échantillon insuffisant</div>'}</div>
+   <div class="panel" style="display:grid;gap:10px"><h2>Analyse des PASS et CLV</h2><div class="status-line">Signaux bruts HL écartés par la combinaison marché, et écart entre rapport probable du matin et rapport final.</div>
+    <div class="tablewrap"><table><tbody>
+    <tr><td class="l" style="font-family:var(--f-body)">Signaux bruts écartés</td><td>${m?.raw_signals?.n??'—'}</td></tr>
+    <tr><td class="l" style="font-family:var(--f-body)">… dont gagnants</td><td>${m?.raw_signals?.wins??'—'}</td></tr>
+    <tr><td class="l" style="font-family:var(--f-body)">ROI fictif s'ils avaient été joués</td><td class="${sgn(m?.raw_signals?.roi)}">${m?.raw_signals?.roi==null?'—':pct(m.raw_signals.roi)}</td></tr>
+    <tr><td class="l" style="font-family:var(--f-body)">CLV mutuelle moyenne des tickets</td><td>${m?.clv==null?'—':pct(m.clv)}</td></tr></tbody></table></div>
+    <div class="insuf">${!m||m.n_races<min?'Échantillon insuffisant — à lire après plusieurs semaines.':''}</div></div>
+  </section>`;
+}
+function vBacktest(){
+  const bt=S.reports.backtest;
+  if(!bt) return '<div class="empty">Le backtest apparaîtra après le premier entraînement sur l\'historique (collecte en cours sur GitHub).</div>';
+  const s=bt.summary||{}, ms=bt.months||[];
+  const fl=s.flat||{};
+  const curve=[{cap:500}].concat(ms.map(m=>({cap:m.capital})));
+  return `<section class="kpis">
+    <div class="kpi"><span class="label">Courses hors échantillon</span><span class="v">${s.races_oos??0}</span><span class="s">${esc((bt.data_range||[]).join(' → '))}</span></div>
+    <div class="kpi"><span class="label">ρ² marché</span><span class="v">${s.rho_mkt==null?'—':s.rho_mkt.toFixed(4)}</span><span class="s">référence à battre</span></div>
+    <div class="kpi"><span class="label">ρ² combiné</span><span class="v">${s.rho_comb==null?'—':s.rho_comb.toFixed(4)}</span><span class="s">gain ${s.delta_rho==null?'—':(s.delta_rho>=0?'+':'')+s.delta_rho.toFixed(4)}</span></div>
+    <div class="kpi"><span class="label">Capital simulé</span><span class="v ${sgn((s.final_capital??500)-500)}">${eur(s.final_capital)}</span><span class="s">départ 500 € · max drawdown ${pct(s.max_drawdown)}</span></div>
+    <div class="kpi"><span class="label">ROI simple gagnant</span><span class="v ${sgn(fl.SIMPLE_GAGNANT?.roi)}">${fl.SIMPLE_GAGNANT?.roi==null?'—':pct(fl.SIMPLE_GAGNANT.roi)}</span><span class="s">${fl.SIMPLE_GAGNANT?.n??0} paris à 1 €</span></div>
+    <div class="kpi"><span class="label">ROI simple placé</span><span class="v ${sgn(fl.SIMPLE_PLACE?.roi)}">${fl.SIMPLE_PLACE?.roi==null?'—':pct(fl.SIMPLE_PLACE.roi)}</span><span class="s">${fl.SIMPLE_PLACE?.n??0} paris à 1 €</span></div>
+  </section>
+  <section class="panel chart"><div class="runhead" style="margin-bottom:8px"><h3>Capital simulé, mois par mois</h3><span class="label">walk-forward</span></div>${ms.length?curveSVG(curve).replace(/J(\d+)/g,'M$1'):'<div class="insuf">Échantillon insuffisant</div>'}</section>
+  <section class="panel" style="display:grid;gap:10px"><h2>Mois par mois</h2><div class="status-line">Chaque mois est prédit par un modèle entraîné uniquement sur les mois précédents. Décision sur le rapport de référence du matin, règlement sur les dividendes officiels.</div>
+  <div class="tablewrap"><table><thead><tr><th class="l">Mois</th><th>Courses</th><th>ρ² fond.</th><th>ρ² marché</th><th>ρ² combiné</th><th>Gain</th><th>α</th><th>Paris</th><th>P&amp;L</th><th>Capital</th></tr></thead><tbody>
+  ${ms.slice().reverse().map(m=>`<tr><td class="l">${esc(m.month)}</td><td>${m.races}</td><td>${m.rho_fund?.toFixed(4)??'—'}</td><td>${m.rho_mkt?.toFixed(4)??'—'}</td><td>${m.rho_comb?.toFixed(4)??'—'}</td><td class="${sgn(m.delta_rho)}">${m.delta_rho==null?'—':(m.delta_rho>=0?'+':'')+m.delta_rho.toFixed(4)}</td><td>${m.alpha}</td><td>${m.bets}</td><td class="${sgn(m.pnl)}">${m.pnl>=0?'+':''}${eur(m.pnl)}</td><td>${eur(m.capital)}</td></tr>`).join('')}
+  </tbody></table></div><div class="status-line">Entraîné le ${ftime(bt.built_at)} · réentraînement chaque lundi.</div></section>`;
+}
+function vHistorique(){
+  const ds=[...S.days].sort((a,b)=>a.date<b.date?-1:1);
+  return `<section class="panel" style="display:grid;gap:12px"><h2>Historique du pilote</h2>
+  <div class="tablewrap"><table><thead><tr><th class="l">Jour</th><th class="l">Date</th><th>Ouverture</th><th>P&amp;L</th><th>Clôture</th><th>BET</th><th>Mises</th><th>ROI jour</th><th>Couverture</th><th class="l">Run</th></tr></thead><tbody>
+  ${ds.map(d=>`<tr><td class="l">J${d.day}</td><td class="l">${fdate(d.date)}</td><td>${eur(d.opening_capital)}</td><td class="${sgn(d.pnl)}">${d.pnl==null?'—':(d.pnl>=0?'+':'')+eur(d.pnl)}</td><td>${d.closing_capital==null?'—':eur(d.closing_capital)}</td><td>${d.n_bet??0}</td><td>${eur(d.exposure)}</td><td class="${sgn(d.pnl)}">${d.pnl==null||!d.exposure?'—':pct(d.pnl/d.exposure)}</td><td>${d.coverage?.analyzed??0}/${d.coverage?.expected??0}</td><td class="l">${d.status_morning==='COMPLETE'?'<span class="pill ok">Complet</span>':'<span class="pill part">Incomplet</span>'}</td></tr>`).join('')||'<tr><td colspan="10" class="l muted">Aucune journée.</td></tr>'}
+  </tbody></table></div><div class="status-line">Le capital de clôture d'un jour devient le capital d'ouverture du suivant. Bilan complet à J30.</div></section>`;
+}
+function vMethode(){
+  const p=S.meta?.params||{};
+  return `<section class="grid2">
+  <div class="panel prose"><h2>Ce que ce pilote teste</h2>
+   <p>Hippique Lab cherche à savoir si un modèle sportif contient une information que le marché PMU n'a pas déjà intégrée. Le capital fictif sert de garde-fou de décision ; la preuve viendra du journal des probabilités, mesuré contre le marché.</p>
+   <p>Chaque journée enregistre une probabilité pour chaque partant avant le départ, même quand aucun pari n'est pris. Une course sans cote vérifiée ou partie avant le run reste <b>partielle</b> : elle n'est jamais comptée comme un PASS.</p>
+   <h3>Chaîne de décision</h3>
+   <ul><li><b>P fondamentale (V1)</b> : logit conditionnel entraîné sur l'historique PMU, modèles trot et plat séparés, 54 variables (forme, vitesse, Elo, aptitudes, entourage, comptes rendus de course). Aucune cote.</li>
+   <li><b>Simple placé</b> : probabilité d'être placé par Harville corrigé (γ = ${p.gamma??'—'}, δ = ${p.delta??'—'}), dividende placé estimé sur l'historique.</li>
+   <li><b>P marché</b> : rapports probables PMU normalisés à 100 %.</li>
+   <li><b>P décision</b> : combinaison log-linéaire modèle × marché (poids modèle ${p.alpha_model??'—'}), méthode de Benter. Le poids du modèle augmentera seulement s'il bat le marché hors échantillon.</li>
+   <li><b>BET</b> si edge ≥ ${p.min_edge!=null?(p.min_edge*100).toFixed(1):'—'} pts et EV basse ≥ ${p.min_ev_low!=null?(p.min_ev_low*100):'—'} %, après incertitude de ${p.u_dec!=null?p.u_dec*100:'—'} % et décote de ${p.odds_haircut!=null?Math.round((1-p.odds_haircut)*100):'—'} % sur le rapport.</li></ul></div>
+  <div class="panel prose"><h2>Règles de portefeuille</h2>
+   <ul><li>¼ Kelly sur la probabilité basse, au plus 2 % du capital par ticket et 6 % par journée.</li>
+   <li>Pari mutuel : le rapport final n'est connu qu'au départ. Chaque ticket porte un <b>rapport minimal</b> ; s'il n'est pas atteint au rapport final, le ticket est annulé (value disparue).</li>
+   <li>Règlement sur le rapport PMU officiel du simple gagnant pour 1 €. Sans rapport vérifiable : en attente, jamais estimé.</li>
+   <li>Aucune martingale, aucune hausse de mise après une perte, aucun pari réel placé.</li></ul>
+   <h3>Version du moteur</h3><p class="mono">${esc(S.meta?.model||'—')}</p>
+   <p class="status-line">J1 a été joué avec le moteur V0 heuristique. Depuis J2, le moteur V1 tourne chaque jour sur GitHub (8h50, 13h20, 22h30) ; il ne prend de tickets que si la porte de validation est franchie.</p></div>
+  </section>`;
+}
+
+function render(){
+  const v=view();
+  document.querySelectorAll('#tabs a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+v?'page':'false'));
+  const P=S.meta; $('#dayLabel').textContent = P ? `Jour ${P.day} / 30 · ${fdate(P.current_date)}` : 'Jour — / 30';
+  $('#updLabel').textContent = S.err ? S.err : P ? `Dernière mise à jour ${ftime(P.updated_at)}` : (S.loaded?'Base vide':'Connexion à la base…');
+  if(!S.loaded && !S.days.length){ return; }
+  if(!S.days.length){ app.innerHTML='<div class="empty">La base est encore vide. Le premier run du matin écrira ici la journée, les courses, les prédictions et les tickets.</div>'; return; }
+  const html={dashboard:vDashboard,aujourdhui:vToday,tickets:vTickets,courses:vCourses,modele:vModele,backtest:vBacktest,historique:vHistorique,methode:vMethode}[v]();
+  app.innerHTML=html;
+  const dp=$('#datePick'); if(dp) dp.addEventListener('change',e=>{S.date=e.target.value; subRaces();});
+  app.querySelectorAll('.race-row').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.k; S.open[k]=!S.open[k]; render();}));
+}
+window.addEventListener('hashchange',render);
+
+let unsubRaces=null, db=null;
+function subRaces(){
+  if(!db||!S.date) return; if(unsubRaces) unsubRaces();
+  S.races=[]; render();
+  unsubRaces=db.collection('races').where('date','==',S.date).onSnapshot(s=>{S.races=s.docs.map(d=>({id:d.id,...d.data()})); render();},e=>{S.err='Courses indisponibles ('+e.code+')'; render();});
+}
+(async function start(){
+  const timer=setTimeout(()=>{ if(!S.loaded){ S.err='La base ne répond pas encore — les données peuvent être absentes ou anciennes.'; render(); } },10000);
+  try{ db = await window.claude?.use?.('db'); }catch(e){ db=null; }
+  if(!db){ clearTimeout(timer); $('#boot').textContent='La base de données n\'est pas disponible dans cette vue. Ouvrez la page depuis votre compte Claude.'; $('#updLabel').textContent='Hors ligne'; return; }
+  const fail=e=>{S.err='Erreur de lecture ('+(e?.code||'?')+')'; render();};
+  db.doc('meta/state').onSnapshot(s=>{ clearTimeout(timer); S.meta=s.exists?s.data():null; S.loaded=true; S.err=null; if(!S.date && S.meta?.current_date){S.date=S.meta.current_date; subRaces();} render(); },fail);
+  db.collection('days').onSnapshot(s=>{ S.days=s.docs.map(d=>d.data()); S.loaded=true; if(!S.date&&S.days.length){S.date=[...S.days].sort((a,b)=>a.date<b.date?1:-1)[0].date; subRaces();} render(); },fail);
+  db.collection('bets').onSnapshot(s=>{ S.bets=s.docs.map(d=>d.data()); render(); },fail);
+  db.collection('reports').onSnapshot(s=>{ S.reports={}; s.docs.forEach(d=>S.reports[d.id]=d.data()); render(); },fail);
+  db.collection('metrics').onSnapshot(s=>{ S.metrics={}; s.docs.forEach(d=>S.metrics[d.id]=d.data()); render(); },fail);
+})();
+render();
+})();
+</script>

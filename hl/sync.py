@@ -125,6 +125,13 @@ def main(phase, d, day_n, dbx, out_dir):
         params=dict(run["rules"], **{k: run["params"][k] for k in ("alpha", "beta", "gamma", "delta")},
                     alpha_model=run["params"]["alpha"], w_experts=0, min_edge=run["rules"]["min_edge"], odds_haircut=run["rules"]["haircut"]),
         gate=run["gate"], updated_at=run["computed_at"], last_run=phase))
+    bt = os.path.join(ROOT, "reports", "backtest.json")
+    mp = os.path.join(ROOT, "models", "latest.json")
+    if os.path.exists(bt) and os.path.exists(mp):
+        rep, mdl = json.load(open(bt)), json.load(open(mp))
+        put("reports", "backtest", dict(built_at=rep.get("built_at"), n_races=rep.get("n_races"), summary=rep.get("summary"),
+            months=rep.get("months"), model=mdl.get("version"), gate=mdl.get("gate"), stage2=mdl.get("stage2"),
+            top_features=mdl.get("top_features"), data_range=mdl.get("data_range")))
     json.dump(writes, open(os.path.join(out_dir, "_writes.json"), "w"))
     print(f"{phase} {d}: {len(to_write)} courses écrites, {len(new_bets)} tickets, exposition jour {sum(b['stake'] for b in all_bets):.2f} € "
           f"sur capital {capital:.2f} €, couverture {cov['analyzed']}/{cov['expected']} · {len(writes)} écritures")

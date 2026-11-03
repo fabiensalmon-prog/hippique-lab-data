@@ -24,6 +24,10 @@ def load(dir_, col):
 
 def main(db_dir, results_path, date, out_dir, now_iso):
     res = json.load(open(results_path))
+    # correspondance tolérante : même journée + même numéro de réunion et de course (R1C3), quel que soit le nom d'hippodrome
+    res_rc = {f"{k[:10]}_{k.split('_')[-1]}": v for k, v in res.items()}
+    def lookup(doc_id):
+        return res.get(doc_id) or res_rc.get(f"{doc_id[:10]}_{doc_id.split('_')[-1]}")
     races = load(db_dir, 'races'); bets = load(db_dir, 'bets'); days = load(db_dir, 'days')
     meta = load(db_dir, 'meta').get('state'); metrics = load(db_dir, 'metrics')
     os.makedirs(out_dir, exist_ok=True); writes = []
@@ -34,8 +38,8 @@ def main(db_dir, results_path, date, out_dir, now_iso):
         writes.append(w)
     # 1. résultats dans les courses du jour
     for rid, (r, ver) in races.items():
-        if r.get('date') != date or rid not in res: continue
-        x = res[rid]
+        x = lookup(rid)
+        if r.get('date') != date or not x: continue
         put('races', rid, dict(r, result=dict(arrivee=x['arrivee'], rapport_gagnant=x.get('rapport_gagnant'),
             non_partants=x.get('non_partants', []), source=x.get('source'), settled_at=now_iso)), ver)
         races[rid] = (dict(r, result=x), ver)
@@ -43,7 +47,7 @@ def main(db_dir, results_path, date, out_dir, now_iso):
     day_pnl, n_settled, pend = 0.0, 0, 0
     for bid, (b, ver) in bets.items():
         if b.get('date') != date or (b.get('settlement') or {}).get('status') in ('WIN', 'LOSS', 'CANCELLED'): continue
-        rid = f"{date}_{b['race_id']}"; x = res.get(rid)
+        rid = f"{date}_{b['race_id']}"; x = lookup(rid)
         if not x:
             st = dict(status='PENDING', note='Résultat non vérifiable', settled_at=now_iso); pend += 1
         else:
