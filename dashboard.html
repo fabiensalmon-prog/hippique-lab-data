@@ -212,11 +212,13 @@ function vDashboard(){
       <div class="status-line">Run du ${ftime(d.morning_at)} · capital d'ouverture ${eur(d.opening_capital)} · ${esc(d.morning_note||'')}</div>`:'<div class="muted">Aucun run enregistré.</div>'}
     </div>
     <div class="panel runbox">
-      <div class="runhead"><h3>Soir · clôture</h3>${d?.status_close==='DONE'?'<span class="pill ok">Terminée</span>':'<span class="pill pass">Prévue 23:00</span>'}</div>
+      <div class="runhead"><h3>Soir · clôture</h3>${d?.status_close==='DONE'?'<span class="pill ok">Terminée</span>':d?.status_close==='PENDING'?'<span class="pill bet">En cours</span>':'<span class="pill pass">Prévue 23:07</span>'}</div>
+      ${d?.status_close==='PENDING'?`<div class="mono" style="font-size:18px;font-weight:600">RÉSULTATS EN COURS</div>
+        <div>${d.n_settled??0} ticket(s) réglé(s), ${d.n_pending??0} en attente · P&amp;L provisoire <span class="${sgn(d.pnl)} mono">${d.pnl>=0?'+':''}${eur(d.pnl)}</span></div>`:''}
       ${d?.status_close==='DONE'?`<div class="mono" style="font-size:18px;font-weight:600">CLÔTURE TERMINÉE</div>
         <div>${d.n_settled??0} ticket(s) réglé(s) · P&amp;L <span class="${sgn(d.pnl)} mono">${d.pnl>=0?'+':''}${eur(d.pnl)}</span></div>`:
-        `<div class="muted">Les tickets du matin seront réglés sur les rapports PMU officiels. Un résultat invérifiable reste « en attente », jamais estimé.</div>`}
-      <div class="closing">CAPITAL DE DÉPART DU PROCHAIN RUN = <b>${d?.closing_capital!=null?eur(d.closing_capital):'en attente de clôture'}</b></div>
+        d?.status_close==='PENDING'?'':`<div class="muted">Les tickets du matin seront réglés sur les rapports PMU officiels. Un résultat invérifiable reste « en attente », jamais estimé.</div>`}
+      <div class="closing">CAPITAL DE DÉPART DU PROCHAIN RUN = <b>${d?.status_close==='DONE'&&d?.closing_capital!=null?eur(d.closing_capital):(d?.closing_capital!=null?eur(d.closing_capital)+' (provisoire)':'en attente de clôture')}</b></div>
     </div>
   </section>
   <section class="panel chart"><div class="runhead" style="margin-bottom:8px"><h3>Courbe du capital</h3><span class="label">J0 → J30</span></div>${curveSVG(P.curve)}</section>`;
@@ -228,11 +230,20 @@ function dayPicker(){
 }
 function predTable(r){
   const ps=[...(r.preds||[])].sort((a,b)=>b.p_hl-a.p_hl);
-  const hasM=ps.some(p=>p.p_mkt!=null); const hasP=ps.some(p=>p.p_place!=null);
-  return `<div class="tablewrap"><table><thead><tr><th>N°</th><th class="l">Cheval</th><th class="l">Driver / jockey</th><th>P fond.</th><th>P experts</th><th>P HL</th>${hasM?'<th>Rapport</th><th>P marché</th><th>P décision</th><th>Edge</th><th>EV basse</th>'+(hasP?'<th>P placé</th>':''):''}<th>Conf.</th></tr></thead><tbody>
-  ${ps.map(p=>`<tr class="${p.selected?'sel':''}"><td>${p.num}</td><td class="horse l">${esc(p.horse)}</td><td class="l" style="font-family:var(--f-body)">${esc(p.jockey||'')}</td><td>${pct(p.p_fund)}</td><td>${p.p_exp==null?'—':pct(p.p_exp)}</td><td><b>${pct(p.p_hl)}</b></td>
+  const hasM=ps.some(p=>p.p_mkt!=null); const hasP=ps.some(p=>p.p_place!=null); const arr=r.result?.arrivee||null; const placeOf=n=>{if(!arr)return null; const i=arr.indexOf(n); return i>=0?i+1:null;};
+  if(arr) ps.sort((a,b)=>(placeOf(a.num)??99)-(placeOf(b.num)??99));
+  return `<div class="tablewrap"><table><thead><tr>${arr?'<th>Arrivée</th>':''}<th>N°</th><th class="l">Cheval</th><th class="l">Driver / jockey</th><th>P fond.</th><th>P experts</th><th>P HL</th>${hasM?'<th>Rapport</th><th>P marché</th><th>P décision</th><th>Edge</th><th>EV basse</th>'+(hasP?'<th>P placé</th>':''):''}<th>Conf.</th></tr></thead><tbody>
+  ${ps.map(p=>`<tr class="${p.selected?'sel':''}">${arr?`<td>${placeOf(p.num)?(placeOf(p.num)===1?'<b>1er</b>':placeOf(p.num)+'e'):'—'}</td>`:''}<td>${p.num}</td><td class="horse l">${esc(p.horse)}</td><td class="l" style="font-family:var(--f-body)">${esc(p.jockey||'')}</td><td>${pct(p.p_fund)}</td><td>${p.p_exp==null?'—':pct(p.p_exp)}</td><td><b>${pct(p.p_hl)}</b></td>
   ${hasM?`<td>${odd(p.odds)}</td><td>${pct(p.p_mkt)}</td><td>${pct(p.p_dec)}</td><td class="${sgn(p.edge)}">${pts(p.edge)}</td><td class="${sgn(p.ev_low)}">${p.ev_low==null?'—':(p.ev_low>=0?'+':'')+Math.round(p.ev_low*100)+' %'}</td>${hasP?`<td>${p.p_place==null?'—':pct(p.p_place)}</td>`:''}`:''}<td>${esc(p.confidence||'')}</td></tr>`).join('')}
   </tbody></table></div>`;
+}
+function shadowLine(r){
+  const s=r.shadow; if(!s) return '';
+  const lab={COUPLE_GAGNANT:'Couplé gagnant',DEUX_SUR_QUATRE:'2sur4'};
+  let items=[];
+  if(s.couple_gagnant) items.push(`Couplé gagnant ${esc(s.couple_gagnant.join('-'))} · ${pct(s.p)}`);
+  for(const k of ['COUPLE_GAGNANT','DEUX_SUR_QUATRE']) if(s[k]) items.push(`${lab[k]} ${esc(s[k].combo)} · P ${pct(s[k].p)} · dividende attendu ${odd(s[k].div_exp)} · EV basse ${(s[k].ev_low>=0?'+':'')+Math.round(s[k].ev_low*100)} %`);
+  return items.length?`<div class="status-line" style="margin-top:8px"><span class="label">Exotiques en observation</span> ${items.join(' — ')}</div>`:'';
 }
 function raceList(races, withDetail){
   const byM={}; races.forEach(r=>{(byM[r.meeting]=byM[r.meeting]||[]).push(r)});
@@ -243,6 +254,7 @@ function raceList(races, withDetail){
     ${rs.map(r=>{const k=r.id; const open=withDetail&&S.open[k]; return `
       <button class="race-row" data-k="${esc(k)}" aria-expanded="${open?'true':'false'}"><span class="rc">R${r.r}C${r.c}</span><span class="mono muted">${esc(r.time)}</span><span class="why">${esc(r.reason||'')}</span><span class="tags">${statusPill(r)}</span></button>
       ${open?`<div class="detail"><div class="status-line" style="margin-bottom:8px">${esc(r.disc)} · ${r.dist} m · ${esc(r.cond||'')} · ${r.n_runners} partants${r.odds_time?` · cotes ${esc(r.odds_src||'')} capturées ${esc(r.odds_time)}`:''}${r.flags?.length?' · ⚠ '+esc(r.flags.join(' ; ')):''}</div>${r.preds?.length?predTable(r):'<div class="muted">Aucune prédiction : course partie avant le run.</div>'}
+      ${shadowLine(r)}
       ${r.result?`<div class="status-line" style="margin-top:8px">Arrivée officielle : <b class="mono">${esc((r.result.arrivee||[]).join(' - '))}</b></div>`:''}</div>`:''}`}).join('')}</div>`;
   }).join('');
 }

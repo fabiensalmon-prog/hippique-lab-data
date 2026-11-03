@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       phase:
-        description: "morning, midday ou closing"
+        description: "morning, midday, results (résultats en cours) ou closing"
         default: morning
       day:
         description: "AAAA-MM-JJ (vide = aujourd'hui, heure de Paris)"

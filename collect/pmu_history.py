@@ -44,7 +44,7 @@ def collect_day(d):
             parts = get(f"{BASE}/{ds}/R{r}/C{k}/participants"); time.sleep(PAUSE)
             rap = get(f"{BASE}/{ds}/R{r}/C{k}/rapports-definitifs"); time.sleep(PAUSE)
             out["races"].append(dict(r=r, c=k, hippodrome=(reu.get("hippodrome") or {}).get("libelleCourt"),
-                                     course=c, participants=parts, rapports=rap))
+                                     meteo=reu.get("meteo"), course=c, participants=parts, rapports=rap))
     return out
 
 def write_day(d, obj):

@@ -91,12 +91,13 @@ def run_phase(phase, d):
     print(f"{phase} {d}: {an}/{n} analysées, {sum(len(r['cands']) for r in out['races'])} candidats, modèle {model['version']}, gate {model['gate']['passed']}")
 
 
-def run_closing(d):
+def run_closing(d, final=True):
     if os.environ.get("HL_TEST_DAY"):
         obj = json.load(gzip.open(os.environ["HL_TEST_DAY"], "rt"))
     else:
         obj = collect_day(date.fromisoformat(d))
-        write_day(date.fromisoformat(d), obj)              # l'historique s'enrichit chaque soir
+        if final:
+            write_day(date.fromisoformat(d), obj)          # l'historique s'enrichit chaque soir
     res = {}
     for race in normalize(obj):
         if not race["arrivee"]:
@@ -116,4 +117,7 @@ def run_closing(d):
 if __name__ == "__main__":
     phase = sys.argv[1]
     d = sys.argv[2] if len(sys.argv) > 2 else datetime.now(PARIS).date().isoformat()
-    run_closing(d) if phase == "closing" else run_phase(phase, d)
+    if phase in ("closing", "results"):
+        run_closing(d, final=(phase == "closing"))
+    else:
+        run_phase(phase, d)

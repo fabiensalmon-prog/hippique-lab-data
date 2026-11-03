@@ -128,15 +128,25 @@ def main(db_dir, results_path, date, out_dir, now_iso):
     put('metrics', 'cumul', m, metrics.get('cumul', (None, None))[1])
     # 4. journée + capital du lendemain
     d, dver = days[date]
+    # P&L du jour = tous les tickets réglés de la journée (déjà réglés lors d'un run précédent + réglés maintenant) : idempotent
+    final_st = {}
+    for bid, (b, _) in bets.items():
+        if b.get('date') == date: final_st[bid] = b.get('settlement') or {}
+    for w in writes:
+        if w['collection'] == 'bets':
+            final_st[w['doc_id']] = json.load(open(w['file_path'])).get('settlement') or {}
+    day_pnl = sum(s.get('net_pnl') or 0 for s in final_st.values() if s.get('status') in ('WIN', 'LOSS'))
+    n_settled = sum(1 for s in final_st.values() if s.get('status') in ('WIN', 'LOSS', 'CANCELLED'))
+    pend = sum(1 for s in final_st.values() if s.get('status') not in ('WIN', 'LOSS', 'CANCELLED'))
     closing = round(d['opening_capital'] + day_pnl, 2)
     put('days', date, dict(d, pnl=round(day_pnl, 2), closing_capital=closing, n_settled=n_settled, n_pending=pend,
         status_close='DONE' if pend == 0 else 'PENDING', close_at=now_iso), dver)
     mm, mver = meta
-    put('meta', 'state', dict(mm, current_capital=closing, updated_at=now_iso, last_run='closing',
+    put('meta', 'state', dict(mm, current_capital=closing if pend == 0 else mm.get('current_capital', d['opening_capital']), updated_at=now_iso, last_run='closing' if pend == 0 else 'resultats',
         peak_capital=max(mm.get('peak_capital', 500.0), closing)), mver)
     json.dump(writes, open(os.path.join(out_dir, '_writes.json'), 'w'))
     print(f"P&L {day_pnl:+.2f} € · réglés {n_settled} · en attente {pend} · courses notées {n_r}")
-    print(f"CAPITAL DE DÉPART DU PROCHAIN RUN = {closing:.2f} €")
+    print(f"CAPITAL DE DÉPART DU PROCHAIN RUN = {closing:.2f} €" + ("" if pend == 0 else f" (provisoire : {pend} ticket(s) encore à régler)"))
 
 if __name__ == '__main__':
     main(*sys.argv[1:6])

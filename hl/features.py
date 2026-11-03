@@ -97,6 +97,8 @@ FEATURES = [
     "drv_wr", "drv_ae", "drv_n", "trn_wr", "trn_ae", "trn_n", "combo_n", "combo_wr", "driver_change",
     # situation du jour
     "corde", "recul", "deferre4", "deferre_any", "oeil_on", "avis_pos", "avis_neg", "inedit", "poids", "valeur",
+    # confrontations directes et écarts à l'arrivée
+    "h2h_score", "h2h_n", "margin3",
 ]
 
 
@@ -106,6 +108,7 @@ class FeatureState:
         self.drv = defaultdict(Decayed)
         self.trn = defaultdict(Decayed)
         self.combo = defaultdict(lambda: [0.0, 0.0])
+        self.h2h = {}                           # (cheval a, cheval b) trié -> [a devant b, b devant a]
 
     # ---------- variables pré-course ----------
     def features(self, race):
@@ -162,6 +165,20 @@ class FeatureState:
                      avis_pos=float(u["avis"] == "POSITIF"), avis_neg=float(u["avis"] == "NEGATIF"),
                      inedit=float(u["inedit"]), poids=(u["poids"] / 10.0 if u["poids"] else None) if grp != "TROT" else None,
                      valeur=u["valeur"] if grp != "TROT" else None)
+            # confrontations directes avec les partants du jour
+            diff = meet = 0.0
+            for v in race["runners"]:
+                if v["np"] or v["horse"] == u["horse"]:
+                    continue
+                a, b = sorted((u["horse"], v["horse"]))
+                rec = self.h2h.get((a, b))
+                if rec:
+                    mine, theirs = (rec[0], rec[1]) if a == u["horse"] else (rec[1], rec[0])
+                    diff += mine - theirs; meet += mine + theirs
+            f["h2h_score"] = diff / (meet + 2.0)
+            f["h2h_n"] = math.log1p(meet)
+            mg = [x["lengths"] for x in hist[-3:] if x.get("lengths") is not None] if hist else []
+            f["margin3"] = -sum(mg) / len(mg) if mg else None
             rows.append(dict(num=u["num"], nom=u["nom"], horse=u["horse"], driver=u["driver"], x=f,
                              odds_ref=u["odds_mkt"], odds_final=u["odds_final"], place=u["place"]))
         return rows
@@ -185,7 +202,9 @@ class FeatureState:
             h["hist"].append(dict(date=d, place=pl or 99, beaten=((pl - 1) / (n - 1)) if pl else 1.0, dq=float(dq),
                                   distance=race["distance"], hippodrome=race["hippodrome"], discipline=race["discipline"],
                                   prix=race["prix"], pen=race["pen"], deferre=u["deferre"], comment=u["comment"],
-                                  red_resid=((u["red_km"] - med) / 1000.0) if (u["red_km"] and med and not dq) else None))
+                                  red_resid=((u["red_km"] - med) / 1000.0) if (u["red_km"] and med and not dq) else None,
+                                  lengths=min(u.get("lengths_behind"), 20.0) if u.get("lengths_behind") is not None else None,
+                                  meteo=race.get("meteo")))
             h["hist"] = h["hist"][-20:]
             won = float(u["num"] == winner)
             pe = inv.get(u["num"], 0.0) / s
@@ -194,6 +213,18 @@ class FeatureState:
             if u["trainer"]:
                 self.trn[u["trainer"]].add(d, won, pe)
             cb = self.combo.setdefault((u["horse"], u["driver"]), [0.0, 0.0]); cb[0] += 1; cb[1] += won
+        # confrontations directes : qui a fini devant qui (non classés derniers)
+        rank = {u["horse"]: (u["place"] if isinstance(u["place"], int) and u["place"] > 0 else 99) for u in runners}
+        hs = list(rank)
+        for i in range(len(hs)):
+            for j in range(i + 1, len(hs)):
+                ra, rb = rank[hs[i]], rank[hs[j]]
+                if ra == rb:
+                    continue
+                a, b = sorted((hs[i], hs[j]))
+                rec = self.h2h.setdefault((a, b), [0, 0])
+                first = hs[i] if ra < rb else hs[j]
+                rec[0 if first == a else 1] += 1
         # Elo multi-joueurs : chaque paire, non classés derniers ex aequo
         order = {u["horse"]: (u["place"] if isinstance(u["place"], int) and u["place"] > 0 else 99) for u in runners}
         elo = {k: self.horse[k]["elo"] for k in order}

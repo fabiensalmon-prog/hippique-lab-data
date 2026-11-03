@@ -1,5 +1,26 @@
 """Lecture des journées PMU collectées -> courses normalisées, dans l'ordre chronologique."""
 import gzip, json, glob, os, re
+
+# écart au cheval précédent (plat / obstacle) en longueurs
+_ECART = {"NEZ": 0.05, "COURTE_TETE": 0.1, "TETE": 0.2, "COURTE_ENCOLURE": 0.25, "ENCOLURE": 0.3, "DEMI_LONGUEUR": 0.5,
+          "TROIS_QUARTS_LONGUEUR": 0.75, "LONGUEUR": 1.0, "DISTANCE": 15.0, "LOIN": 15.0, "DEAD_HEAT": 0.0, "TRES_LOIN": 20.0}
+
+
+def ecart_longueurs(d):
+    if not d:
+        return None
+    ident = (d.get("identifiant") or "").upper()
+    if ident in _ECART:
+        return _ECART[ident]
+    lib = (d.get("libelleCourt") or "").replace(",", ".").replace("L", "").strip()
+    try:
+        if "/" in lib:
+            a, b = lib.split()[-1].split("/") if " " in lib else lib.split("/")
+            whole = float(lib.split()[0]) if " " in lib else 0.0
+            return whole + float(a) / float(b)
+        return float(lib)
+    except (ValueError, IndexError):
+        return None
 from datetime import date
 
 ROOT = os.environ.get("HL_DATA") or os.path.join(os.path.dirname(__file__), "..", "data")
@@ -73,6 +94,8 @@ def normalize(dayobj):
             autostart="AUTOSTART" in cat, handicap="HANDICAP" in cat, reclamer="RECLAMER" in cat,
             categorie=cat, piste=c.get("typePiste"), pen=penv, terrain=pen.get("intitule"),
             conditions=c.get("conditions") or "", n_declared=c.get("nombreDeclaresPartants"),
+            meteo=dict(temp=(x.get("meteo") or {}).get("temperature"), ciel=(x.get("meteo") or {}).get("nebulositeLibelleCourt"),
+                       vent=(x.get("meteo") or {}).get("forceVent")) if x.get("meteo") else None,
             arrivee=[a[0] if isinstance(a, list) and a else a for a in arr],
             dead_heat=any(isinstance(a, list) and len(a) > 1 for a in arr),
             div_sg=_div(rap, "SIMPLE_GAGNANT"), div_sp=_div(rap, "SIMPLE_PLACE"),
@@ -94,7 +117,16 @@ def normalize(dayobj):
                 odds_ref=_rap(p, "dernierRapportReference"), odds_final=_rap(p, "dernierRapportDirect"),
                 # --- informations APRÈS course : jamais utilisées comme variables de cette course ---
                 place=p.get("ordreArrivee"), incident=p.get("incident") or "", red_km=p.get("reductionKilometrique"),
-                temps=p.get("tempsObtenu"), comment=com))
+                temps=p.get("tempsObtenu"), comment=com, ecart=ecart_longueurs(p.get("distanceChevalPrecedent"))))
+        fin = sorted([u for u in race["runners"] if isinstance(u["place"], int) and u["place"] > 0], key=lambda u: u["place"])
+        cum = 0.0
+        for u in race["runners"]:
+            u["lengths_behind"] = None
+        for k, u in enumerate(fin):
+            if k > 0:
+                e = u["ecart"]
+                cum = cum + e if e is not None else None if cum is None else cum + 1.0
+            u["lengths_behind"] = cum if k > 0 else 0.0
         live = [u for u in race["runners"] if not u["np"]]
         if live and all(u["odds_ref"] for u in live):
             race["mkt_src"] = "REFERENCE"
