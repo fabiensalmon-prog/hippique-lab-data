@@ -49,7 +49,7 @@ def main(db_dir, results_path, date, out_dir, now_iso):
         if b.get('date') != date or (b.get('settlement') or {}).get('status') in ('WIN', 'LOSS', 'CANCELLED'): continue
         rid = f"{date}_{b['race_id']}"; x = lookup(rid)
         if not x:
-            st = dict(status='PENDING', note='Résultat non vérifiable', settled_at=now_iso); pend += 1
+            st = dict(status='PENDING', note='Course pas encore courue ou résultat officiel pas encore publié', settled_at=now_iso); pend += 1
         else:
             fo = (x.get('final_odds') or {}).get(str(b['num'])) or (x.get('final_odds') or {}).get(b['num'])
             if b['num'] in x.get('non_partants', []):
