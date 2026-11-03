@@ -51,5 +51,5 @@ jobs:
           if python3 -c "import json,sys; p=json.load(open('data/progress.json')); sys.exit(0 if p.get('oldest_done','9999') > '2024-11-01' else 1)"; then
             gh workflow run collect.yml -f mode=backfill -f arg=30 && echo "lot suivant lancé"
           else
-            echo "historique complet"
+            echo "historique complet : entraînement lancé"; gh workflow run train.yml
           fi
