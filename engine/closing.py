@@ -28,7 +28,7 @@ def main(db_dir, results_path, date, out_dir, now_iso):
     res_rc = {f"{k[:10]}_{k.split('_')[-1]}": v for k, v in res.items()}
     def lookup(doc_id):
         return res.get(doc_id) or res_rc.get(f"{doc_id[:10]}_{doc_id.split('_')[-1]}")
-    races = load(db_dir, 'races'); bets = load(db_dir, 'bets'); days = load(db_dir, 'days')
+    races = load(db_dir, 'races'); bets = load(db_dir, 'bets'); labbets = load(db_dir, 'labbets'); days = load(db_dir, 'days')
     meta = load(db_dir, 'meta').get('state'); metrics = load(db_dir, 'metrics')
     os.makedirs(out_dir, exist_ok=True); writes = []
     def put(col, did, data, ver, op='set'):
@@ -45,44 +45,45 @@ def main(db_dir, results_path, date, out_dir, now_iso):
         races[rid] = (dict(r, result=x), ver)
     # 2. règlement des tickets
     day_pnl, n_settled, pend = 0.0, 0, 0
-    for bid, (b, ver) in bets.items():
-        if b.get('date') != date or (b.get('settlement') or {}).get('status') in ('WIN', 'LOSS', 'CANCELLED'): continue
-        rid = f"{date}_{b['race_id']}"; x = lookup(rid)
-        if not x:
-            st = dict(status='PENDING', note='Course pas encore courue ou résultat officiel pas encore publié', settled_at=now_iso); pend += 1
-        else:
-            fo = (x.get('final_odds') or {}).get(str(b['num'])) or (x.get('final_odds') or {}).get(b['num'])
-            if b['num'] in x.get('non_partants', []):
-                st = dict(status='CANCELLED', note='Non-partant, mise remboursée', gross_return=b['stake'], net_pnl=0.0)
-            elif b.get('market_code') in ('COUPLE_GAGNANT', 'DEUX_SUR_QUATRE'):
-                mp = x.get('rapport_cg' if b['market_code'] == 'COUPLE_GAGNANT' else 'rapport_2s4') or {}
-                parts = [int(t) for t in str(b['num']).split('-')]
-                dv = mp.get(str(b['num']))
-                if any(q in x.get('non_partants', []) for q in parts):
-                    st = dict(status='CANCELLED', note='Un cheval du couple non-partant, mise remboursée', gross_return=b['stake'], net_pnl=0.0)
-                elif not mp: st = dict(status='PENDING', note='Rapports du pari non trouvés'); pend += 1
-                elif dv: st = dict(status='WIN', final_odds=dv, gross_return=round(b['stake']*dv, 2), net_pnl=round(b['stake']*dv - b['stake'], 2))
-                else: st = dict(status='LOSS', gross_return=0.0, net_pnl=-b['stake'])
-            elif b.get('market_code') == 'SIMPLE_PLACE':
-                rp = x.get('rapport_place') or {}
-                dv = rp.get(str(b['num']))
-                if not rp: st = dict(status='PENDING', note='Rapports placé non trouvés'); pend += 1
-                elif dv: st = dict(status='WIN', final_odds=dv, gross_return=round(b['stake']*dv, 2), net_pnl=round(b['stake']*dv - b['stake'], 2))
-                else: st = dict(status='LOSS', final_odds=fo, gross_return=0.0, net_pnl=-b['stake'])
-            elif x['arrivee'] and x['arrivee'][0] == b['num']:
-                rap = x.get('rapport_gagnant')
-                if rap is None: st = dict(status='PENDING', note='Rapport officiel non trouvé'); pend += 1
-                elif rap < b['min_odds']: st = dict(status='CANCELLED', final_odds=rap, note=f"Rapport {rap} < minimal {b['min_odds']} : value disparue", gross_return=b['stake'], net_pnl=0.0)
-                else: st = dict(status='WIN', final_odds=rap, gross_return=round(b['stake']*rap, 2), net_pnl=round(b['stake']*rap - b['stake'], 2))
-            else:
-                if fo is not None and fo < b['min_odds']:
-                    st = dict(status='CANCELLED', final_odds=fo, note=f"Cote finale {fo} < minimale {b['min_odds']}", gross_return=b['stake'], net_pnl=0.0)
-                else:
-                    st = dict(status='LOSS', final_odds=fo, gross_return=0.0, net_pnl=-b['stake'])
-            if fo: st['clv'] = round(b['odds']/fo - 1, 4)
-            st.update(settled_at=now_iso, source=x.get('source'))
-            if st['status'] in ('WIN', 'LOSS'): day_pnl += st['net_pnl']; n_settled += 1
-        put('bets', bid, dict(b, settlement=st), ver)
+    for col, bets_c in (('bets', bets), ('labbets', labbets)):
+     for bid, (b, ver) in bets_c.items():
+         if b.get('date') != date or (b.get('settlement') or {}).get('status') in ('WIN', 'LOSS', 'CANCELLED'): continue
+         rid = f"{date}_{b['race_id']}"; x = lookup(rid)
+         if not x:
+             st = dict(status='PENDING', note='Course pas encore courue ou résultat officiel pas encore publié', settled_at=now_iso); pend += 1
+         else:
+             fo = (x.get('final_odds') or {}).get(str(b['num'])) or (x.get('final_odds') or {}).get(b['num'])
+             if b['num'] in x.get('non_partants', []):
+                 st = dict(status='CANCELLED', note='Non-partant, mise remboursée', gross_return=b['stake'], net_pnl=0.0)
+             elif b.get('market_code') in ('COUPLE_GAGNANT', 'DEUX_SUR_QUATRE'):
+                 mp = x.get('rapport_cg' if b['market_code'] == 'COUPLE_GAGNANT' else 'rapport_2s4') or {}
+                 parts = [int(t) for t in str(b['num']).split('-')]
+                 dv = mp.get(str(b['num']))
+                 if any(q in x.get('non_partants', []) for q in parts):
+                     st = dict(status='CANCELLED', note='Un cheval du couple non-partant, mise remboursée', gross_return=b['stake'], net_pnl=0.0)
+                 elif not mp: st = dict(status='PENDING', note='Rapports du pari non trouvés'); pend += 1
+                 elif dv: st = dict(status='WIN', final_odds=dv, gross_return=round(b['stake']*dv, 2), net_pnl=round(b['stake']*dv - b['stake'], 2))
+                 else: st = dict(status='LOSS', gross_return=0.0, net_pnl=-b['stake'])
+             elif b.get('market_code') == 'SIMPLE_PLACE':
+                 rp = x.get('rapport_place') or {}
+                 dv = rp.get(str(b['num']))
+                 if not rp: st = dict(status='PENDING', note='Rapports placé non trouvés'); pend += 1
+                 elif dv: st = dict(status='WIN', final_odds=dv, gross_return=round(b['stake']*dv, 2), net_pnl=round(b['stake']*dv - b['stake'], 2))
+                 else: st = dict(status='LOSS', final_odds=fo, gross_return=0.0, net_pnl=-b['stake'])
+             elif x['arrivee'] and x['arrivee'][0] == b['num']:
+                 rap = x.get('rapport_gagnant')
+                 if rap is None: st = dict(status='PENDING', note='Rapport officiel non trouvé'); pend += 1
+                 elif rap < b['min_odds']: st = dict(status='CANCELLED', final_odds=rap, note=f"Rapport {rap} < minimal {b['min_odds']} : value disparue", gross_return=b['stake'], net_pnl=0.0)
+                 else: st = dict(status='WIN', final_odds=rap, gross_return=round(b['stake']*rap, 2), net_pnl=round(b['stake']*rap - b['stake'], 2))
+             else:
+                 if fo is not None and fo < b['min_odds']:
+                     st = dict(status='CANCELLED', final_odds=fo, note=f"Cote finale {fo} < minimale {b['min_odds']}", gross_return=b['stake'], net_pnl=0.0)
+                 else:
+                     st = dict(status='LOSS', final_odds=fo, gross_return=0.0, net_pnl=-b['stake'])
+             if fo: st['clv'] = round(b['odds']/fo - 1, 4)
+             st.update(settled_at=now_iso, source=x.get('source'))
+             if st['status'] in ('WIN', 'LOSS'): day_pnl += st['net_pnl']; n_settled += 1
+         put(col, bid, dict(b, settlement=st), ver)
     # 3. métriques cumulées sur toutes les courses réglées
     eps = 1e-6; n_r = n_run = 0; B = dict(hl=0, mkt=0); L = dict(hl=0, mkt=0, dec=0); RK = dict(hl=0, mkt=0); nm = nd = 0
     bins = [dict(lo=i/20, hi=(i+1)/20, n=0, sp=0.0, w=0) for i in range(20)]
@@ -167,13 +168,23 @@ def main(db_dir, results_path, date, out_dir, now_iso):
     n_settled = sum(1 for s in final_st.values() if s.get('status') in ('WIN', 'LOSS', 'CANCELLED'))
     pend = sum(1 for s in final_st.values() if s.get('status') not in ('WIN', 'LOSS', 'CANCELLED'))
     closing = round(d['opening_capital'] + day_pnl, 2)
+    lab_st = {bid: (b.get('settlement') or {}) for bid, (b, _) in labbets.items() if b.get('date') == date}
+    for w in writes:
+        if w['collection'] == 'labbets':
+            lab_st[w['doc_id']] = json.load(open(w['file_path'])).get('settlement') or {}
+    lab_pnl = sum(x.get('net_pnl') or 0 for x in lab_st.values() if x.get('status') in ('WIN', 'LOSS'))
+    lab_pend = sum(1 for x in lab_st.values() if x.get('status') not in ('WIN', 'LOSS', 'CANCELLED'))
+    lab_open = d.get('lab_opening_capital') if d.get('lab_opening_capital') is not None else 500.0
+    lab_close = round(lab_open + lab_pnl, 2)
     put('days', date, dict(d, pnl=round(day_pnl, 2), closing_capital=closing, n_settled=n_settled, n_pending=pend,
+        lab_pnl=round(lab_pnl, 2), lab_closing_capital=lab_close, lab_n_pending=lab_pend,
         status_close='DONE' if pend == 0 else 'PENDING', close_at=now_iso), dver)
     mm, mver = meta
-    put('meta', 'state', dict(mm, current_capital=closing if pend == 0 else mm.get('current_capital', d['opening_capital']), updated_at=now_iso, last_run='closing' if pend == 0 else 'resultats',
+    put('meta', 'state', dict(mm, current_capital=closing if pend == 0 else mm.get('current_capital', d['opening_capital']),
+        lab_capital=lab_close if lab_pend == 0 else mm.get('lab_capital', lab_open), updated_at=now_iso, last_run='closing' if pend == 0 else 'resultats',
         peak_capital=max(mm.get('peak_capital', 500.0), closing)), mver)
     json.dump(writes, open(os.path.join(out_dir, '_writes.json'), 'w'))
-    print(f"P&L {day_pnl:+.2f} € · réglés {n_settled} · en attente {pend} · courses notées {n_r}")
+    print(f"P&L {day_pnl:+.2f} € · réglés {n_settled} · en attente {pend} · courses notées {n_r} · labo P&L {lab_pnl:+.2f} € ({len(lab_st)} tickets, {lab_pend} en attente)")
     print(f"CAPITAL DE DÉPART DU PROCHAIN RUN = {closing:.2f} €" + ("" if pend == 0 else f" (provisoire : {pend} ticket(s) encore à régler)"))
 
 if __name__ == '__main__':

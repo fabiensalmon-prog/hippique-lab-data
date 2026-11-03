@@ -117,7 +117,7 @@ select{font:inherit;font-family:var(--f-mono);background:var(--surface);color:va
 (function(){
 const $ = (s,el=document)=>el.querySelector(s);
 const app = $('#app');
-const S = {meta:null, days:[], bets:[], races:[], metrics:{}, reports:{}, date:null, loaded:false, err:null, open:{}};
+const S = {meta:null, days:[], bets:[], labbets:[], races:[], metrics:{}, reports:{}, date:null, loaded:false, err:null, open:{}};
 const eur = v => v==null||isNaN(v) ? '—' : (Math.round(v*100)/100).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
 const pct = (v,d=1) => v==null||isNaN(v) ? '—' : (v*100).toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d})+' %';
 const pts = v => v==null ? '—' : (v>=0?'+':'')+(v*100).toFixed(1).replace('.',',')+' pts';
@@ -195,6 +195,7 @@ function vDashboard(){
     <div class="kpi"><span class="label">ROI sur mises</span><span class="v ${sgn(P.roi)}">${P.roi==null?'—':pct(P.roi)}</span><span class="s">mises réglées ${eur(P.staked)}</span></div>
     <div class="kpi"><span class="label">Peak</span><span class="v">${eur(P.peak)}</span><span class="s">drawdown actuel ${pct(P.dd)}</span></div>
     <div class="kpi"><span class="label">Max drawdown</span><span class="v">${pct(P.mdd)}</span><span class="s">série de pertes max ${P.maxStreak}</span></div>
+    <div class="kpi"><span class="label">Capital laboratoire</span><span class="v ${sgn((S.meta?.lab_capital??500)-500)}">${eur(S.meta?.lab_capital??500)}</span><span class="s">${labSummary().n} ticket(s) labo réglé(s), tous types de pari</span></div>
   </section>
   <section class="kpis" aria-label="Indicateurs du jour">
     <div class="kpi"><span class="label">Exposition du jour</span><span class="v">${eur(d?.exposure??0)}</span><span class="s">plafond ${eur((d?.opening_capital??P.cap)*0.06)} (6 %)</span></div>
@@ -280,11 +281,24 @@ function ticket(b){
     <div class="foot">${betPill(b)}<span class="mono">${s?(s.status==='WIN'||s.status==='LOSS'?`rapport ${odd(s.final_odds)} · <span class="${sgn(s.net_pnl)}">${s.net_pnl>=0?'+':''}${eur(s.net_pnl)}</span>`:esc(s.note||'')):'règlement à 23:00'}</span></div>
   </article>`;
 }
+function labSummary(){
+  const ls=S.labbets; const st=ls.map(b=>b.settlement?.status);
+  const done=ls.filter(b=>['WIN','LOSS'].includes(b.settlement?.status));
+  const pnl=done.reduce((a,b)=>a+(b.settlement.net_pnl||0),0), staked=done.reduce((a,b)=>a+b.stake,0);
+  const by={}; for(const b of done){const k=b.market||'—'; by[k]=by[k]||{n:0,w:0,st:0,pnl:0}; by[k].n++; by[k].w+=b.settlement.status==='WIN'; by[k].st+=b.stake; by[k].pnl+=b.settlement.net_pnl||0;}
+  return {pnl,staked,n:done.length,by};
+}
 function vTickets(){
   const bs=S.bets.filter(b=>b.date===S.date).sort((a,b)=>a.time<b.time?-1:1);
-  const tot=bs.reduce((s,b)=>s+b.stake,0);
-  return `<section style="display:grid;gap:14px"><div class="toolbar"><div><h2>Tickets du ${fdate(S.date)}</h2><div class="status-line">${bs.length} ticket(s) · exposition ${eur(tot)} · immuables après le départ</div></div>${dayPicker()}</div>
-  ${bs.length?`<div class="tickets">${bs.map(ticket).join('')}</div>`:'<div class="empty">Aucun BET ce jour. Zéro pari est un résultat normal quand aucune value ne résiste à l\'incertitude.</div>'}</section>`;
+  const ls=S.labbets.filter(b=>b.date===S.date).sort((a,b)=>a.time<b.time?-1:1);
+  const tot=bs.reduce((s,b)=>s+b.stake,0), ltot=ls.reduce((s,b)=>s+b.stake,0);
+  const L=labSummary();
+  return `<section style="display:grid;gap:14px"><div class="toolbar"><div><h2>Tickets du ${fdate(S.date)}</h2><div class="status-line">Portefeuille officiel : ${bs.length} ticket(s) · exposition ${eur(tot)} · immuables après le départ</div></div>${dayPicker()}</div>
+  ${bs.length?`<div class="tickets">${bs.map(ticket).join('')}</div>`:'<div class="empty">Aucun ticket officiel ce jour : seuls les types de pari validés par le backtest sont joués ici.</div>'}</section>
+  <section style="display:grid;gap:14px"><div><h2>Laboratoire</h2><div class="status-line">Le moteur choisit pour chaque course le pari qui maximise la croissance du capital : gagnant, placé, couplé ou 2sur4. Portes ignorées, capital fictif séparé (${eur(S.meta?.lab_capital??500)}). C'est ici que chaque type de pari fait ses preuves en conditions réelles.</div></div>
+  ${L.n?`<div class="tablewrap"><table><thead><tr><th class="l">Pari choisi</th><th>Tickets réglés</th><th>Gagnants</th><th>Mises</th><th>P&amp;L</th><th>ROI</th></tr></thead><tbody>${Object.entries(L.by).map(([k,v])=>`<tr><td class="l" style="font-family:var(--f-body)">${esc(k)}</td><td>${v.n}</td><td>${v.w}</td><td>${eur(v.st)}</td><td class="${sgn(v.pnl)}">${v.pnl>=0?'+':''}${eur(v.pnl)}</td><td class="${sgn(v.pnl)}">${pct(v.pnl/v.st)}</td></tr>`).join('')}</tbody></table></div>`:''}
+  <div class="status-line">${ls.length} ticket(s) labo ce jour · exposition ${eur(ltot)}</div>
+  ${ls.length?`<div class="tickets">${ls.map(ticket).join('')}</div>`:'<div class="empty">Aucun ticket labo ce jour.</div>'}</section>`;
 }
 function vCourses(){
   return `<section class="panel" style="display:grid;gap:14px"><div class="toolbar"><div><h2>Journal des prédictions</h2><div class="status-line">Probabilités de tous les partants, figées avant le départ. Cliquez une course pour le détail.</div></div>${dayPicker()}</div>
@@ -371,8 +385,8 @@ function vBacktest(){
 function vHistorique(){
   const ds=[...S.days].sort((a,b)=>a.date<b.date?-1:1);
   return `<section class="panel" style="display:grid;gap:12px"><h2>Historique du pilote</h2>
-  <div class="tablewrap"><table><thead><tr><th class="l">Jour</th><th class="l">Date</th><th>Ouverture</th><th>P&amp;L</th><th>Clôture</th><th>BET</th><th>Mises</th><th>ROI jour</th><th>Couverture</th><th class="l">Run</th></tr></thead><tbody>
-  ${ds.map(d=>`<tr><td class="l">J${d.day}</td><td class="l">${fdate(d.date)}</td><td>${eur(d.opening_capital)}</td><td class="${sgn(d.pnl)}">${d.pnl==null?'—':(d.pnl>=0?'+':'')+eur(d.pnl)}</td><td>${d.closing_capital==null?'—':eur(d.closing_capital)}</td><td>${d.n_bet??0}</td><td>${eur(d.exposure)}</td><td class="${sgn(d.pnl)}">${d.pnl==null||!d.exposure?'—':pct(d.pnl/d.exposure)}</td><td>${d.coverage?.analyzed??0}/${d.coverage?.expected??0}</td><td class="l">${d.status_morning==='COMPLETE'?'<span class="pill ok">Complet</span>':'<span class="pill part">Incomplet</span>'}</td></tr>`).join('')||'<tr><td colspan="10" class="l muted">Aucune journée.</td></tr>'}
+  <div class="tablewrap"><table><thead><tr><th class="l">Jour</th><th class="l">Date</th><th>Ouverture</th><th>P&amp;L</th><th>Clôture</th><th>BET</th><th>Mises</th><th>ROI jour</th><th>Couverture</th><th>Labo P&amp;L</th><th>Labo capital</th><th class="l">Run</th></tr></thead><tbody>
+  ${ds.map(d=>`<tr><td class="l">J${d.day}</td><td class="l">${fdate(d.date)}</td><td>${eur(d.opening_capital)}</td><td class="${sgn(d.pnl)}">${d.pnl==null?'—':(d.pnl>=0?'+':'')+eur(d.pnl)}</td><td>${d.closing_capital==null?'—':eur(d.closing_capital)}</td><td>${d.n_bet??0}</td><td>${eur(d.exposure)}</td><td class="${sgn(d.pnl)}">${d.pnl==null||!d.exposure?'—':pct(d.pnl/d.exposure)}</td><td>${d.coverage?.analyzed??0}/${d.coverage?.expected??0}</td><td class="${sgn(d.lab_pnl)}">${d.lab_pnl==null?'—':(d.lab_pnl>=0?'+':'')+eur(d.lab_pnl)}</td><td>${d.lab_closing_capital==null?'—':eur(d.lab_closing_capital)}</td><td class="l">${d.status_morning==='COMPLETE'?'<span class="pill ok">Complet</span>':'<span class="pill part">Incomplet</span>'}</td></tr>`).join('')||'<tr><td colspan="12" class="l muted">Aucune journée.</td></tr>'}
   </tbody></table></div><div class="status-line">Le capital de clôture d'un jour devient le capital d'ouverture du suivant. Bilan complet à J30.</div></section>`;
 }
 function vMethode(){
@@ -426,6 +440,7 @@ function subRaces(){
   db.doc('meta/state').onSnapshot(s=>{ clearTimeout(timer); S.meta=s.exists?s.data():null; S.loaded=true; S.err=null; if(!S.date && S.meta?.current_date){S.date=S.meta.current_date; subRaces();} render(); },fail);
   db.collection('days').onSnapshot(s=>{ S.days=s.docs.map(d=>d.data()); S.loaded=true; if(!S.date&&S.days.length){S.date=[...S.days].sort((a,b)=>a.date<b.date?1:-1)[0].date; subRaces();} render(); },fail);
   db.collection('bets').onSnapshot(s=>{ S.bets=s.docs.map(d=>d.data()); render(); },fail);
+  db.collection('labbets').onSnapshot(s=>{ S.labbets=s.docs.map(d=>d.data()); render(); },fail);
   db.collection('reports').onSnapshot(s=>{ S.reports={}; s.docs.forEach(d=>S.reports[d.id]=d.data()); render(); },fail);
   db.collection('metrics').onSnapshot(s=>{ S.metrics={}; s.docs.forEach(d=>S.metrics[d.id]=d.data()); render(); },fail);
 })();

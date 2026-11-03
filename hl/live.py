@@ -55,7 +55,7 @@ def run_phase(phase, d):
                    group=race["group"], dist=race["distance"], cond=race["categorie"], n_runners=len(rows),
                    terrain=race["terrain"], pen=race["pen"], libelle=race["libelle"])
         if started or len(rows) < 2:
-            doc.update(status="NON_ANALYSEE", decision=None, reason="Départ avant le run (hors délai)", preds=[], cands=[])
+            doc.update(status="NON_ANALYSEE", decision=None, reason="Départ avant le run (hors délai)", preds=[], cands=[], lab_cands=[])
             out["races"].append(doc); continue
         mdl = model["groups"].get(race["group"])
         pf = predict_any(mdl, dict(id=race["id"], rows=rows)) if mdl else None
@@ -64,6 +64,9 @@ def run_phase(phase, d):
                            + 0.8 * (r["x"].get("mus_cons") or 0.0) - (r["x"].get("mus_dq") or 0.0) for r in rows])
             e = np.exp(2.6 * (sc - sc.max())); pf = e / e.sum()
         a = analyse(rows, pf, params, race_key=race["id"])
+        # laboratoire : le modèle avec son poids estimé (ou un a priori de 0,25 sans modèle), tous les paris, portes ignorées
+        lab_params = dict(params, alpha=params.get("alpha_fitted") if params.get("alpha_fitted") else 0.25)
+        a_lab = analyse(rows, pf, lab_params, race_key=race["id"], all_markets=True)
         if not a["market_ok"]:
             doc.update(status="PARTIELLE", decision=None, reason="Prédiction journalisée, rapports probables PMU incomplets")
         else:
@@ -83,12 +86,13 @@ def run_phase(phase, d):
                      form=x.get("mus_form"), incident_risk=x.get("mus_dq"), n_runs=x.get("mus_n"),
                      confidence="MOYENNE" if x.get("has_hist") else "FAIBLE",
                      p_hl=p["p_fund"], p_exp=None, raw_signal=bool(p.get("edge_raw", 0) >= 0.05))
-        doc.update(preds=a["preds"], cands=a["cands"], shadow=a.get("shadow"), odds_time=obj["collected_at"][11:16] + " UTC",
+        doc.update(preds=a["preds"], cands=a["cands"], lab_cands=a_lab["cands"], lab_alternatives=a_lab.get("alternatives"),
+                   shadow=a_lab.get("shadow") or a.get("shadow"), odds_time=obj["collected_at"][11:16] + " UTC",
                    odds_src="PMU rapport de référence")
         out["races"].append(doc)
     json.dump(out, open(os.path.join(ROOT, "live", d, f"{phase}.json"), "w"), ensure_ascii=False, indent=0)
     n = len(out["races"]); an = sum(r["status"] == "ANALYSEE" for r in out["races"])
-    print(f"{phase} {d}: {an}/{n} analysées, {sum(len(r['cands']) for r in out['races'])} candidats, modèle {model['version']}, gate {model['gate']['passed']}")
+    print(f"{phase} {d}: {an}/{n} analysées, {sum(len(r['cands']) for r in out['races'])} tickets officiels, {sum(len(r.get('lab_cands') or []) for r in out['races'])} tickets labo, modèle {model['version']}, gate {model['gate']['passed']}")
 
 
 def run_closing(d, final=True):

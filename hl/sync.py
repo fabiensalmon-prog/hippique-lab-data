@@ -71,37 +71,51 @@ def main(phase, d, day_n, dbx, out_dir):
         to_write.append(r)
         for c in r.get("cands", []):
             cands.append((r, c))
-    sized = size([c for _, c in cands], capital, already)
-    by_key = {(c["num"], c["market"], c["kelly_f"]): c for c in sized}
-    new_bets = []
-    for r, c in cands:
-        s = by_key.get((c["num"], c["market"], c["kelly_f"]))
-        if not s:
-            continue
-        TAG = dict(SIMPLE_GAGNANT=("WIN", "Simple gagnant"), SIMPLE_PLACE=("PLACE", "Simple placé"),
-                   COUPLE_GAGNANT=("CG", "Couplé gagnant"), DEUX_SUR_QUATRE=("2S4", "2sur4"))
-        tag, label = TAG[c["market"]]
-        p = next((p for p in r["preds"] if p["num"] == c["num"]), None)
-        if p is None:     # couple : on agrège les deux chevaux
-            nums = [int(t) for t in str(c["num"]).split("-")]
-            ps = [q for q in r["preds"] if q["num"] in nums]
-            p = dict(p_fund=c["p"], p_mkt=None, edge=None, ev=c["ev_low"], confidence=min((q.get("confidence") or "FAIBLE") for q in ps) if ps else "FAIBLE",
-                     form=min((q.get("form") or 0) for q in ps) if ps else None, incident_risk=max((q.get("incident_risk") or 0) for q in ps) if ps else None)
-        bid = f"{d.replace('-', '')}_{r['race_id']}_N{c['num']}_{tag}"
-        if bid in bets_db:
-            continue
-        pour, contre, risk = pour_contre(p, c["market"])
-        if c["market"] in ("COUPLE_GAGNANT", "DEUX_SUR_QUATRE"):
-            pour = [f"Probabilité du couple {c['p']*100:.1f} % (arrivées simulées, Harville corrigé)", f"Dividende attendu {c['div_exp']:.1f} € pour 1 €"]
-            contre = ["Dividende estimé sur l'historique : le vrai rapport n'est connu qu'à l'arrivée"] + contre
-            risk = "Un seul des deux chevaux dans l'arrivée"
-        new_bets.append(dict(bet_id=bid, date=d, race_id=r["race_id"], meeting=r["meeting"], rc=f"R{r['r']}C{r['c']}",
-                             time=r["time"], num=c["num"], horse=c["horse"], market=label, market_code=c["market"],
-                             odds=c["odds"], odds_time=r.get("odds_time"), p_hl=p.get("p_fund"), p_mkt=p.get("p_mkt"),
-                             p_dec=c["p"], p_low=c["p_low"], edge=p.get("edge"), ev=p.get("ev"), ev_low=c["ev_low"],
-                             sp_div_exp=c.get("sp_div_exp") or c.get("div_exp"), confidence=p.get("confidence"), stake=s["stake"],
-                             min_odds=c.get("min_odds") or 0, status="OPEN", pour=pour, contre=contre, risk=risk,
-                             experts=f"Modèle {run['model']}", created_at=run["computed_at"], settlement=None))
+    def build_bets(cands, capital, already, existing, portfolio):
+        sized = size([c for _, c in cands], capital, already)
+        by_key = {(c["num"], c["market"], c["kelly_f"]): c for c in sized}
+        new_bets = []
+        for r, c in cands:
+            s = by_key.get((c["num"], c["market"], c["kelly_f"]))
+            if not s:
+                continue
+            TAG = dict(SIMPLE_GAGNANT=("WIN", "Simple gagnant"), SIMPLE_PLACE=("PLACE", "Simple placé"),
+                       COUPLE_GAGNANT=("CG", "Couplé gagnant"), DEUX_SUR_QUATRE=("2S4", "2sur4"))
+            tag, label = TAG[c["market"]]
+            p = next((p for p in r["preds"] if p["num"] == c["num"]), None)
+            if p is None:     # couple : on agrège les deux chevaux
+                nums = [int(t) for t in str(c["num"]).split("-")]
+                ps = [q for q in r["preds"] if q["num"] in nums]
+                p = dict(p_fund=c["p"], p_mkt=None, edge=None, ev=c["ev_low"], confidence=min((q.get("confidence") or "FAIBLE") for q in ps) if ps else "FAIBLE",
+                         form=min((q.get("form") or 0) for q in ps) if ps else None, incident_risk=max((q.get("incident_risk") or 0) for q in ps) if ps else None)
+            bid = f"{d.replace('-', '')}_{r['race_id']}_N{c['num']}_{tag}"
+            if bid in existing:
+                continue
+            pour, contre, risk = pour_contre(p, c["market"])
+            if c["market"] in ("COUPLE_GAGNANT", "DEUX_SUR_QUATRE"):
+                pour = [f"Probabilité du couple {c['p']*100:.1f} % (arrivées simulées, Harville corrigé)", f"Dividende attendu {c['div_exp']:.1f} € pour 1 €"]
+                contre = ["Dividende estimé sur l'historique : le vrai rapport n'est connu qu'à l'arrivée"] + contre
+                risk = "Un seul des deux chevaux dans l'arrivée"
+            new_bets.append(dict(bet_id=bid, date=d, race_id=r["race_id"], meeting=r["meeting"], rc=f"R{r['r']}C{r['c']}",
+                                 time=r["time"], num=c["num"], horse=c["horse"], market=label, market_code=c["market"],
+                                 odds=c["odds"], odds_time=r.get("odds_time"), p_hl=p.get("p_fund"), p_mkt=p.get("p_mkt"),
+                                 p_dec=c["p"], p_low=c["p_low"], edge=p.get("edge"), ev=p.get("ev"), ev_low=c["ev_low"],
+                                 sp_div_exp=c.get("sp_div_exp") or c.get("div_exp"), confidence=p.get("confidence"), stake=s["stake"],
+                                 min_odds=c.get("min_odds") or 0, status="OPEN", pour=pour, contre=contre, risk=risk,
+                                 experts=f"Modèle {run['model']}", created_at=run["computed_at"], settlement=None, portfolio=portfolio))
+        return new_bets
+
+    new_bets = build_bets(cands, capital, already, bets_db, "OFFICIEL")
+    # laboratoire : tous les paris que le modèle choisit, portes ignorées, capital fictif séparé
+    lab_db = {k: v for k, v in load_dir(dbx, "labbets").items() if v.get("date") == d}
+    if d in days and days[d].get("lab_opening_capital") is not None:
+        lab_capital = days[d]["lab_opening_capital"]
+    elif prev_days and days[prev_days[-1]].get("lab_closing_capital") is not None:
+        lab_capital = days[prev_days[-1]]["lab_closing_capital"]
+    else:
+        lab_capital = meta.get("lab_capital", 500.0)
+    lab_cands = [(r, c) for r in to_write for c in (r.get("lab_cands") or [])]
+    lab_bets = build_bets(lab_cands, lab_capital, sum(x.get("stake", 0) for x in lab_db.values()), lab_db, "LABO")
     chosen = {(b["race_id"], b["num"]) for b in new_bets if b["market_code"] in ("SIMPLE_GAGNANT", "SIMPLE_PLACE")}
     for r in to_write:
         preds = r["preds"]
@@ -117,6 +131,9 @@ def main(phase, d, day_n, dbx, out_dir):
             phase=phase, preds=preds, result=None))
     for b in new_bets:
         put("bets", b["bet_id"], b)
+    for b in lab_bets:
+        put("labbets", b["bet_id"], b)
+    all_lab = list(lab_db.values()) + lab_bets
     # journée
     st = {k: v.get("status") for k, v in races_db.items()}
     dec = {k: v.get("decision") for k, v in races_db.items()}
@@ -133,11 +150,14 @@ def main(phase, d, day_n, dbx, out_dir):
         status_close=prev.get("status_close", "PLANNED"), coverage=cov, n_bet=len(all_bets),
         n_pass=sum(1 for k, v in st.items() if v == "ANALYSEE" and dec.get(k) != "BET" and not any(b["race_id"] in k for b in all_bets)),
         exposure=round(sum(b["stake"] for b in all_bets), 2), n_settled=prev.get("n_settled", 0),
+        lab_opening_capital=lab_capital, lab_closing_capital=prev.get("lab_closing_capital"), lab_pnl=prev.get("lab_pnl"),
+        lab_n_bet=len(all_lab), lab_exposure=round(sum(b["stake"] for b in all_lab), 2),
         morning_at=prev.get("morning_at") or run["computed_at"], midday_at=run["computed_at"] if phase == "midday" else prev.get("midday_at"),
         model=run["model"], kelly_fraction=RULES["kelly"], max_bet_pct=RULES["max_bet_pct"], max_day_pct=RULES["max_day_pct"],
         morning_note=(f"Modèle {run['model']} · " + ("validé" if run["gate"]["passed"] else "non validé : le marché décide seul (α = 0)")
                       + f" · {cov['partial']} partielle(s), {cov['not_analyzed']} hors délai")))
     put("meta", "state", dict(meta, day=day_n, current_date=d, current_capital=capital, model=run["model"],
+        lab_capital=meta.get("lab_capital", lab_capital),
         params=dict(run["rules"], **{k: run["params"][k] for k in ("alpha", "beta", "gamma", "delta")},
                     alpha_model=run["params"]["alpha"], w_experts=0, min_edge=run["rules"]["min_edge"], odds_haircut=run["rules"]["haircut"]),
         gate=run["gate"], updated_at=run["computed_at"], last_run=phase))
@@ -150,7 +170,7 @@ def main(phase, d, day_n, dbx, out_dir):
             top_features=mdl.get("top_features"), data_range=mdl.get("data_range")))
     json.dump(writes, open(os.path.join(out_dir, "_writes.json"), "w"))
     print(f"{phase} {d}: {len(to_write)} courses écrites, {len(new_bets)} tickets, exposition jour {sum(b['stake'] for b in all_bets):.2f} € "
-          f"sur capital {capital:.2f} €, couverture {cov['analyzed']}/{cov['expected']} · {len(writes)} écritures")
+          f"sur capital {capital:.2f} € · labo {len(lab_bets)} tickets ({sum(b['stake'] for b in lab_bets):.2f} €) · couverture {cov['analyzed']}/{cov['expected']} · {len(writes)} écritures")
 
 
 if __name__ == "__main__":
