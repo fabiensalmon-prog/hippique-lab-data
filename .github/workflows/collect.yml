@@ -9,9 +9,8 @@ on:
       arg:
         description: "date AAAA-MM-JJ (mode day) ou nombre de jours (mode backfill)"
         default: "2026-11-02"
-  # Activé après validation du test d'une journée :
-  # schedule:
-  #   - cron: "17 */4 * * *"   # toutes les 4 h : 30 jours de plus dans le passé
+  schedule:
+    - cron: "17 */4 * * *"   # toutes les 4 h : 30 jours de plus dans le passé (test du 02/11/2026 validé)
 
 permissions:
   contents: write
