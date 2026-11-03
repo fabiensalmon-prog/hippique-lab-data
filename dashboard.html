@@ -297,6 +297,12 @@ function calibSVG(bins){
   for(const b of bins){ if(!b.n) continue; g+=`<circle cx="${x(Math.min(b.p,mx)/mx)}" cy="${y(Math.min(b.freq,mx)/mx)}" r="${3+Math.min(8,Math.sqrt(b.n)/2)}" fill="var(--accent)" fill-opacity=".55" stroke="var(--accent)"/>`; }
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Calibration : probabilité annoncée contre fréquence observée">${g}</svg>`;
 }
+function altTable(rows){
+  const fmt=v=>v==null?'—':pct(v);
+  return `<div class="tablewrap"><table><thead><tr><th class="l">Sélection</th><th>Courses</th><th>1er</th><th>2e</th><th>3e</th><th>Au-delà</th><th>ROI joué gagnant</th><th>ROI joué placé</th></tr></thead><tbody>
+  ${rows.map(([l,A])=>!A||!A.n?`<tr><td class="l" style="font-family:var(--f-body)">${l}</td><td colspan="7" class="l insuf">Échantillon insuffisant</td></tr>`:`<tr><td class="l" style="font-family:var(--f-body)">${l}</td><td>${A.n}</td><td>${pct(A.p1/A.n,0)}</td><td>${pct(A.p2/A.n,0)}</td><td>${pct(A.p3/A.n,0)}</td><td>${pct(A.p4/A.n,0)}</td><td class="${sgn(A.roi_win)}">${fmt(A.roi_win)}</td><td class="${sgn(A.roi_place)}">${fmt(A.roi_place)}</td></tr>`).join('')}
+  </tbody></table></div>`;
+}
 function vModele(){
   const m=S.metrics.cumul; const min=300;
   const row=(lbl,hl,mk,lowerBetter=true)=>{
@@ -321,6 +327,10 @@ function vModele(){
     ${m?.calibration?.length?calibSVG(m.calibration):'<div class="insuf">Échantillon insuffisant</div>'}</div>
    <div class="panel" style="display:grid;gap:10px"><h2>Désaccords modèle / marché</h2><div class="status-line">Chevaux où P HL dépasse le marché de plus de 10 pts. Si le marché gagne ces désaccords, le modèle se trompe.</div>
     ${m?.disagree?`<div class="tablewrap"><table><thead><tr><th class="l">Segment</th><th>Chevaux</th><th>P HL moy.</th><th>P marché moy.</th><th>Taux de victoire</th></tr></thead><tbody>${m.disagree.map(s=>`<tr><td class="l">${esc(s.label)}</td><td>${s.n}</td><td>${pct(s.p_hl)}</td><td>${pct(s.p_mkt)}</td><td>${pct(s.freq)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="insuf">Échantillon insuffisant</div>'}</div>
+   <div class="panel" style="display:grid;gap:10px;grid-column:1/-1"><h2>Gagnant ou placé ?</h2><div class="status-line">Où finissent nos choix, et ce qu'ils auraient rapporté joués à 1 € en gagnant ou en placé. Un cheval souvent 2e ou 3e avec un ROI placé supérieur au ROI gagnant indique qu'il faut le jouer placé.</div>
+    ${altTable([['Nos tickets gagnant',m?.alt?.tickets],['Notre n°1 de chaque course',m?.alt?.top1]])}
+    ${S.reports.backtest?.summary?.top1?`<div class="status-line">Même analyse sur le backtest (${S.reports.backtest.summary.top1.modele?.n??0} courses hors échantillon) :</div>${altTable([['Notre n°1 (modèle combiné)',S.reports.backtest.summary.top1.modele],['Favori du marché',S.reports.backtest.summary.top1.favori_marche]])}`:''}
+    ${m?.alt?.top1?.n<300?'<div class="insuf">À lire après plusieurs semaines : sur quelques courses, une 2e place ne dit encore rien.</div>':''}</div>
    <div class="panel" style="display:grid;gap:10px"><h2>Analyse des PASS et CLV</h2><div class="status-line">Signaux bruts HL écartés par la combinaison marché, et écart entre rapport probable du matin et rapport final.</div>
     <div class="tablewrap"><table><tbody>
     <tr><td class="l" style="font-family:var(--f-body)">Signaux bruts écartés</td><td>${m?.raw_signals?.n??'—'}</td></tr>
@@ -345,7 +355,7 @@ function vBacktest(){
   <section class="grid2">
    <div class="panel" style="display:grid;gap:10px"><h2>Par type de pari</h2><div class="status-line">ROI à mise fixe de 1 € sur les paris que le moteur aurait pris. Un marché n'est ouvert aux mises que si son ROI est positif sur au moins ${bt.gate?.market_min_bets??300} paris et que le modèle est validé.</div>
     <div class="tablewrap"><table><thead><tr><th class="l">Pari</th><th>Paris</th><th>Gagnants</th><th>ROI</th><th class="l">En live</th></tr></thead><tbody>
-    ${[['SIMPLE_GAGNANT','Simple gagnant'],['SIMPLE_PLACE','Simple placé'],['COUPLE_GAGNANT','Couplé gagnant'],['DEUX_SUR_QUATRE','2sur4']].map(([k,l])=>{const f=fl[k]||{};const on=bt.gate?.markets?.[k];return `<tr><td class="l" style="font-family:var(--f-body)">${l}</td><td>${f.n??0}</td><td>${f.wins??0}</td><td class="${sgn(f.roi)}">${f.roi==null?'—':pct(f.roi)}</td><td class="l">${on?'<span class="pill win">Ouvert</span>':'<span class="pill pass">Observation</span>'}</td></tr>`}).join('')}
+    ${[['SIMPLE_GAGNANT','Simple gagnant'],['GAGNANT_JOUE_PLACE','Les mêmes chevaux, joués placé'],['SIMPLE_PLACE','Simple placé'],['COUPLE_GAGNANT','Couplé gagnant'],['DEUX_SUR_QUATRE','2sur4']].map(([k,l])=>{const f=fl[k]||{};const on=bt.gate?.markets?.[k];return `<tr><td class="l" style="font-family:var(--f-body)">${l}</td><td>${f.n??0}</td><td>${f.wins??0}</td><td class="${sgn(f.roi)}">${f.roi==null?'—':pct(f.roi)}</td><td class="l">${on?'<span class="pill win">Ouvert</span>':'<span class="pill pass">Observation</span>'}</td></tr>`}).join('')}
     </tbody></table></div></div>
    <div class="panel" style="display:grid;gap:10px"><h2>Par discipline</h2><div class="status-line">Pouvoir prédictif hors échantillon (ρ², plus haut = meilleur). Le gain du combiné sur le marché est ce qui compte.</div>
     <div class="tablewrap"><table><thead><tr><th class="l">Discipline</th><th>Courses</th><th>Modèle seul</th><th>Marché</th><th>Combiné</th><th>Gain</th></tr></thead><tbody>

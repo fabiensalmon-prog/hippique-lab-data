@@ -41,7 +41,7 @@ def main(db_dir, results_path, date, out_dir, now_iso):
         x = lookup(rid)
         if r.get('date') != date or not x: continue
         put('races', rid, dict(r, result=dict(arrivee=x['arrivee'], rapport_gagnant=x.get('rapport_gagnant'),
-            non_partants=x.get('non_partants', []), source=x.get('source'), settled_at=now_iso)), ver)
+            non_partants=x.get('non_partants', []), rapport_place=x.get('rapport_place'), rapport_cg=x.get('rapport_cg'), rapport_2s4=x.get('rapport_2s4'), source=x.get('source'), settled_at=now_iso)), ver)
         races[rid] = (dict(r, result=x), ver)
     # 2. règlement des tickets
     day_pnl, n_settled, pend = 0.0, 0, 0
@@ -111,6 +111,34 @@ def main(db_dir, results_path, date, out_dir, now_iso):
                 if p.get('raw_signal') and not p.get('selected'):
                     raw['n'] += 1
                     if p['num'] == win: raw['wins'] += 1; raw['ret'] += (x.get('rapport_gagnant') or p['odds'])
+    # analyse « gagnant ou placé ? » : où finissent nos choix, et ce qu'aurait rapporté chaque façon de les jouer
+    def acc(): return dict(n=0, p1=0, p2=0, p3=0, p4=0, ret_win=0.0, n_place=0, ret_place=0.0)
+    alt = dict(top1=acc(), tickets=acc())
+    def add(A, num, x):
+        arr = x.get('arrivee') or []
+        pos = arr.index(num) + 1 if num in arr else None
+        A['n'] += 1
+        A['p1' if pos == 1 else 'p2' if pos == 2 else 'p3' if pos == 3 else 'p4'] += 1
+        A['ret_win'] += (x.get('rapport_gagnant') or 0.0) if pos == 1 else 0.0
+        rp = x.get('rapport_place')
+        if rp:
+            A['n_place'] += 1; A['ret_place'] += rp.get(str(num), 0.0)
+    race_by_id = {}
+    for rid, (r, _) in races.items():
+        x = r.get('result')
+        if not x or not x.get('arrivee') or not r.get('preds'): continue
+        race_by_id[rid] = (r, x)
+        ps = [p for p in r['preds'] if p['num'] not in set(x.get('non_partants', []))]
+        if ps:
+            top = max(ps, key=lambda p: p.get('p_dec') if p.get('p_dec') is not None else p['p_hl'])
+            add(alt['top1'], top['num'], x)
+    for bid, (b, _) in bets.items():
+        if b.get('market_code', 'SIMPLE_GAGNANT') != 'SIMPLE_GAGNANT': continue
+        rx = race_by_id.get(f"{b['date']}_{b['race_id']}")
+        if rx: add(alt['tickets'], b['num'], rx[1])
+    for A in alt.values():
+        A['roi_win'] = (A['ret_win'] - A['n']) / A['n'] if A['n'] else None
+        A['roi_place'] = (A['ret_place'] - A['n_place']) / A['n_place'] if A['n_place'] else None
     clvs = [b['settlement']['clv'] for b, _ in bets.values() if (b.get('settlement') or {}).get('clv') is not None]
     for bid, (b, _) in bets.items():
         for w in writes:
@@ -124,7 +152,7 @@ def main(db_dir, results_path, date, out_dir, now_iso):
              calibration=[dict(p=b['sp']/b['n'], freq=b['w']/b['n'], n=b['n']) for b in bins if b['n']],
              disagree=[dict(label='P HL ≥ P marché + 10 pts', n=dis['n'], p_hl=dis['sh']/dis['n'], p_mkt=dis['sm']/dis['n'], freq=dis['w']/dis['n'])] if dis['n'] else None,
              raw_signals=dict(n=raw['n'], wins=raw['wins'], roi=(raw['ret']-raw['n'])/raw['n'] if raw['n'] else None),
-             clv=sum(clvs)/len(clvs) if clvs else None)
+             clv=sum(clvs)/len(clvs) if clvs else None, alt=alt)
     put('metrics', 'cumul', m, metrics.get('cumul', (None, None))[1])
     # 4. journée + capital du lendemain
     d, dver = days[date]

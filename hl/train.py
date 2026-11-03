@@ -117,6 +117,7 @@ def main():
     flat = defaultdict(lambda: dict(n=0, staked=0.0, ret=0.0, wins=0))
     by_group = defaultdict(lambda: dict(races=0, ll_f=0.0, ll_m=0.0, ll_c=0.0, ll_0=0.0))
     bets_log = []
+    top1 = defaultdict(lambda: dict(n=0, p1=0, p2=0, p3=0, p4=0, ret_win=0.0, n_place=0, ret_place=0.0))
     for mi, m in enumerate(months):
         train = [r for r in data if r["month"] < m]
         test = [r for r in data if r["month"] == m]
@@ -144,6 +145,15 @@ def main():
             G["races"] += 1; G["ll_0"] += -math.log(r["n"])
             G["ll_f"] += math.log(max(1e-9, oos[r["id"]][w])); G["ll_m"] += math.log(max(1e-9, mkt(r)[w]))
             G["ll_c"] += math.log(max(1e-9, combine(oos[r["id"]], mkt(r), alpha, beta)[w]))
+        for r in ev:            # notre n°1 (probabilité combinée) : où finit-il, gagnant ou placé ?
+            pc = combine(oos[r["id"]], mkt(r), alpha, beta)
+            for key, idx in (("modele", int(np.argmax(pc))), ("favori_marche", int(np.argmax(mkt(r))))):
+                num = r["rows"][idx]["num"]; arr = r["arrivee"]
+                pos = arr.index(num) + 1 if num in arr else None
+                T = top1[key]; T["n"] += 1; T["p1" if pos == 1 else "p2" if pos == 2 else "p3" if pos == 3 else "p4"] += 1
+                T["ret_win"] += r["div_sg"].get(str(num), 0.0) if pos == 1 else 0.0
+                if r["div_sp"]:
+                    T["n_place"] += 1; T["ret_place"] += r["div_sp"].get(str(num), 0.0)
         rho = lambda ll: 1 - ll / ll_0 if ll_0 else None
         mb = defaultdict(lambda: dict(n=0, pnl=0.0))
         for day in sorted({r["date"] for r in ev}):
@@ -160,6 +170,9 @@ def main():
                     pnl = b["stake"] * div - b["stake"]
                     day_pnl += pnl
                     F = flat[b["market"]]; F["n"] += 1; F["staked"] += 1.0; F["ret"] += div; F["wins"] += div > 0
+                    if b["market"] == "SIMPLE_GAGNANT" and r["div_sp"]:      # le même cheval, joué placé
+                        alt = r["div_sp"].get(str(b["num"]), 0.0)
+                        A = flat["GAGNANT_JOUE_PLACE"]; A["n"] += 1; A["staked"] += 1.0; A["ret"] += alt; A["wins"] += alt > 0
                     mb[b["market"]]["n"] += 1; mb[b["market"]]["pnl"] += pnl
                     bets_log.append(dict(date=day, race=r["id"], market=b["market"], num=b["num"], p=round(b["p"], 4),
                                          odds=round(b["odds"], 2), stake=b["stake"], div=div, pnl=round(pnl, 2)))
@@ -207,6 +220,8 @@ def main():
     report.update(summary=dict(
         races_oos=tot, rho_fund=agg("rho_fund"), rho_mkt=agg("rho_mkt"), rho_comb=agg("rho_comb"), delta_rho=agg("delta_rho"),
         final_capital=round(bank["capital"], 2), max_drawdown=round(bank["mdd"], 4), flat=flat_out, by_group=groups_out,
+        top1={k: dict(v, roi_win=(v["ret_win"] - v["n"]) / v["n"] if v["n"] else None,
+                      roi_place=(v["ret_place"] - v["n_place"]) / v["n_place"] if v["n_place"] else None) for k, v in top1.items()},
         bets=len(bets_log), gate=gate, seconds=round(time.time() - t0)))
     os.makedirs(os.path.join(ROOT, "models"), exist_ok=True)
     os.makedirs(os.path.join(ROOT, "reports"), exist_ok=True)
