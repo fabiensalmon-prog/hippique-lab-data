@@ -18,11 +18,15 @@ Pilote : J1 = 2026-11-03 (moteur V0), J2 et suivants : moteur V1. Capital initia
 ## Règles non négociables
 1. Une prédiction n'existe que si elle est calculée avant le départ ; course partie → NON_ANALYSEE.
 2. PARTIEL ≠ PASS : sans rapports probables PMU pour tous les partants → PARTIELLE.
-3. Tickets immuables après création, sauf le champ settlement à la clôture.
+3. Tickets immuables après création, sauf le champ settlement à la clôture. Un ticket validé n'est jamais annulé sur sa cote : il est réglé sur le rapport final ; seul un non-partant est remboursé.
 4. Jamais de résultat estimé : sans rapport officiel → PENDING.
 5. opening_capital(J+1) = closing_capital(J).
 6. Porte de validation : le modèle ne participe aux décisions (α > 0) que si, hors échantillon, le gain de ρ² sur le marché est ≥ 0,005 sur au moins 1 000 courses. Sinon α = 0, le marché décide seul et aucun ticket n'est pris (observation).
 7. Mises : ¼ Kelly sur la probabilité basse, 2 % du capital par ticket, 6 % par jour.
+
+## Portefeuilles
+- Officiel (500 € fictifs) : seuls les types de pari validés par le backtest.
+- Laboratoire (500 € fictifs séparés, collection `labbets`) : un pari par course, choisi par croissance de Kelly parmi gagnant, placé, couplé gagnant, 2sur4, portes ignorées.
 
 ## Modèle V1
 - Étage 1 : logit conditionnel séparé trot / plat, 54 variables (`hl/features.py`), toutes calculées avec l'information antérieure à la course.

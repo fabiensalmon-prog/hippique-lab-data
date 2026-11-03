@@ -404,7 +404,7 @@ function vMethode(){
    <li><b>BET</b> si edge ≥ ${p.min_edge!=null?(p.min_edge*100).toFixed(1):'—'} pts et EV basse ≥ ${p.min_ev_low!=null?(p.min_ev_low*100):'—'} %, après incertitude de ${p.u_dec!=null?p.u_dec*100:'—'} % et décote de ${p.odds_haircut!=null?Math.round((1-p.odds_haircut)*100):'—'} % sur le rapport.</li></ul></div>
   <div class="panel prose"><h2>Règles de portefeuille</h2>
    <ul><li>¼ Kelly sur la probabilité basse, au plus 2 % du capital par ticket et 6 % par journée.</li>
-   <li>Pari mutuel : le rapport final n'est connu qu'au départ. Chaque ticket porte un <b>rapport minimal</b> ; s'il n'est pas atteint au rapport final, le ticket est annulé (value disparue).</li>
+   <li>Pari mutuel : le rapport final n'est connu qu'au départ. Chaque ticket porte un <b>rapport minimal</b> : la cote sous laquelle il ne faut pas le jouer au moment de parier. Un ticket validé n'est jamais annulé : il est réglé sur le rapport final (seul un non-partant est remboursé).</li>
    <li>Règlement sur le rapport PMU officiel du simple gagnant pour 1 €. Sans rapport vérifiable : en attente, jamais estimé.</li>
    <li>Aucune martingale, aucune hausse de mise après une perte, aucun pari réel placé.</li></ul>
    <h3>Version du moteur</h3><p class="mono">${esc(S.meta?.model||'—')}</p>

@@ -73,14 +73,12 @@ def main(db_dir, results_path, date, out_dir, now_iso):
              elif x['arrivee'] and x['arrivee'][0] == b['num']:
                  rap = x.get('rapport_gagnant')
                  if rap is None: st = dict(status='PENDING', note='Rapport officiel non trouvé'); pend += 1
-                 elif rap < b['min_odds']: st = dict(status='CANCELLED', final_odds=rap, note=f"Rapport {rap} < minimal {b['min_odds']} : value disparue", gross_return=b['stake'], net_pnl=0.0)
                  else: st = dict(status='WIN', final_odds=rap, gross_return=round(b['stake']*rap, 2), net_pnl=round(b['stake']*rap - b['stake'], 2))
              else:
-                 if fo is not None and fo < b['min_odds']:
-                     st = dict(status='CANCELLED', final_odds=fo, note=f"Cote finale {fo} < minimale {b['min_odds']}", gross_return=b['stake'], net_pnl=0.0)
-                 else:
-                     st = dict(status='LOSS', final_odds=fo, gross_return=0.0, net_pnl=-b['stake'])
+                 st = dict(status='LOSS', final_odds=fo, gross_return=0.0, net_pnl=-b['stake'])
              if fo: st['clv'] = round(b['odds']/fo - 1, 4)
+             if fo and b.get('min_odds') and fo < b['min_odds'] and st['status'] in ('WIN', 'LOSS'):
+                 st['note'] = f"Cote finale {fo} sous la cote minimale {b['min_odds']} : ticket maintenu (un pari validé ne s'annule pas)"
              st.update(settled_at=now_iso, source=x.get('source'))
              if st['status'] in ('WIN', 'LOSS'): day_pnl += st['net_pnl']; n_settled += 1
          put(col, bid, dict(b, settlement=st), ver)

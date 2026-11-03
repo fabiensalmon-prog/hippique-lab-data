@@ -164,8 +164,6 @@ def main():
                     div = settle(r, b)
                     if div is None:
                         continue
-                    if b["market"] == "SIMPLE_GAGNANT" and div and b["min_odds"] and div < b["min_odds"]:
-                        continue                                  # value disparue : ticket annulé
                     spent += b["stake"]
                     pnl = b["stake"] * div - b["stake"]
                     day_pnl += pnl
