@@ -114,7 +114,8 @@ def main(phase, d, day_n, dbx, out_dir):
         lab_capital = days[prev_days[-1]]["lab_closing_capital"]
     else:
         lab_capital = meta.get("lab_capital", 500.0)
-    lab_cands = [(r, c) for r in to_write for c in (r.get("lab_cands") or [])]
+    # le labo peut aussi jouer une course déjà décidée par le portefeuille officiel (tant qu'elle n'est pas partie)
+    lab_cands = [(r, c) for r in run["races"] if r["status"] == "ANALYSEE" for c in (r.get("lab_cands") or [])]
     lab_bets = build_bets(lab_cands, lab_capital, sum(x.get("stake", 0) for x in lab_db.values()), lab_db, "LABO")
     chosen = {(b["race_id"], b["num"]) for b in new_bets if b["market_code"] in ("SIMPLE_GAGNANT", "SIMPLE_PLACE")}
     for r in to_write:
