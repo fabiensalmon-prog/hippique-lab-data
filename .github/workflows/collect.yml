@@ -1,0 +1,45 @@
+name: Collecte historique PMU
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "day (test d'une journée) ou backfill"
+        default: day
+      arg:
+        description: "date AAAA-MM-JJ (mode day) ou nombre de jours (mode backfill)"
+        default: "2026-11-02"
+  # Activé après validation du test d'une journée :
+  # schedule:
+  #   - cron: "17 */4 * * *"   # toutes les 4 h : 30 jours de plus dans le passé
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collecte
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Collecter
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python3 collect/pmu_history.py backfill 30
+          else
+            python3 collect/pmu_history.py "${{ inputs.mode }}" "${{ inputs.arg }}"
+          fi
+      - name: Enregistrer
+        run: |
+          git config user.name "hippique-lab-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || git commit -m "Collecte $(date -u +%F) ${{ github.event_name }}"
+          git pull --rebase && git push
