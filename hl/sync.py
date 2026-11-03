@@ -54,6 +54,12 @@ def main(phase, d, day_n, dbx, out_dir):
         if vers.get(f"{col}/{did}"): w["if_version"] = vers[f"{col}/{did}"]
         writes.append(w)
 
+    # une course = même journée + même R/C, quel que soit le nom d'hippodrome (compatibilité J1 / V0)
+    by_rc = {f"{v['date']}_{k.split('_')[-1]}": k for k, v in races_db.items()}
+    for r in run["races"]:
+        old = by_rc.get(f"{d}_R{r['r']}C{r['c']}")
+        if old:
+            r["doc_id"] = old; r["race_id"] = races_db[old].get("race_id", r["race_id"])
     already = sum(b.get("stake", 0) for b in bets_db.values())
     cands, to_write = [], []
     for r in sorted(run["races"], key=lambda x: x["time"]):
