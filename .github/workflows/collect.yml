@@ -10,7 +10,7 @@ on:
         description: "date AAAA-MM-JJ (mode day) ou nombre de jours (mode backfill)"
         default: "2026-11-02"
   schedule:
-    - cron: "17 */4 * * *"   # toutes les 4 h : 30 jours de plus dans le passé (test du 02/11/2026 validé)
+    - cron: "17 * * * *"   # toutes les heures : 30 jours de plus dans le passé, jusqu'au 01/11/2024
 
 permissions:
   contents: write
@@ -41,4 +41,4 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add data
           git diff --cached --quiet || git commit -m "Collecte $(date -u +%F) ${{ github.event_name }}"
-          git pull --rebase && git push
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push -q && break; sleep $((i*7)); done

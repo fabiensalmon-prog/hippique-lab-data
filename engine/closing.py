@@ -50,6 +50,12 @@ def main(db_dir, results_path, date, out_dir, now_iso):
             fo = (x.get('final_odds') or {}).get(str(b['num'])) or (x.get('final_odds') or {}).get(b['num'])
             if b['num'] in x.get('non_partants', []):
                 st = dict(status='CANCELLED', note='Non-partant, mise remboursée', gross_return=b['stake'], net_pnl=0.0)
+            elif b.get('market_code') == 'SIMPLE_PLACE':
+                rp = x.get('rapport_place') or {}
+                dv = rp.get(str(b['num']))
+                if not rp: st = dict(status='PENDING', note='Rapports placé non trouvés'); pend += 1
+                elif dv: st = dict(status='WIN', final_odds=dv, gross_return=round(b['stake']*dv, 2), net_pnl=round(b['stake']*dv - b['stake'], 2))
+                else: st = dict(status='LOSS', final_odds=fo, gross_return=0.0, net_pnl=-b['stake'])
             elif x['arrivee'] and x['arrivee'][0] == b['num']:
                 rap = x.get('rapport_gagnant')
                 if rap is None: st = dict(status='PENDING', note='Rapport officiel non trouvé'); pend += 1

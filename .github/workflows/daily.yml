@@ -1,0 +1,48 @@
+name: Run quotidien Hippique Lab
+
+on:
+  schedule:
+    - cron: "50 7 * * *"    # 08:50 Paris (hiver) : run du matin
+    - cron: "20 12 * * *"   # 13:20 Paris : run marché de l'après-midi
+    - cron: "30 21 * * *"   # 22:30 Paris : résultats et rapports définitifs
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: "morning, midday ou closing"
+        default: morning
+      day:
+        description: "AAAA-MM-JJ (vide = aujourd'hui, heure de Paris)"
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q numpy scipy
+      - name: Phase
+        id: ph
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then P="${{ inputs.phase }}"; D="${{ inputs.day }}";
+          else case "${{ github.event.schedule }}" in "50 7 * * *") P=morning;; "20 12 * * *") P=midday;; *) P=closing;; esac; D=""; fi
+          echo "phase=$P" >> $GITHUB_OUTPUT; echo "day=$D" >> $GITHUB_OUTPUT
+      - name: Run
+        run: python3 -m hl.live ${{ steps.ph.outputs.phase }} ${{ steps.ph.outputs.day }}
+      - name: Enregistrer
+        run: |
+          git config user.name "hippique-lab-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add live data
+          git diff --cached --quiet || git commit -q -m "Run ${{ steps.ph.outputs.phase }} $(date -u +%F)"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push -q && break; sleep $((i*7)); done
