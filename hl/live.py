@@ -59,8 +59,10 @@ def run_phase(phase, d):
             out["races"].append(doc); continue
         mdl = model["groups"].get(race["group"])
         pf = predict_any(mdl, dict(id=race["id"], rows=rows)) if mdl else None
-        if pf is None:
-            pf = np.ones(len(rows)) / len(rows)
+        if pf is None:      # pas encore de modèle entraîné : heuristique musique du V0 (sans cotes)
+            sc = np.array([3.0 * (r["x"].get("mus_form") if r["x"].get("mus_form") is not None else 0.25)
+                           + 0.8 * (r["x"].get("mus_cons") or 0.0) - (r["x"].get("mus_dq") or 0.0) for r in rows])
+            e = np.exp(2.6 * (sc - sc.max())); pf = e / e.sum()
         a = analyse(rows, pf, params)
         if not a["market_ok"]:
             doc.update(status="PARTIELLE", decision=None, reason="Prédiction journalisée, rapports probables PMU incomplets")
