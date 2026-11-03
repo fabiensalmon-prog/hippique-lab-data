@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: collecte
@@ -42,3 +43,13 @@ jobs:
           git add data
           git diff --cached --quiet || git commit -m "Collecte $(date -u +%F) ${{ github.event_name }}"
           for i in 1 2 3 4 5; do git pull --rebase -q && git push -q && break; sleep $((i*7)); done
+      - name: Enchaîner le lot suivant
+        if: github.event_name == 'schedule' || inputs.mode == 'backfill'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if python3 -c "import json,sys; p=json.load(open('data/progress.json')); sys.exit(0 if p.get('oldest_done','9999') > '2024-11-01' else 1)"; then
+            gh workflow run collect.yml -f mode=backfill -f arg=30 && echo "lot suivant lancé"
+          else
+            echo "historique complet"
+          fi
