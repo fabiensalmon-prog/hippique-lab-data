@@ -21,7 +21,7 @@ def load_dir(dbx, col):
 def pour_contre(p, market):
     pour, contre = [], []
     if (p.get("form") or 0) >= 0.55: pour.append(f"Forme récente solide (indice {p['form']:.2f})")
-    if p.get("p_fund", 0) > p.get("p_mkt", 0): pour.append(f"Le modèle fondamental le voit à {p['p_fund']*100:.0f} % contre {p['p_mkt']*100:.0f} % pour le marché")
+    if p.get("p_mkt") is not None and (p.get("p_fund") or 0) > p["p_mkt"]: pour.append(f"Le modèle fondamental le voit à {p['p_fund']*100:.0f} % contre {p['p_mkt']*100:.0f} % pour le marché")
     if market == "SIMPLE_PLACE" and p.get("p_place"): pour.append(f"Probabilité d'être placé {p['p_place']*100:.0f} % (Harville corrigé)")
     if (p.get("incident_risk") or 0) >= 0.2: contre.append(f"Risque de faute : {int(p['incident_risk']*100)} % de disqualifications récentes")
     if p.get("confidence") == "FAIBLE": contre.append("Peu d'historique dans notre base sur ce cheval")
@@ -78,21 +78,31 @@ def main(phase, d, day_n, dbx, out_dir):
         s = by_key.get((c["num"], c["market"], c["kelly_f"]))
         if not s:
             continue
-        p = next(p for p in r["preds"] if p["num"] == c["num"])
-        tag = "WIN" if c["market"] == "SIMPLE_GAGNANT" else "PLACE"
+        TAG = dict(SIMPLE_GAGNANT=("WIN", "Simple gagnant"), SIMPLE_PLACE=("PLACE", "Simple placé"),
+                   COUPLE_GAGNANT=("CG", "Couplé gagnant"), DEUX_SUR_QUATRE=("2S4", "2sur4"))
+        tag, label = TAG[c["market"]]
+        p = next((p for p in r["preds"] if p["num"] == c["num"]), None)
+        if p is None:     # couple : on agrège les deux chevaux
+            nums = [int(t) for t in str(c["num"]).split("-")]
+            ps = [q for q in r["preds"] if q["num"] in nums]
+            p = dict(p_fund=c["p"], p_mkt=None, edge=None, ev=c["ev_low"], confidence=min((q.get("confidence") or "FAIBLE") for q in ps) if ps else "FAIBLE",
+                     form=min((q.get("form") or 0) for q in ps) if ps else None, incident_risk=max((q.get("incident_risk") or 0) for q in ps) if ps else None)
         bid = f"{d.replace('-', '')}_{r['race_id']}_N{c['num']}_{tag}"
         if bid in bets_db:
             continue
         pour, contre, risk = pour_contre(p, c["market"])
+        if c["market"] in ("COUPLE_GAGNANT", "DEUX_SUR_QUATRE"):
+            pour = [f"Probabilité du couple {c['p']*100:.1f} % (arrivées simulées, Harville corrigé)", f"Dividende attendu {c['div_exp']:.1f} € pour 1 €"]
+            contre = ["Dividende estimé sur l'historique : le vrai rapport n'est connu qu'à l'arrivée"] + contre
+            risk = "Un seul des deux chevaux dans l'arrivée"
         new_bets.append(dict(bet_id=bid, date=d, race_id=r["race_id"], meeting=r["meeting"], rc=f"R{r['r']}C{r['c']}",
-                             time=r["time"], num=c["num"], horse=c["horse"],
-                             market="Simple gagnant" if tag == "WIN" else "Simple placé", market_code=c["market"],
-                             odds=c["odds"], odds_time=r.get("odds_time"), p_hl=p["p_fund"], p_mkt=p["p_mkt"],
-                             p_dec=c["p"], p_low=c["p_low"], edge=p["edge"], ev=p["ev"], ev_low=c["ev_low"],
-                             sp_div_exp=c.get("sp_div_exp"), confidence=p.get("confidence"), stake=s["stake"],
+                             time=r["time"], num=c["num"], horse=c["horse"], market=label, market_code=c["market"],
+                             odds=c["odds"], odds_time=r.get("odds_time"), p_hl=p.get("p_fund"), p_mkt=p.get("p_mkt"),
+                             p_dec=c["p"], p_low=c["p_low"], edge=p.get("edge"), ev=p.get("ev"), ev_low=c["ev_low"],
+                             sp_div_exp=c.get("sp_div_exp") or c.get("div_exp"), confidence=p.get("confidence"), stake=s["stake"],
                              min_odds=c.get("min_odds") or 0, status="OPEN", pour=pour, contre=contre, risk=risk,
                              experts=f"Modèle {run['model']}", created_at=run["computed_at"], settlement=None))
-    chosen = {(b["race_id"], b["num"]) for b in new_bets}
+    chosen = {(b["race_id"], b["num"]) for b in new_bets if b["market_code"] in ("SIMPLE_GAGNANT", "SIMPLE_PLACE")}
     for r in to_write:
         preds = r["preds"]
         for p in preds:

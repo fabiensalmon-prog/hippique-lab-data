@@ -140,3 +140,55 @@ def fit_sp_dividend(samples):
 
 def sp_expected(coef, odds, n):
     return max(1.05, math.exp(coef[0] + coef[1] * math.log(odds) + coef[2] * math.log(n)))
+
+
+# ---------- arrivées simulées (Harville corrigé) et paris de couples ----------
+def simulate_top(p, gamma, delta, sims=4000, seed=0, depth=4):
+    """Tirages d'arrivées : 1er selon p, 2e selon p^gamma, 3e et 4e selon p^delta (hors chevaux déjà classés).
+    -> array (sims, depth) d'index."""
+    rng = np.random.default_rng(seed)
+    p = np.clip(np.asarray(p, float), 1e-9, 1)
+    n = len(p)
+    depth = min(depth, n)
+    logw = [np.log(p), gamma * np.log(p), delta * np.log(p), delta * np.log(p)]
+    taken = np.zeros((sims, n), bool)
+    out = np.zeros((sims, depth), int)
+    for k in range(depth):
+        g = logw[k][None, :] + rng.gumbel(size=(sims, n))
+        g[taken] = -np.inf
+        idx = g.argmax(1)
+        out[:, k] = idx
+        taken[np.arange(sims), idx] = True
+    return out
+
+
+def pair_probs(top, n):
+    """-> (couplé gagnant {(i,j): p}, 2sur4 {(i,j): p}) pour i<j, à partir des tirages."""
+    sims = len(top)
+    a, b = np.minimum(top[:, 0], top[:, 1]), np.maximum(top[:, 0], top[:, 1])
+    cg = np.zeros((n, n)); np.add.at(cg, (a, b), 1.0); cg /= sims
+    s4 = np.zeros((n, n))
+    if top.shape[1] >= 4:
+        m = np.zeros((sims, n), bool); m[np.arange(sims)[:, None], top[:, :4]] = True
+        s4 = (m.T.astype(float) @ m.astype(float)) / sims
+        s4 = np.triu(s4, 1)
+    return cg, s4
+
+
+def fit_pair_dividend(samples):
+    """samples : (cote_i, cote_j, n_partants, dividende pour 1 €) des couples gagnants -> coefficients log-linéaires."""
+    samples = [s for s in samples if s[3] and s[3] > 0 and s[0] and s[0] > 1 and s[1] and s[1] > 1 and s[2] > 1]
+    if len(samples) < 80:
+        return None
+    A = np.array([[1.0, math.log(oi * oj), math.log(n)] for oi, oj, n, _ in samples])
+    b = np.array([math.log(dv) for *_, dv in samples])
+    coef, *_ = np.linalg.lstsq(A, b, rcond=None)
+    resid = b - A @ coef
+    return coef.tolist() + [float(np.var(resid))]       # dernier terme : variance résiduelle (correction log-normale)
+
+
+def pair_expected(coef, oi, oj, n):
+    if not coef:
+        return None
+    mu = coef[0] + coef[1] * math.log(oi * oj) + coef[2] * math.log(n)
+    return math.exp(mu + 0.5 * coef[3])

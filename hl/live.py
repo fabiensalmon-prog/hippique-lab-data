@@ -37,7 +37,7 @@ def run_phase(phase, d):
     mp = os.path.join(ROOT, "models", "latest.json")
     model = json.load(open(mp)) if os.path.exists(mp) else dict(
         version="HL-V1.0-sans-modele", groups={}, gate=dict(passed=False, n_races_oos=0, delta_rho_oos=None),
-        stage2=dict(alpha=0.0, beta=1.0, gamma=0.81, delta=0.65, sp_coef=[0.15, 0.45, 0.0]))
+        stage2=dict(alpha=0.0, beta=1.0, gamma=0.81, delta=0.65, sp_coef=[0.15, 0.45, 0.0], markets={}))
     st = FeatureState()
     for r in iter_races(until=(date.fromisoformat(d) - timedelta(days=1)).isoformat()):
         st.update(r)
@@ -63,13 +63,14 @@ def run_phase(phase, d):
             sc = np.array([3.0 * (r["x"].get("mus_form") if r["x"].get("mus_form") is not None else 0.25)
                            + 0.8 * (r["x"].get("mus_cons") or 0.0) - (r["x"].get("mus_dq") or 0.0) for r in rows])
             e = np.exp(2.6 * (sc - sc.max())); pf = e / e.sum()
-        a = analyse(rows, pf, params)
+        a = analyse(rows, pf, params, race_key=race["id"])
         if not a["market_ok"]:
             doc.update(status="PARTIELLE", decision=None, reason="Prédiction journalisée, rapports probables PMU incomplets")
         else:
             doc.update(status="ANALYSEE", decision="BET" if a["cands"] else "PASS")
             if a["cands"]:
-                doc["reason"] = " · ".join(f"{c['market'].replace('SIMPLE_', '')} N°{c['num']} EV basse {c['ev_low']*100:+.0f} %" for c in a["cands"])
+                lab = dict(SIMPLE_GAGNANT="GAGNANT", SIMPLE_PLACE="PLACÉ", COUPLE_GAGNANT="COUPLÉ", DEUX_SUR_QUATRE="2SUR4")
+                doc["reason"] = " · ".join(f"{lab[c['market']]} N°{c['num']} EV basse {c['ev_low']*100:+.0f} %" for c in a["cands"])
             else:
                 top = max(a["preds"], key=lambda p: p["ev_low"])
                 doc["reason"] = (f"Meilleure EV basse N°{top['num']} {top['ev_low']*100:+.0f} % (edge {top['edge']*100:+.1f} pts) : sous le seuil"
@@ -105,6 +106,7 @@ def run_closing(d):
             rapport_place={k: v for k, v in race["div_sp"].items()},
             non_partants=[u["num"] for u in race["runners"] if u["np"]],
             final_odds={str(u["num"]): u["odds_final"] for u in race["runners"] if u["odds_final"]},
+            rapport_cg=race["div_cg"], rapport_2s4=race["div_2s4"],
             dead_heat=race["dead_heat"], source="PMU rapports définitifs")
     os.makedirs(os.path.join(ROOT, "live", d), exist_ok=True)
     json.dump(res, open(os.path.join(ROOT, "live", d, "results.json"), "w"), ensure_ascii=False)

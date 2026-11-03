@@ -54,6 +54,15 @@ def main(db_dir, results_path, date, out_dir, now_iso):
             fo = (x.get('final_odds') or {}).get(str(b['num'])) or (x.get('final_odds') or {}).get(b['num'])
             if b['num'] in x.get('non_partants', []):
                 st = dict(status='CANCELLED', note='Non-partant, mise remboursée', gross_return=b['stake'], net_pnl=0.0)
+            elif b.get('market_code') in ('COUPLE_GAGNANT', 'DEUX_SUR_QUATRE'):
+                mp = x.get('rapport_cg' if b['market_code'] == 'COUPLE_GAGNANT' else 'rapport_2s4') or {}
+                parts = [int(t) for t in str(b['num']).split('-')]
+                dv = mp.get(str(b['num']))
+                if any(q in x.get('non_partants', []) for q in parts):
+                    st = dict(status='CANCELLED', note='Un cheval du couple non-partant, mise remboursée', gross_return=b['stake'], net_pnl=0.0)
+                elif not mp: st = dict(status='PENDING', note='Rapports du pari non trouvés'); pend += 1
+                elif dv: st = dict(status='WIN', final_odds=dv, gross_return=round(b['stake']*dv, 2), net_pnl=round(b['stake']*dv - b['stake'], 2))
+                else: st = dict(status='LOSS', gross_return=0.0, net_pnl=-b['stake'])
             elif b.get('market_code') == 'SIMPLE_PLACE':
                 rp = x.get('rapport_place') or {}
                 dv = rp.get(str(b['num']))

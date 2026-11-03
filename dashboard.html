@@ -257,11 +257,11 @@ function vToday(){
 function ticket(b){
   const s=b.settlement;
   return `<article class="ticket">
-    <div class="th"><span class="label">${esc(b.rc)} · ${esc(b.meeting)} · ${esc(b.time)}</span><span class="horse">N°${b.num} ${esc(b.horse)}</span><span class="label">${esc(b.market||'Simple gagnant')}</span></div>
-    <dl><dt>Rapport probable</dt><dd>${odd(b.odds)}</dd><dt>Capturé</dt><dd>${esc(b.odds_time||'—')}</dd>
+    <div class="th"><span class="label">${esc(b.rc)} · ${esc(b.meeting)} · ${esc(b.time)}</span><span class="horse">${String(b.num).includes('-')?'Couple '+esc(b.num):'N°'+b.num} ${esc(b.horse)}</span><span class="label">${esc(b.market||'Simple gagnant')}</span></div>
+    <dl><dt>${['COUPLE_GAGNANT','DEUX_SUR_QUATRE'].includes(b.market_code)?'Dividende attendu':'Rapport probable'}</dt><dd>${odd(b.odds)}</dd><dt>Capturé</dt><dd>${esc(b.odds_time||'—')}</dd>
     <dt>P Hippique Lab</dt><dd>${pct(b.p_hl)}</dd><dt>P marché (gagnant)</dt><dd>${pct(b.p_mkt)}</dd><dt>${b.market_code==='SIMPLE_PLACE'?'P placé décision':'P décision'}</dt><dd>${pct(b.p_dec)}</dd>
     <dt>Edge</dt><dd class="${sgn(b.edge)}">${pts(b.edge)}</dd><dt>EV basse</dt><dd class="${sgn(b.ev_low)}">${(b.ev_low>=0?'+':'')+Math.round(b.ev_low*100)} %</dd>
-    <dt>Confiance</dt><dd>${esc(b.confidence||'—')}</dd><dt>Mise</dt><dd><b>${eur(b.stake)}</b></dd>${b.market_code==='SIMPLE_PLACE'?`<dt>Dividende placé estimé</dt><dd>${odd(b.sp_div_exp)}</dd>`:`<dt>Rapport minimal</dt><dd>${odd(b.min_odds)}</dd>`}</dl>
+    <dt>Confiance</dt><dd>${esc(b.confidence||'—')}</dd><dt>Mise</dt><dd><b>${eur(b.stake)}</b></dd>${['SIMPLE_PLACE','COUPLE_GAGNANT','DEUX_SUR_QUATRE'].includes(b.market_code)?`<dt>Dividende estimé (1 €)</dt><dd>${odd(b.sp_div_exp)}</dd>`:`<dt>Rapport minimal</dt><dd>${odd(b.min_odds)}</dd>`}</dl>
     <div class="notes">${b.pour?.length?`<div><span class="label">Pour</span><ul>${b.pour.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
     ${b.contre?.length?`<div><span class="label">Contre</span><ul>${b.contre.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
     ${b.experts?`<div><span class="label">Experts</span> ${esc(b.experts)}</div>`:''}${b.risk?`<div><span class="label">Risque principal</span> ${esc(b.risk)}</div>`:''}</div>
@@ -294,6 +294,7 @@ function vModele(){
   const g=S.meta?.gate, bt=S.reports.backtest;
   const gateBox=`<div class="panel" style="display:grid;gap:8px;grid-column:1/-1"><div class="runhead"><h2>Porte de validation</h2>${g?(g.passed?'<span class="pill win">Modèle validé</span>':'<span class="pill part">Non validé : observation</span>'):'<span class="pill pass">En attente</span>'}</div>
     <div class="status-line">Le modèle ne prend part aux décisions que s'il améliore le marché hors échantillon : gain de ρ² ≥ ${g?.min_delta_rho??0.005} sur au moins ${g?.min_races??1000} courses. Sinon α = 0 : le marché décide seul et aucun ticket n'est pris.</div>
+    ${g?.markets?`<div class="legend">${[['SIMPLE_GAGNANT','Gagnant'],['SIMPLE_PLACE','Placé'],['COUPLE_GAGNANT','Couplé'],['DEUX_SUR_QUATRE','2sur4']].map(([k,l])=>`<span class="pill ${g.markets[k]?'win':'pass'}">${l} ${g.markets[k]?'ouvert':'observation'}</span>`).join('')}</div>`:''}
     <div class="mono">${g?`Courses hors échantillon : ${g.n_races_oos??0} · gain de ρ² : ${g.delta_rho_oos==null?'—':(g.delta_rho_oos>=0?'+':'')+g.delta_rho_oos.toFixed(4)} · modèle ${esc(S.meta?.model||'')}`:'Premier entraînement après l\'import de l\'historique.'}</div>
     ${bt?.top_features?Object.entries(bt.top_features).map(([gr,fs])=>`<div><span class="label">Variables les plus influentes · ${esc(gr)}</span><div class="mono" style="font-size:12px">${fs.slice(0,10).map(([f,w])=>`${esc(f)} ${w>=0?'+':''}${w}`).join(' · ')}</div></div>`).join(''):''}</div>`;
   return `<section class="grid2">${gateBox}
@@ -328,8 +329,16 @@ function vBacktest(){
     <div class="kpi"><span class="label">ρ² marché</span><span class="v">${s.rho_mkt==null?'—':s.rho_mkt.toFixed(4)}</span><span class="s">référence à battre</span></div>
     <div class="kpi"><span class="label">ρ² combiné</span><span class="v">${s.rho_comb==null?'—':s.rho_comb.toFixed(4)}</span><span class="s">gain ${s.delta_rho==null?'—':(s.delta_rho>=0?'+':'')+s.delta_rho.toFixed(4)}</span></div>
     <div class="kpi"><span class="label">Capital simulé</span><span class="v ${sgn((s.final_capital??500)-500)}">${eur(s.final_capital)}</span><span class="s">départ 500 € · max drawdown ${pct(s.max_drawdown)}</span></div>
-    <div class="kpi"><span class="label">ROI simple gagnant</span><span class="v ${sgn(fl.SIMPLE_GAGNANT?.roi)}">${fl.SIMPLE_GAGNANT?.roi==null?'—':pct(fl.SIMPLE_GAGNANT.roi)}</span><span class="s">${fl.SIMPLE_GAGNANT?.n??0} paris à 1 €</span></div>
-    <div class="kpi"><span class="label">ROI simple placé</span><span class="v ${sgn(fl.SIMPLE_PLACE?.roi)}">${fl.SIMPLE_PLACE?.roi==null?'—':pct(fl.SIMPLE_PLACE.roi)}</span><span class="s">${fl.SIMPLE_PLACE?.n??0} paris à 1 €</span></div>
+  </section>
+  <section class="grid2">
+   <div class="panel" style="display:grid;gap:10px"><h2>Par type de pari</h2><div class="status-line">ROI à mise fixe de 1 € sur les paris que le moteur aurait pris. Un marché n'est ouvert aux mises que si son ROI est positif sur au moins ${bt.gate?.market_min_bets??300} paris et que le modèle est validé.</div>
+    <div class="tablewrap"><table><thead><tr><th class="l">Pari</th><th>Paris</th><th>Gagnants</th><th>ROI</th><th class="l">En live</th></tr></thead><tbody>
+    ${[['SIMPLE_GAGNANT','Simple gagnant'],['SIMPLE_PLACE','Simple placé'],['COUPLE_GAGNANT','Couplé gagnant'],['DEUX_SUR_QUATRE','2sur4']].map(([k,l])=>{const f=fl[k]||{};const on=bt.gate?.markets?.[k];return `<tr><td class="l" style="font-family:var(--f-body)">${l}</td><td>${f.n??0}</td><td>${f.wins??0}</td><td class="${sgn(f.roi)}">${f.roi==null?'—':pct(f.roi)}</td><td class="l">${on?'<span class="pill win">Ouvert</span>':'<span class="pill pass">Observation</span>'}</td></tr>`}).join('')}
+    </tbody></table></div></div>
+   <div class="panel" style="display:grid;gap:10px"><h2>Par discipline</h2><div class="status-line">Pouvoir prédictif hors échantillon (ρ², plus haut = meilleur). Le gain du combiné sur le marché est ce qui compte.</div>
+    <div class="tablewrap"><table><thead><tr><th class="l">Discipline</th><th>Courses</th><th>Modèle seul</th><th>Marché</th><th>Combiné</th><th>Gain</th></tr></thead><tbody>
+    ${Object.entries(s.by_group||{}).map(([g,v])=>`<tr><td class="l">${esc(g)}</td><td>${v.races}</td><td>${v.rho_fund.toFixed(4)}</td><td>${v.rho_mkt.toFixed(4)}</td><td>${v.rho_comb.toFixed(4)}</td><td class="${sgn(v.rho_comb-v.rho_mkt)}">${(v.rho_comb-v.rho_mkt>=0?'+':'')+(v.rho_comb-v.rho_mkt).toFixed(4)}</td></tr>`).join('')||'<tr><td colspan="6" class="l muted">Échantillon insuffisant</td></tr>'}
+    </tbody></table></div></div>
   </section>
   <section class="panel chart"><div class="runhead" style="margin-bottom:8px"><h3>Capital simulé, mois par mois</h3><span class="label">walk-forward</span></div>${ms.length?curveSVG(curve).replace(/J(\d+)/g,'M$1'):'<div class="insuf">Échantillon insuffisant</div>'}</section>
   <section class="panel" style="display:grid;gap:10px"><h2>Mois par mois</h2><div class="status-line">Chaque mois est prédit par un modèle entraîné uniquement sur les mois précédents. Décision sur le rapport de référence du matin, règlement sur les dividendes officiels.</div>
@@ -351,7 +360,8 @@ function vMethode(){
    <p>Hippique Lab cherche à savoir si un modèle sportif contient une information que le marché PMU n'a pas déjà intégrée. Le capital fictif sert de garde-fou de décision ; la preuve viendra du journal des probabilités, mesuré contre le marché.</p>
    <p>Chaque journée enregistre une probabilité pour chaque partant avant le départ, même quand aucun pari n'est pris. Une course sans cote vérifiée ou partie avant le run reste <b>partielle</b> : elle n'est jamais comptée comme un PASS.</p>
    <h3>Chaîne de décision</h3>
-   <ul><li><b>P fondamentale (V1)</b> : logit conditionnel entraîné sur l'historique PMU, modèles trot et plat séparés, 54 variables (forme, vitesse, Elo, aptitudes, entourage, comptes rendus de course). Aucune cote.</li>
+   <ul><li><b>P fondamentale (V1)</b> : logit conditionnel entraîné sur l'historique PMU, modèles trot, plat et obstacle séparés, 54 variables (forme, vitesse, Elo, aptitudes, entourage, comptes rendus de course). Aucune cote.</li>
+   <li><b>Couplé gagnant et 2sur4</b> : arrivées simulées (3 000 tirages par course), dividendes attendus estimés sur l'historique ; ouverts aux mises seulement si leur ROI hors échantillon est positif.</li>
    <li><b>Simple placé</b> : probabilité d'être placé par Harville corrigé (γ = ${p.gamma??'—'}, δ = ${p.delta??'—'}), dividende placé estimé sur l'historique.</li>
    <li><b>P marché</b> : rapports probables PMU normalisés à 100 %.</li>
    <li><b>P décision</b> : combinaison log-linéaire modèle × marché (poids modèle ${p.alpha_model??'—'}), méthode de Benter. Le poids du modèle augmentera seulement s'il bat le marché hors échantillon.</li>

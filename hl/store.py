@@ -3,7 +3,7 @@ import gzip, json, glob, os, re
 from datetime import date
 
 ROOT = os.environ.get("HL_DATA") or os.path.join(os.path.dirname(__file__), "..", "data")
-DISC = {"ATTELE": "TROT", "MONTE": "TROT", "PLAT": "PLAT"}   # obstacle exclu du pilote
+DISC = {"ATTELE": "TROT", "MONTE": "TROT", "PLAT": "PLAT", "HAIE": "OBSTACLE", "STEEPLECHASE": "OBSTACLE", "CROSS": "OBSTACLE"}
 
 
 def load_day(path):
@@ -27,7 +27,11 @@ def _div(rapports, typ):
         for x in t.get("rapports", []):
             d = x.get("dividendePourUnEuro")
             if d is not None:
-                out[str(x.get("combinaison"))] = d / 100.0
+                k = str(x.get("combinaison"))
+                if "-" in k:   # combinaisons non ordonnées : clé triée « 1-7 »
+                    try: k = "-".join(str(v) for v in sorted(int(t) for t in k.split("-")))
+                    except ValueError: pass
+                out[k] = d / 100.0
     return out
 
 

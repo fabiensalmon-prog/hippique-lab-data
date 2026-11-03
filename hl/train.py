@@ -1,22 +1,28 @@
-"""Entraînement V1 + backtest walk-forward mensuel.
+"""Entraînement V1.1 + backtest walk-forward mensuel.
 
 python3 -m hl.train            -> models/latest.json, reports/backtest.json
-Chaque mois de test n'est prédit qu'avec un modèle entraîné sur les mois précédents (étage 1),
-et l'étage 2 n'est estimé que sur des prédictions hors échantillon des mois précédents.
-Décisions sur le rapport de référence (matin), règlement sur les dividendes officiels.
+- Étage 1 (logit conditionnel trot / plat / obstacle) : chaque mois de test est prédit par un modèle entraîné
+  uniquement sur les mois précédents.
+- Étage 2, Harville corrigé, dividendes attendus (placé, couplé, 2sur4) : estimés sur les mois précédents seulement.
+- Décisions sur la cote marché du matin (rapport de référence), règlement sur les dividendes officiels.
+- Portes : le modèle n'entre dans les décisions que s'il améliore le marché (gain de ρ²) ; chaque marché n'est
+  misé que si son ROI hors échantillon est positif sur au moins 300 paris.
 """
-import json, math, os, sys, time
+import json, math, os, time
 from collections import defaultdict
 import numpy as np
 
 from .store import iter_races
 from .features import FeatureState, FEATURES
-from .model import Design, fit_clogit, probs, split_probs, fit_stage2, combine, fit_harville, fit_sp_dividend, loglik
-from .decide import analyse, size, n_places, RULES
+from .model import (Design, fit_clogit, probs, split_probs, fit_stage2, combine, fit_harville, fit_sp_dividend,
+                    fit_pair_dividend, loglik)
+from .decide import analyse, size, RULES, MARKETS
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-MIN_TRAIN_MONTHS = 2
+GROUPS = ("TROT", "PLAT", "OBSTACLE")
+MIN_TRAIN_MONTHS = int(os.environ.get("HL_MIN_TRAIN_MONTHS", "2"))
 L2 = 2.0
+GATE = dict(min_races=1000, min_delta_rho=0.005, market_min_bets=300)
 
 
 def build_dataset():
@@ -31,9 +37,9 @@ def build_dataset():
         w = race["arrivee"][0] if race["arrivee"] else None
         out.append(dict(id=race["id"], date=race["date"], month=race["date"][:7], group=race["group"], rows=rows,
                         n=len(rows), winner_idx=nums.index(w) if w in nums else None,
-                        order=[nums.index(a) for a in race["arrivee"][:3] if a in nums],
-                        div_sg=race["div_sg"], div_sp=race["div_sp"], dead_heat=race["dead_heat"],
-                        hippodrome=race["hippodrome"], heure=race["heure"]))
+                        order=[nums.index(a) for a in race["arrivee"][:3] if a in nums], arrivee=race["arrivee"],
+                        div_sg=race["div_sg"], div_sp=race["div_sp"], div_cg=race["div_cg"], div_2s4=race["div_2s4"],
+                        dead_heat=race["dead_heat"], hippodrome=race["hippodrome"], heure=race["heure"]))
     return out, st
 
 
@@ -55,8 +61,7 @@ def predict_group(model, races):
 
 def predict_any(model, race):
     """Prédiction d'une course sans résultat (live)."""
-    tmp = dict(race, winner_idx=0)
-    return predict_group(model, [tmp]).get(race["id"])
+    return predict_group(model, [dict(race, winner_idx=0)]).get(race["id"])
 
 
 def mkt(r):
@@ -66,114 +71,148 @@ def mkt(r):
     inv = np.array([1 / v for v in o]); return inv / inv.sum()
 
 
+def odds_of(r, num):
+    return next((x["odds_ref"] for x in r["rows"] if str(x["num"]) == str(num)), None)
+
+
+def dividend_params(train):
+    """Régressions des dividendes attendus sur les courses d'entraînement récentes."""
+    sp, cg, s4 = [], [], []
+    for r in train[-8000:]:
+        for x in r["rows"]:
+            k = str(x["num"])
+            if k in r["div_sp"] and x["odds_ref"]:
+                sp.append((x["odds_ref"], r["n"], r["div_sp"][k]))
+        for combo, dv in r["div_cg"].items():
+            a, _, b = combo.partition("-")
+            oa, ob = odds_of(r, a), odds_of(r, b)
+            if oa and ob: cg.append((oa, ob, r["n"], dv))
+        for combo, dv in r["div_2s4"].items():
+            a, _, b = combo.partition("-")
+            oa, ob = odds_of(r, a), odds_of(r, b)
+            if oa and ob: s4.append((oa, ob, r["n"], dv))
+    return dict(sp_coef=fit_sp_dividend(sp), cg_coef=fit_pair_dividend(cg), s4_coef=fit_pair_dividend(s4))
+
+
+def settle(r, b):
+    """Dividende pour 1 € du ticket simulé (0 si perdu, None si non réglable)."""
+    k = str(b["num"])
+    if b["market"] == "SIMPLE_GAGNANT":
+        return r["div_sg"].get(k, 0.0)
+    if b["market"] == "SIMPLE_PLACE":
+        return r["div_sp"].get(k, 0.0) if r["div_sp"] else None
+    if b["market"] == "COUPLE_GAGNANT":
+        return r["div_cg"].get(k, 0.0) if r["div_cg"] else None
+    return r["div_2s4"].get(k, 0.0) if r["div_2s4"] else None
+
+
 def main():
     t0 = time.time()
     data, _ = build_dataset()
     months = sorted({r["month"] for r in data})
     print(f"{len(data)} courses, {len(months)} mois : {months[:1]} -> {months[-1:]}", flush=True)
-    oos = {}                      # id -> P fondamentale hors échantillon
+    oos = {}
     report = dict(months=[], built_at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), n_races=len(data))
     bank = dict(capital=500.0, peak=500.0, mdd=0.0)
     flat = defaultdict(lambda: dict(n=0, staked=0.0, ret=0.0, wins=0))
+    by_group = defaultdict(lambda: dict(races=0, ll_f=0.0, ll_m=0.0, ll_c=0.0, ll_0=0.0))
     bets_log = []
     for mi, m in enumerate(months):
         train = [r for r in data if r["month"] < m]
         test = [r for r in data if r["month"] == m]
         if mi < MIN_TRAIN_MONTHS:
             continue
-        for g in ("TROT", "PLAT"):
+        for g in GROUPS:
             mdl = fit_group([r for r in train if r["group"] == g])
             if mdl:
                 oos.update(predict_group(mdl, [r for r in test if r["group"] == g]))
-        # étage 2 + Harville + placé sur les mois précédents (hors échantillon)
         prev = [r for r in train if r["id"] in oos and r["winner_idx"] is not None and mkt(r) is not None]
         if len(prev) < 200:
             continue
         alpha, beta = fit_stage2([oos[r["id"]] for r in prev], [mkt(r) for r in prev], [r["winner_idx"] for r in prev])
-        pc_prev = [combine(oos[r["id"]], mkt(r), alpha, beta) for r in prev]
-        gamma, delta = fit_harville(pc_prev[-3000:], [r["order"] for r in prev[-3000:]])
-        sp_samples = [(r["rows"][i]["odds_ref"], r["n"], r["div_sp"][str(r["rows"][i]["num"])])
-                      for r in train[-6000:] for i in range(r["n"])
-                      if str(r["rows"][i]["num"]) in r["div_sp"] and r["rows"][i]["odds_ref"]]
-        params = dict(alpha=alpha, beta=beta, gamma=gamma, delta=delta, sp_coef=fit_sp_dividend(sp_samples))
-        # évaluation du mois
+        pc_prev = [combine(oos[r["id"]], mkt(r), alpha, beta) for r in prev[-3000:]]
+        gamma, delta = fit_harville(pc_prev, [r["order"] for r in prev[-3000:]])
+        params = dict(alpha=alpha, beta=beta, gamma=gamma, delta=delta, **dividend_params(train))
         ev = [r for r in test if r["id"] in oos and r["winner_idx"] is not None and mkt(r) is not None]
-        ll_f = loglik([oos[r["id"]] for r in ev], [r["winner_idx"] for r in ev])
-        ll_m = loglik([mkt(r) for r in ev], [r["winner_idx"] for r in ev])
-        ll_c = loglik([combine(oos[r["id"]], mkt(r), alpha, beta) for r in ev], [r["winner_idx"] for r in ev])
+        W = [r["winner_idx"] for r in ev]
+        ll_f = loglik([oos[r["id"]] for r in ev], W)
+        ll_m = loglik([mkt(r) for r in ev], W)
+        ll_c = loglik([combine(oos[r["id"]], mkt(r), alpha, beta) for r in ev], W)
         ll_0 = sum(-math.log(r["n"]) for r in ev)
+        for r in ev:
+            G = by_group[r["group"]]; w = r["winner_idx"]
+            G["races"] += 1; G["ll_0"] += -math.log(r["n"])
+            G["ll_f"] += math.log(max(1e-9, oos[r["id"]][w])); G["ll_m"] += math.log(max(1e-9, mkt(r)[w]))
+            G["ll_c"] += math.log(max(1e-9, combine(oos[r["id"]], mkt(r), alpha, beta)[w]))
         rho = lambda ll: 1 - ll / ll_0 if ll_0 else None
-        # paris simulés, journée par journée
-        mb = dict(n=0, staked=0.0, pnl=0.0)
+        mb = defaultdict(lambda: dict(n=0, pnl=0.0))
         for day in sorted({r["date"] for r in ev}):
             cap0 = bank["capital"]; spent = 0.0; day_pnl = 0.0
             for r in sorted([x for x in ev if x["date"] == day], key=lambda x: x["heure"] or 0):
-                a = analyse(r["rows"], oos[r["id"]], params)
+                a = analyse(r["rows"], oos[r["id"]], params, race_key=r["id"], all_markets=True)
                 for b in size(a["cands"], cap0, spent):
+                    div = settle(r, b)
+                    if div is None:
+                        continue
+                    if b["market"] == "SIMPLE_GAGNANT" and div and b["min_odds"] and div < b["min_odds"]:
+                        continue                                  # value disparue : ticket annulé
                     spent += b["stake"]
-                    num = str(b["num"])
-                    if b["market"] == "SIMPLE_GAGNANT":
-                        div = r["div_sg"].get(num)
-                        if div is not None and b["min_odds"] and div < b["min_odds"]:
-                            spent -= b["stake"]; continue          # value disparue : ticket annulé
-                    else:
-                        div = r["div_sp"].get(num)
-                    gross = b["stake"] * div if div else 0.0
-                    day_pnl += gross - b["stake"]
-                    fk = b["market"]; flat[fk]["n"] += 1; flat[fk]["staked"] += 1.0; flat[fk]["ret"] += (div or 0.0)
-                    flat[fk]["wins"] += bool(div)
-                    mb["n"] += 1; mb["staked"] += b["stake"]; mb["pnl"] += gross - b["stake"]
-                    bets_log.append(dict(date=day, race=r["id"], market=fk, num=b["num"], odds=b["odds"], p=round(b["p"], 4),
-                                         stake=b["stake"], div=div, pnl=round(gross - b["stake"], 2)))
+                    pnl = b["stake"] * div - b["stake"]
+                    day_pnl += pnl
+                    F = flat[b["market"]]; F["n"] += 1; F["staked"] += 1.0; F["ret"] += div; F["wins"] += div > 0
+                    mb[b["market"]]["n"] += 1; mb[b["market"]]["pnl"] += pnl
+                    bets_log.append(dict(date=day, race=r["id"], market=b["market"], num=b["num"], p=round(b["p"], 4),
+                                         odds=round(b["odds"], 2), stake=b["stake"], div=div, pnl=round(pnl, 2)))
             bank["capital"] += day_pnl
             bank["peak"] = max(bank["peak"], bank["capital"])
             bank["mdd"] = max(bank["mdd"], (bank["peak"] - bank["capital"]) / bank["peak"])
-        report["months"].append(dict(month=m, races=len(ev), alpha=round(alpha, 3), beta=round(beta, 3),
-                                     gamma=gamma, delta=delta, rho_fund=rho(ll_f), rho_mkt=rho(ll_m), rho_comb=rho(ll_c),
-                                     delta_rho=(rho(ll_c) - rho(ll_m)) if ll_0 else None,
-                                     bets=mb["n"], staked=round(mb["staked"], 2), pnl=round(mb["pnl"], 2),
-                                     capital=round(bank["capital"], 2)))
-        print(f"{m}: {len(ev)} courses  rho fond {rho(ll_f):.4f} marché {rho(ll_m):.4f} combiné {rho(ll_c):.4f}  "
-              f"alpha {alpha:.2f} beta {beta:.2f}  paris {mb['n']} P&L {mb['pnl']:+.2f}  capital {bank['capital']:.2f}", flush=True)
-    # modèle final pour le live : tout l'historique
-    final = {g: fit_group([r for r in data if r["group"] == g]) for g in ("TROT", "PLAT")}
+        rec = dict(month=m, races=len(ev), alpha=round(alpha, 3), beta=round(beta, 3), gamma=gamma, delta=delta,
+                   rho_fund=rho(ll_f), rho_mkt=rho(ll_m), rho_comb=rho(ll_c),
+                   delta_rho=(rho(ll_c) - rho(ll_m)) if ll_0 else None,
+                   bets=sum(v["n"] for v in mb.values()), pnl=round(sum(v["pnl"] for v in mb.values()), 2),
+                   by_market={k: dict(n=v["n"], pnl=round(v["pnl"], 2)) for k, v in mb.items()},
+                   capital=round(bank["capital"], 2))
+        report["months"].append(rec)
+        print(f"{m}: {len(ev)} courses  ρ² fond {rho(ll_f):.4f} marché {rho(ll_m):.4f} combiné {rho(ll_c):.4f}  "
+              f"α {alpha:.2f} β {beta:.2f}  paris {rec['bets']} P&L {rec['pnl']:+.2f}  capital {bank['capital']:.2f}", flush=True)
+    # ---------- modèle final pour le live ----------
+    final = {g: fit_group([r for r in data if r["group"] == g]) for g in GROUPS}
     prev = [r for r in data if r["id"] in oos and r["winner_idx"] is not None and mkt(r) is not None]
     if len(prev) >= 200:
         alpha, beta = fit_stage2([oos[r["id"]] for r in prev], [mkt(r) for r in prev], [r["winner_idx"] for r in prev])
         pcs = [combine(oos[r["id"]], mkt(r), alpha, beta) for r in prev[-3000:]]
         gamma, delta = fit_harville(pcs, [r["order"] for r in prev[-3000:]])
     else:
-        alpha, beta, gamma, delta = 0.0, 1.0, 0.81, 0.65       # pas assez de recul : le marché seul décide
-    sp_samples = [(r["rows"][i]["odds_ref"], r["n"], r["div_sp"][str(r["rows"][i]["num"])])
-                  for r in data[-8000:] for i in range(r["n"])
-                  if str(r["rows"][i]["num"]) in r["div_sp"] and r["rows"][i]["odds_ref"]]
+        alpha, beta, gamma, delta = 0.0, 1.0, 0.81, 0.65
     mths = report["months"]
-    tot_races = sum(x["races"] for x in mths)
-    agg = lambda k: (sum(x[k] * x["races"] for x in mths if x[k] is not None) / tot_races) if tot_races else None
-    gate = dict(min_races=1000, min_delta_rho=0.005,
-                n_races_oos=tot_races, delta_rho_oos=agg("delta_rho"))
-    gate["passed"] = bool(gate["delta_rho_oos"] is not None and tot_races >= gate["min_races"]
-                          and gate["delta_rho_oos"] >= gate["min_delta_rho"])
-    latest = dict(version="HL-V1." + time.strftime("%Y%m%d", time.gmtime()), features=FEATURES, groups=final,
+    tot = sum(x["races"] for x in mths)
+    agg = lambda k: (sum(x[k] * x["races"] for x in mths if x[k] is not None) / tot) if tot else None
+    gate = dict(min_races=GATE["min_races"], min_delta_rho=GATE["min_delta_rho"], n_races_oos=tot, delta_rho_oos=agg("delta_rho"))
+    gate["passed"] = bool(gate["delta_rho_oos"] is not None and tot >= GATE["min_races"] and gate["delta_rho_oos"] >= GATE["min_delta_rho"])
+    flat_out = {k: dict(v, roi=(v["ret"] - v["staked"]) / v["staked"] if v["staked"] else None) for k, v in flat.items()}
+    markets = {mk: bool(gate["passed"] and flat_out.get(mk, {}).get("n", 0) >= GATE["market_min_bets"]
+                        and (flat_out.get(mk, {}).get("roi") or -1) > 0) for mk in MARKETS}
+    gate["markets"] = markets
+    latest = dict(version="HL-V1.1." + time.strftime("%Y%m%d", time.gmtime()), features=FEATURES, groups=final,
                   stage2=dict(alpha=alpha if gate["passed"] else 0.0, alpha_fitted=alpha, beta=beta, gamma=gamma, delta=delta,
-                              sp_coef=fit_sp_dividend(sp_samples)),
+                              markets=markets, **dividend_params(data)),
                   gate=gate, data_range=[data[0]["date"], data[-1]["date"]] if data else None, rules=RULES,
                   trained_at=report["built_at"])
-    # coefficients lisibles (importance)
     for g, mdl in final.items():
         if mdl:
             latest.setdefault("top_features", {})[g] = sorted(
                 [(f, round(w, 3)) for f, w in zip(FEATURES, mdl["w"])], key=lambda t: -abs(t[1]))[:15]
+    groups_out = {g: dict(races=v["races"], rho_fund=1 - v["ll_f"] / v["ll_0"], rho_mkt=1 - v["ll_m"] / v["ll_0"],
+                          rho_comb=1 - v["ll_c"] / v["ll_0"]) for g, v in by_group.items() if v["ll_0"]}
     report.update(summary=dict(
-        races_oos=tot_races, rho_fund=agg("rho_fund"), rho_mkt=agg("rho_mkt"), rho_comb=agg("rho_comb"),
-        delta_rho=agg("delta_rho"), final_capital=round(bank["capital"], 2), max_drawdown=round(bank["mdd"], 4),
-        flat={k: dict(v, roi=(v["ret"] - v["staked"]) / v["staked"] if v["staked"] else None) for k, v in flat.items()},
+        races_oos=tot, rho_fund=agg("rho_fund"), rho_mkt=agg("rho_mkt"), rho_comb=agg("rho_comb"), delta_rho=agg("delta_rho"),
+        final_capital=round(bank["capital"], 2), max_drawdown=round(bank["mdd"], 4), flat=flat_out, by_group=groups_out,
         bets=len(bets_log), gate=gate, seconds=round(time.time() - t0)))
     os.makedirs(os.path.join(ROOT, "models"), exist_ok=True)
     os.makedirs(os.path.join(ROOT, "reports"), exist_ok=True)
     json.dump(latest, open(os.path.join(ROOT, "models", "latest.json"), "w"), indent=1)
     json.dump(dict(report, bets_sample=bets_log[-300:]), open(os.path.join(ROOT, "reports", "backtest.json"), "w"), indent=1)
-    print(json.dumps(report["summary"], indent=1))
+    print(json.dumps(report["summary"], indent=1, default=str))
 
 
 if __name__ == "__main__":

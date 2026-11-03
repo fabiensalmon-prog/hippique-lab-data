@@ -40,6 +40,8 @@ def parse_musique(s, group, disc):
         place, kind = m.group(2), m.group(3)
         if group == "PLAT":
             wd = 1.0 if kind == 'p' else 0.5
+        elif group == "OBSTACLE":
+            wd = 1.0 if kind in 'hsc' else 0.5
         else:
             wd = 1.0 if (kind == 'a') == (disc == "ATTELE") else 0.6
         runs.append((PTS.get(place, 0.0), wd * season, place in 'DATRG'))
@@ -141,7 +143,7 @@ class FeatureState:
                 f["track_apt"] = apt(lambda x: x["hippodrome"] == race["hippodrome"])
                 f["spec_apt"] = apt(lambda x: x["discipline"] == race["discipline"])
                 f["terrain_apt"] = (apt(lambda x: x["pen"] is not None and abs(x["pen"] - race["pen"]) <= 0.6)
-                                    if grp == "PLAT" and race["pen"] is not None else None)
+                                    if grp in ("PLAT", "OBSTACLE") and race["pen"] is not None else None)
                 f.update(comment_flags(last["comment"]))
                 f["first_deferre"] = float(bool(u["deferre"]) and not last["deferre"]) if grp == "TROT" else 0.0
             else:
@@ -158,8 +160,8 @@ class FeatureState:
                      deferre_any=float("DEFERRE" in u["deferre"]),
                      oeil_on=float(u["oeilleres"] not in ("", "SANS_OEILLERES")),
                      avis_pos=float(u["avis"] == "POSITIF"), avis_neg=float(u["avis"] == "NEGATIF"),
-                     inedit=float(u["inedit"]), poids=(u["poids"] / 10.0 if u["poids"] else None) if grp == "PLAT" else None,
-                     valeur=u["valeur"] if grp == "PLAT" else None)
+                     inedit=float(u["inedit"]), poids=(u["poids"] / 10.0 if u["poids"] else None) if grp != "TROT" else None,
+                     valeur=u["valeur"] if grp != "TROT" else None)
             rows.append(dict(num=u["num"], nom=u["nom"], horse=u["horse"], driver=u["driver"], x=f,
                              odds_ref=u["odds_mkt"], odds_final=u["odds_final"], place=u["place"]))
         return rows
