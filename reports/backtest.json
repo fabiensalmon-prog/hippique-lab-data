@@ -559,8 +559,8 @@
    "capital": 49.6
   }
  ],
- "built_at": "2026-11-04T00:37:13Z",
- "n_races": 25976,
+ "built_at": "2026-11-04T07:29:38Z",
+ "n_races": 25999,
  "summary": {
   "races_oos": 21608,
   "rho_fund": 0.1356842195766709,
@@ -666,7 +666,7 @@
     "DEUX_SUR_QUATRE": false
    }
   },
-  "seconds": 324
+  "seconds": 321
  },
  "bets_sample": [
   {
