@@ -3,51 +3,51 @@
   "TROT": [
    [
     "class_jump",
-    196
-   ],
-   [
-    "drv_n",
-    171
-   ],
-   [
-    "trn_wr",
-    162
+    177
    ],
    [
     "win_rate",
-    158
+    151
    ],
    [
-    "drv_wr",
-    144
+    "trn_wr",
+    148
    ],
    [
     "log_prix",
-    136
+    135
    ],
    [
-    "red_resid",
-    108
+    "drv_n",
+    130
+   ],
+   [
+    "drv_wr",
+    120
    ],
    [
     "log_courses",
-    90
+    99
    ],
    [
-    "log_gains_annee",
-    88
+    "red_resid",
+    84
    ],
    [
     "corde",
-    80
+    64
    ],
    [
     "drv_ae",
-    78
+    61
    ],
    [
-    "red_best",
-    71
+    "spd_last",
+    60
+   ],
+   [
+    "log_gains_annee",
+    58
    ]
   ],
   "PLAT": [
@@ -154,26 +154,83 @@
  "test_courses": 10185,
  "periode_test": "2026-01-01 -> 2026-11-03",
  "marche_final": 0.2072,
- "logit_seul": 0.1416,
- "gbm_seul": 0.0854,
- "logit_plus_marche": 0.2088,
+ "logit_seul": 0.1425,
+ "gbm_seul": 0.0829,
+ "logit_plus_marche": 0.2089,
  "gbm_plus_marche": 0.209,
- "deux_plus_marche": 0.2089,
+ "deux_plus_marche": 0.209,
  "poids": {
   "logit": [
-   0.125,
-   1.007
+   0.129,
+   1.003
   ],
   "gbm": [
-   0.409,
-   0.982
+   0.414,
+   0.979
   ],
   "deux": [
-   0.221,
-   0.985
+   0.227,
+   0.981
   ]
  },
- "gain_logit_plus_marche": 0.0016,
+ "segments": {
+  "discipline TROT": {
+   "courses": 5740,
+   "marche": 0.2378,
+   "gain": 0.0029
+  },
+  "discipline PLAT": {
+   "courses": 3454,
+   "marche": 0.1653,
+   "gain": 0.0
+  },
+  "discipline OBSTACLE": {
+   "courses": 991,
+   "marche": 0.1616,
+   "gain": 0.0007
+  },
+  "petites allocations": {
+   "courses": 3442,
+   "marche": 0.1797,
+   "gain": 0.0047
+  },
+  "allocations moyennes": {
+   "courses": 3658,
+   "marche": 0.2199,
+   "gain": 0.0012
+  },
+  "grosses allocations": {
+   "courses": 3085,
+   "marche": 0.223,
+   "gain": -0.0008
+  },
+  "moins de 10 partants": {
+   "courses": 2688,
+   "marche": 0.204,
+   "gain": 0.0014
+  },
+  "10 \u00e0 13 partants": {
+   "courses": 4476,
+   "marche": 0.21,
+   "gain": 0.002
+  },
+  "14 partants et plus": {
+   "courses": 3021,
+   "marche": 0.2057,
+   "gain": 0.0016
+  },
+  "trot, petites allocations": {
+   "courses": 1799,
+   "marche": 0.1978,
+   "gain": 0.0082
+  },
+  "trot, allocations moyennes et grosses": {
+   "courses": 3941,
+   "marche": 0.2562,
+   "gain": 0.0005
+  }
+ },
+ "gain_logit_plus_marche": 0.0017,
  "gain_gbm_plus_marche": 0.0018,
- "gain_deux_plus_marche": 0.0017
+ "gain_deux_plus_marche": 0.0018
 }

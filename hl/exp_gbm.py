@@ -79,6 +79,26 @@ def main():
                gbm_plus_marche=rho([combine(P_gbm_te[r["id"]], mfinal(r), a2, b2) for r in ter]),
                deux_plus_marche=rho([combine(mix(P_log_te[r["id"]], P_gbm_te[r["id"]]), mfinal(r), a3, b3) for r in ter]),
                poids=dict(logit=[round(a1, 3), round(b1, 3)], gbm=[round(a2, 3), round(b2, 3)], deux=[round(a3, 3), round(b3, 3)]))
+    # où le marché final est-il le plus faible ? gain du modèle combiné par segment
+    def seg_gain(rs):
+        if len(rs) < 300:
+            return None
+        l0 = sum(-math.log(r["n"]) for r in rs)
+        lm = sum(math.log(mfinal(r)[r["winner_idx"]]) for r in rs)
+        lc = sum(math.log(max(1e-9, combine(mix(P_log_te[r["id"]], P_gbm_te[r["id"]]), mfinal(r), a3, b3)[r["winner_idx"]])) for r in rs)
+        return dict(courses=len(rs), marche=round(1 - lm / l0, 4), gain=round((lm - lc) / l0, 4))
+    pr = sorted(r["rows"][0]["x"]["log_prix"] for r in ter); q1, q2 = pr[len(pr) // 3], pr[2 * len(pr) // 3]
+    res["segments"] = {
+        **{f"discipline {g}": seg_gain([r for r in ter if r["group"] == g]) for g in GROUPS},
+        "petites allocations": seg_gain([r for r in ter if r["rows"][0]["x"]["log_prix"] <= q1]),
+        "allocations moyennes": seg_gain([r for r in ter if q1 < r["rows"][0]["x"]["log_prix"] <= q2]),
+        "grosses allocations": seg_gain([r for r in ter if r["rows"][0]["x"]["log_prix"] > q2]),
+        "moins de 10 partants": seg_gain([r for r in ter if r["n"] < 10]),
+        "10 à 13 partants": seg_gain([r for r in ter if 10 <= r["n"] <= 13]),
+        "14 partants et plus": seg_gain([r for r in ter if r["n"] >= 14]),
+        "trot, petites allocations": seg_gain([r for r in ter if r["group"] == "TROT" and r["rows"][0]["x"]["log_prix"] <= q1]),
+        "trot, allocations moyennes et grosses": seg_gain([r for r in ter if r["group"] == "TROT" and r["rows"][0]["x"]["log_prix"] > q1]),
+    }
     for k in ("logit_plus_marche", "gbm_plus_marche", "deux_plus_marche"):
         res["gain_" + k] = round(res[k] - res["marche_final"], 4)
     json.dump(res, open(os.path.join(ROOT, "reports", "exp_gbm.json"), "w"), indent=1)

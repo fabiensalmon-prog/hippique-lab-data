@@ -99,6 +99,8 @@ FEATURES = [
     "corde", "recul", "deferre4", "deferre_any", "oeil_on", "avis_pos", "avis_neg", "inedit", "poids", "valeur",
     # confrontations directes et écarts à l'arrivée
     "h2h_score", "h2h_n", "margin3",
+    # vitesses normalisées au trot (réduction kilométrique corrigée de la piste, de la distance, du départ et du jour)
+    "spd_last", "spd_avg3", "spd_best5", "spd_dist", "spd_n",
 ]
 
 
@@ -108,6 +110,8 @@ class FeatureState:
         self.drv = defaultdict(Decayed)
         self.trn = defaultdict(Decayed)
         self.combo = defaultdict(lambda: [0.0, 0.0])
+        self.par = {}                           # (hippodrome, spécialité, autostart, distance arrondie) -> [réduction de référence, n]
+        self.variant = {}                       # (date, hippodrome, spécialité) -> [somme des écarts du jour, n]
         self.h2h = {}                           # (cheval a, cheval b) trié -> [a devant b, b devant a]
 
     # ---------- variables pré-course ----------
@@ -177,6 +181,19 @@ class FeatureState:
                     diff += mine - theirs; meet += mine + theirs
             f["h2h_score"] = diff / (meet + 2.0)
             f["h2h_n"] = math.log1p(meet)
+            figs = []
+            for x in (hist or []):
+                if x.get("sp_raw") is not None:
+                    v = self.variant.get(x["var_key"])
+                    vm = v[0] / v[1] if v and v[1] else 0.0
+                    figs.append((x["distance"], max(-5.0, min(5.0, -(x["sp_raw"] - vm)))))
+            if grp == "TROT" and figs:
+                fv = [y for _, y in figs]
+                near = [y for dd, y in figs if dd and race["distance"] and abs(dd - race["distance"]) <= 200]
+                f.update(spd_last=fv[-1], spd_avg3=sum(fv[-3:]) / len(fv[-3:]), spd_best5=max(fv[-5:]),
+                         spd_dist=sum(near[-3:]) / len(near[-3:]) if near else None, spd_n=math.log1p(len(fv)))
+            else:
+                f.update(spd_last=None, spd_avg3=None, spd_best5=None, spd_dist=None, spd_n=0.0)
             mg = [x["lengths"] for x in hist[-3:] if x.get("lengths") is not None] if hist else []
             f["margin3"] = -sum(mg) / len(mg) if mg else None
             rows.append(dict(num=u["num"], nom=u["nom"], horse=u["horse"], driver=u["driver"], x=f,
@@ -195,6 +212,19 @@ class FeatureState:
         reds = sorted(u["red_km"] for u in runners if u["red_km"])
         med = reds[len(reds) // 2] if reds else None
         winner = race["arrivee"][0] if race["arrivee"] else None
+        par_val = var_key = None
+        if race["group"] == "TROT" and med and race["distance"]:
+            pk = (race["hippodrome"], race["discipline"], race["autostart"], int(round(race["distance"] / 100.0)) * 100)
+            var_key = (d, race["hippodrome"], race["discipline"])
+            pv = self.par.get(pk)
+            if pv and pv[1] >= 3:
+                par_val = pv[0]
+                vv = self.variant.setdefault(var_key, [0.0, 0])
+                vv[0] += (med - par_val) / 1000.0; vv[1] += 1
+            if pv:
+                pv[0] += 0.08 * (med - pv[0]); pv[1] += 1
+            else:
+                self.par[pk] = [float(med), 1]
         for u in runners:
             pl = u["place"] if isinstance(u["place"], int) and u["place"] > 0 else None
             dq = "DISQUALIFIE" in u["incident"] or u["incident"] in ("ARRETE", "TOMBE", "DEROBE")
@@ -204,6 +234,8 @@ class FeatureState:
                                   prix=race["prix"], pen=race["pen"], deferre=u["deferre"], comment=u["comment"],
                                   red_resid=((u["red_km"] - med) / 1000.0) if (u["red_km"] and med and not dq) else None,
                                   lengths=min(u.get("lengths_behind"), 20.0) if u.get("lengths_behind") is not None else None,
+                                  sp_raw=((u["red_km"] - par_val) / 1000.0) if (par_val and u["red_km"] and not dq) else None,
+                                  var_key=var_key,
                                   meteo=race.get("meteo")))
             h["hist"] = h["hist"][-20:]
             won = float(u["num"] == winner)
