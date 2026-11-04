@@ -100,8 +100,11 @@ def run_closing(d, final=True):
         obj = json.load(gzip.open(os.environ["HL_TEST_DAY"], "rt"))
     else:
         obj = collect_day(date.fromisoformat(d))
-        if final:
-            write_day(date.fromisoformat(d), obj)          # l'historique s'enrichit chaque soir
+        today_paris = datetime.now(PARIS).date().isoformat()
+        all_done = all((x.get("course") or {}).get("ordreArrivee") or (x.get("course") or {}).get("statut") in ("COURSE_ANNULEE", "ANNULEE")
+                       for x in obj.get("races", []))
+        if final and (d < today_paris or all_done):
+            write_day(date.fromisoformat(d), obj)          # l'historique ne reçoit que des journées terminées
     res = {}
     for race in normalize(obj):
         if not race["arrivee"]:

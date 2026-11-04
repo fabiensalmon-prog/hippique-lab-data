@@ -35,9 +35,14 @@ jobs:
         id: ph
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then P="${{ inputs.phase }}"; D="${{ inputs.day }}";
-          else case "${{ github.event.schedule }}" in "50 7 * * *") P=morning;; "20 12 * * *") P=midday;; *) P=closing;; esac; D=""; fi
+          else case "${{ github.event.schedule }}" in "50 7 * * *") P=morning;; "20 12 * * *") P=midday;; *) P=closing;; esac; D="";
+            # GitHub retarde parfois les déclenchements de plusieurs heures : une clôture lancée après minuit vise la veille
+            if [ "$P" = closing ] && [ "$(TZ=Europe/Paris date +%H)" -lt 12 ]; then D=$(TZ=Europe/Paris date -d yesterday +%F); fi
+            if [ "$P" != closing ] && [ "$(TZ=Europe/Paris date +%H)" -ge 21 ]; then echo "run trop tardif, ignoré"; P=skip; fi
+          fi
           echo "phase=$P" >> $GITHUB_OUTPUT; echo "day=$D" >> $GITHUB_OUTPUT
       - name: Run
+        if: steps.ph.outputs.phase != 'skip'
         run: python3 -m hl.live ${{ steps.ph.outputs.phase }} ${{ steps.ph.outputs.day }}
       - name: Enregistrer
         run: |
