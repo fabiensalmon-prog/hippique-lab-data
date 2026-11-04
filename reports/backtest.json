@@ -31,7 +31,11 @@
      "pnl": 3.2
     }
    },
-   "capital": 396.9
+   "capital": 396.9,
+   "races_final": 729,
+   "rho_mkt_final": 0.22342794625370832,
+   "rho_comb_final": 0.2263475020586122,
+   "delta_rho_final": 0.002919555804903884
   },
   {
    "month": "2025-03",
@@ -60,7 +64,11 @@
      "pnl": -6.0
     }
    },
-   "capital": 345.45
+   "capital": 345.45,
+   "races_final": 870,
+   "rho_mkt_final": 0.21551708649431345,
+   "rho_comb_final": 0.21695598372597813,
+   "delta_rho_final": 0.001438897231664682
   },
   {
    "month": "2025-04",
@@ -89,7 +97,11 @@
      "pnl": 1.9
     }
    },
-   "capital": 316.05
+   "capital": 316.05,
+   "races_final": 827,
+   "rho_mkt_final": 0.17833384417438092,
+   "rho_comb_final": 0.17785473586343648,
+   "delta_rho_final": -0.00047910831094444273
   },
   {
    "month": "2025-05",
@@ -118,7 +130,11 @@
      "pnl": -5.2
     }
    },
-   "capital": 295.65
+   "capital": 295.65,
+   "races_final": 926,
+   "rho_mkt_final": 0.18241947967048544,
+   "rho_comb_final": 0.18287315506848323,
+   "delta_rho_final": 0.0004536753979977881
   },
   {
    "month": "2025-06",
@@ -147,7 +163,11 @@
      "pnl": 1.95
     }
    },
-   "capital": 275.0
+   "capital": 275.0,
+   "races_final": 889,
+   "rho_mkt_final": 0.2027269474974983,
+   "rho_comb_final": 0.2043359207134392,
+   "delta_rho_final": 0.0016089732159408898
   },
   {
    "month": "2025-07",
@@ -180,7 +200,11 @@
      "pnl": 7.45
     }
    },
-   "capital": 258.05
+   "capital": 258.05,
+   "races_final": 950,
+   "rho_mkt_final": 0.19627316115309146,
+   "rho_comb_final": 0.19747385594073708,
+   "delta_rho_final": 0.0012006947876456175
   },
   {
    "month": "2025-08",
@@ -213,7 +237,11 @@
      "pnl": -1.0
     }
    },
-   "capital": 202.55
+   "capital": 202.55,
+   "races_final": 938,
+   "rho_mkt_final": 0.19946029560731304,
+   "rho_comb_final": 0.20089597516982227,
+   "delta_rho_final": 0.001435679562509229
   },
   {
    "month": "2025-09",
@@ -246,7 +274,11 @@
      "pnl": -2.0
     }
    },
-   "capital": 182.55
+   "capital": 182.55,
+   "races_final": 853,
+   "rho_mkt_final": 0.19744472841188676,
+   "rho_comb_final": 0.1992985625696886,
+   "delta_rho_final": 0.0018538341578018258
   },
   {
    "month": "2025-10",
@@ -279,7 +311,11 @@
      "pnl": -5.0
     }
    },
-   "capital": 178.6
+   "capital": 178.6,
+   "races_final": 855,
+   "rho_mkt_final": 0.19183716890843516,
+   "rho_comb_final": 0.19354461637914322,
+   "delta_rho_final": 0.0017074474707080567
   },
   {
    "month": "2025-11",
@@ -308,7 +344,11 @@
      "pnl": -1.5
     }
    },
-   "capital": 166.15
+   "capital": 166.15,
+   "races_final": 889,
+   "rho_mkt_final": 0.2079927164481814,
+   "rho_comb_final": 0.20956725876530446,
+   "delta_rho_final": 0.0015745423171230621
   },
   {
    "month": "2025-12",
@@ -337,7 +377,11 @@
      "pnl": 3.5
     }
    },
-   "capital": 148.45
+   "capital": 148.45,
+   "races_final": 810,
+   "rho_mkt_final": 0.18155133654437516,
+   "rho_comb_final": 0.18168252973329357,
+   "delta_rho_final": 0.00013119318891841036
   },
   {
    "month": "2026-01",
@@ -370,7 +414,11 @@
      "pnl": -1.0
     }
    },
-   "capital": 152.7
+   "capital": 152.7,
+   "races_final": 810,
+   "rho_mkt_final": 0.21655844963281023,
+   "rho_comb_final": 0.21902138974632224,
+   "delta_rho_final": 0.002462940113512002
   },
   {
    "month": "2026-02",
@@ -403,7 +451,11 @@
      "pnl": -6.0
     }
    },
-   "capital": 139.8
+   "capital": 139.8,
+   "races_final": 763,
+   "rho_mkt_final": 0.22187778521555612,
+   "rho_comb_final": 0.22447665548843998,
+   "delta_rho_final": 0.0025988702728838575
   },
   {
    "month": "2026-03",
@@ -436,7 +488,11 @@
      "pnl": -23.1
     }
    },
-   "capital": 148.5
+   "capital": 148.5,
+   "races_final": 879,
+   "rho_mkt_final": 0.23232126652711205,
+   "rho_comb_final": 0.23570447737050915,
+   "delta_rho_final": 0.0033832108433970998
   },
   {
    "month": "2026-04",
@@ -465,7 +521,11 @@
      "pnl": 1.25
     }
    },
-   "capital": 126.25
+   "capital": 126.25,
+   "races_final": 827,
+   "rho_mkt_final": 0.20889482572774776,
+   "rho_comb_final": 0.21109044727787407,
+   "delta_rho_final": 0.0021956215501263143
   },
   {
    "month": "2026-05",
@@ -494,7 +554,11 @@
      "pnl": -2.0
     }
    },
-   "capital": 108.15
+   "capital": 108.15,
+   "races_final": 931,
+   "rho_mkt_final": 0.22153383611551658,
+   "rho_comb_final": 0.22481555049801516,
+   "delta_rho_final": 0.0032817143824985795
   },
   {
    "month": "2026-06",
@@ -523,7 +587,11 @@
      "pnl": -4.0
     }
    },
-   "capital": 76.8
+   "capital": 76.8,
+   "races_final": 890,
+   "rho_mkt_final": 0.20702345520653354,
+   "rho_comb_final": 0.2076881606069203,
+   "delta_rho_final": 0.000664705400386767
   },
   {
    "month": "2026-07",
@@ -548,7 +616,11 @@
      "pnl": -8.0
     }
    },
-   "capital": 48.2
+   "capital": 48.2,
+   "races_final": 933,
+   "rho_mkt_final": 0.22599247562969826,
+   "rho_comb_final": 0.22862809010953145,
+   "delta_rho_final": 0.0026356144798331815
   },
   {
    "month": "2026-08",
@@ -564,7 +636,11 @@
    "bets": 0,
    "pnl": 0,
    "by_market": {},
-   "capital": 48.2
+   "capital": 48.2,
+   "races_final": 926,
+   "rho_mkt_final": 0.20680421945209604,
+   "rho_comb_final": 0.207755083828843,
+   "delta_rho_final": 0.0009508643767469627
   },
   {
    "month": "2026-09",
@@ -580,7 +656,11 @@
    "bets": 0,
    "pnl": 0,
    "by_market": {},
-   "capital": 48.2
+   "capital": 48.2,
+   "races_final": 877,
+   "rho_mkt_final": 0.20456141219456248,
+   "rho_comb_final": 0.20598275117786957,
+   "delta_rho_final": 0.0014213389833070966
   },
   {
    "month": "2026-10",
@@ -596,7 +676,11 @@
    "bets": 0,
    "pnl": 0,
    "by_market": {},
-   "capital": 48.2
+   "capital": 48.2,
+   "races_final": 926,
+   "rho_mkt_final": 0.19697517637165352,
+   "rho_comb_final": 0.198076405601047,
+   "delta_rho_final": 0.0011012292293934856
   },
   {
    "month": "2026-11",
@@ -612,10 +696,14 @@
    "bets": 0,
    "pnl": 0,
    "by_market": {},
-   "capital": 48.2
+   "capital": 48.2,
+   "races_final": 92,
+   "rho_mkt_final": 0.2375077265367087,
+   "rho_comb_final": 0.24211732245062512,
+   "delta_rho_final": 0.004609595913916409
   }
  ],
- "built_at": "2026-11-04T10:05:37Z",
+ "built_at": "2026-11-04T10:31:55Z",
  "n_races": 26000,
  "summary": {
   "races_oos": 18403,
@@ -714,7 +802,10 @@
    "min_delta_rho": 0.005,
    "n_races_oos": 18403,
    "delta_rho_oos": 0.005734135288129289,
-   "passed": true,
+   "n_races_final": 18390,
+   "delta_rho_final": 0.0016483563824856047,
+   "reference": "march\u00e9 final",
+   "passed": false,
    "markets": {
     "SIMPLE_GAGNANT": false,
     "SIMPLE_PLACE": false,
@@ -722,7 +813,7 @@
     "DEUX_SUR_QUATRE": false
    }
   },
-  "seconds": 245
+  "seconds": 228
  },
  "bets_sample": [
   {

@@ -582,7 +582,7 @@
   }
  },
  "stage2": {
-  "alpha": 0.2648428967565348,
+  "alpha": 0.0,
   "alpha_fitted": 0.2648428967565348,
   "beta": 0.8681598765847247,
   "gamma": 0.8,
@@ -616,7 +616,10 @@
   "min_delta_rho": 0.005,
   "n_races_oos": 18403,
   "delta_rho_oos": 0.005734135288129289,
-  "passed": true,
+  "n_races_final": 18390,
+  "delta_rho_final": 0.0016483563824856047,
+  "reference": "march\u00e9 final",
+  "passed": false,
   "markets": {
    "SIMPLE_GAGNANT": false,
    "SIMPLE_PLACE": false,
@@ -648,7 +651,7 @@
   "min_stake": 1.0,
   "s4_min_stake": 3.0
  },
- "trained_at": "2026-11-04T10:05:37Z",
+ "trained_at": "2026-11-04T10:31:55Z",
  "top_features": {
   "TROT": [
    [
