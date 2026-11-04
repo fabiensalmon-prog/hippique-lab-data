@@ -32,7 +32,7 @@ jobs:
       - name: Collecter
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            python3 collect/pmu_history.py backfill 30
+            python3 collect/pmu_history.py backfill 45
           else
             python3 collect/pmu_history.py "${{ inputs.mode }}" "${{ inputs.arg }}"
           fi
@@ -48,8 +48,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if python3 -c "import json,sys; p=json.load(open('data/progress.json')); sys.exit(0 if p.get('oldest_done','9999') > '2024-11-01' else 1)"; then
-            gh workflow run collect.yml -f mode=backfill -f arg=30 && echo "lot suivant lancé"
+          if python3 -c "import json,sys; p=json.load(open('data/progress.json')); sys.exit(0 if p.get('oldest_done','9999') > '2020-01-01' else 1)"; then
+            gh workflow run collect.yml -f mode=backfill -f arg=45 && echo "lot suivant lancé"
           else
             echo "historique complet : entraînement lancé"; gh workflow run train.yml
           fi

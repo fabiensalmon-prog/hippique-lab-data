@@ -2,7 +2,7 @@ name: Entraînement et backtest
 
 on:
   schedule:
-    - cron: "40 3 * * *"    # chaque nuit 04:40 Paris : le modèle suit l'historique qui grossit
+    - cron: "40 3 * * 1"    # chaque lundi 04:40 Paris (et à la fin de chaque collecte)
   workflow_dispatch: {}
 
 permissions:

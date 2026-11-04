@@ -14,7 +14,7 @@ BASE = "https://online.turfinfo.api.pmu.fr/rest/client/1/programme"
 UA = {"User-Agent": "HippiqueLab-research/0.1 (usage personnel, collecte lente)", "Accept": "application/json"}
 PAUSE = 0.4
 ROOT = os.path.join(os.path.dirname(__file__), "..", "data")
-TARGET_OLDEST = date(2024, 11, 1)   # objectif : 2 saisons (extensible)
+TARGET_OLDEST = date(2020, 1, 1)   # objectif : environ 7 saisons
 
 def get(url, tries=3):
     for i in range(tries):
