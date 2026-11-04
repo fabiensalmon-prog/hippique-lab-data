@@ -39,7 +39,7 @@ def build_dataset():
                         n=len(rows), winner_idx=nums.index(w) if w in nums else None,
                         order=[nums.index(a) for a in race["arrivee"][:3] if a in nums], arrivee=race["arrivee"],
                         div_sg=race["div_sg"], div_sp=race["div_sp"], div_cg=race["div_cg"], div_2s4=race["div_2s4"],
-                        dead_heat=race["dead_heat"], hippodrome=race["hippodrome"], heure=race["heure"]))
+                        dead_heat=race["dead_heat"], hippodrome=race["hippodrome"], heure=race["heure"], mkt_src=race.get("mkt_src")))
     return out, st
 
 

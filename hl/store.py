@@ -132,8 +132,10 @@ def normalize(dayobj):
             race["mkt_src"] = "REFERENCE"
             for u in race["runners"]: u["odds_mkt"] = u["odds_ref"]
         else:
-            race["mkt_src"] = "DIRECT"
-            for u in race["runners"]: u["odds_mkt"] = u["odds_final"]
+            # Pas de rapport de référence complet : la course n'a pas de marché utilisable avant le départ.
+            # (Utiliser la cote finale ici faisait fuir l'information d'après-course dans le backtest.)
+            race["mkt_src"] = "AUCUN"
+            for u in race["runners"]: u["odds_mkt"] = None
         out.append(race)
     out.sort(key=lambda r: (r["date"], r["heure"] or 0, r["r"], r["c"]))
     return out
