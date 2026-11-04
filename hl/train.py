@@ -71,6 +71,13 @@ def mkt(r):
     inv = np.array([1 / v for v in o]); return inv / inv.sum()
 
 
+def mkt_final(r):
+    o = [x["odds_final"] for x in r["rows"]]
+    if not all(v and v > 1 for v in o):
+        return None
+    inv = np.array([1 / v for v in o]); return inv / inv.sum()
+
+
 def odds_of(r, num):
     return next((x["odds_ref"] for x in r["rows"] if str(x["num"]) == str(num)), None)
 
@@ -154,6 +161,18 @@ def main():
                 T["ret_win"] += r["div_sg"].get(str(num), 0.0) if pos == 1 else 0.0
                 if r["div_sp"]:
                     T["n_place"] += 1; T["ret_place"] += r["div_sp"].get(str(num), 0.0)
+        # face au marché FINAL (celui qui fixe les rapports) : la vraie référence à battre
+        prevf = [r for r in prev if mkt_final(r) is not None]
+        evf = [r for r in ev if mkt_final(r) is not None]
+        if len(prevf) >= 200 and evf:
+            af, bf = fit_stage2([oos[r["id"]] for r in prevf], [mkt_final(r) for r in prevf], [r["winner_idx"] for r in prevf])
+            llf0 = sum(-math.log(r["n"]) for r in evf)
+            llfm = loglik([mkt_final(r) for r in evf], [r["winner_idx"] for r in evf])
+            llfc = loglik([combine(oos[r["id"]], mkt_final(r), af, bf) for r in evf], [r["winner_idx"] for r in evf])
+            final_rec = dict(races_final=len(evf), rho_mkt_final=1 - llfm / llf0, rho_comb_final=1 - llfc / llf0,
+                             delta_rho_final=(1 - llfc / llf0) - (1 - llfm / llf0))
+        else:
+            final_rec = dict(races_final=0, rho_mkt_final=None, rho_comb_final=None, delta_rho_final=None)
         rho = lambda ll: 1 - ll / ll_0 if ll_0 else None
         mb = defaultdict(lambda: dict(n=0, pnl=0.0))
         for day in sorted({r["date"] for r in ev}):
@@ -182,7 +201,7 @@ def main():
                    delta_rho=(rho(ll_c) - rho(ll_m)) if ll_0 else None,
                    bets=sum(v["n"] for v in mb.values()), pnl=round(sum(v["pnl"] for v in mb.values()), 2),
                    by_market={k: dict(n=v["n"], pnl=round(v["pnl"], 2)) for k, v in mb.items()},
-                   capital=round(bank["capital"], 2))
+                   capital=round(bank["capital"], 2), **final_rec)
         report["months"].append(rec)
         print(f"{m}: {len(ev)} courses  ρ² fond {rho(ll_f):.4f} marché {rho(ll_m):.4f} combiné {rho(ll_c):.4f}  "
               f"α {alpha:.2f} β {beta:.2f}  paris {rec['bets']} P&L {rec['pnl']:+.2f}  capital {bank['capital']:.2f}", flush=True)
@@ -198,8 +217,12 @@ def main():
     mths = report["months"]
     tot = sum(x["races"] for x in mths)
     agg = lambda k: (sum(x[k] * x["races"] for x in mths if x[k] is not None) / tot) if tot else None
-    gate = dict(min_races=GATE["min_races"], min_delta_rho=GATE["min_delta_rho"], n_races_oos=tot, delta_rho_oos=agg("delta_rho"))
-    gate["passed"] = bool(gate["delta_rho_oos"] is not None and tot >= GATE["min_races"] and gate["delta_rho_oos"] >= GATE["min_delta_rho"])
+    totf = sum(x.get("races_final") or 0 for x in mths)
+    dfin = (sum((x.get("delta_rho_final") or 0) * (x.get("races_final") or 0) for x in mths) / totf) if totf else None
+    gate = dict(min_races=GATE["min_races"], min_delta_rho=GATE["min_delta_rho"], n_races_oos=tot, delta_rho_oos=agg("delta_rho"),
+                n_races_final=totf, delta_rho_final=dfin, reference="marché final")
+    # la porte se juge face au marché FINAL : battre la cote du matin ne suffit pas au pari mutuel
+    gate["passed"] = bool(dfin is not None and totf >= GATE["min_races"] and dfin >= GATE["min_delta_rho"])
     flat_out = {k: dict(v, roi=(v["ret"] - v["staked"]) / v["staked"] if v["staked"] else None) for k, v in flat.items()}
     markets = {mk: bool(gate["passed"] and flat_out.get(mk, {}).get("n", 0) >= GATE["market_min_bets"]
                         and (flat_out.get(mk, {}).get("roi") or -1) > 0) for mk in MARKETS}

@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-04T10:03:59Z",
+ "built_at": "2026-11-04T10:28:52Z",
  "runners": 213970,
  "roi_by_odds": [
   {
@@ -434,6 +434,69 @@
    "hit": 0.191
   }
  },
+ "final_odds_edge": [
+  {
+   "ratio": "0-0.8",
+   "gagnant": {
+    "n": 47255,
+    "roi": -0.5195,
+    "hit": 0.008
+   }
+  },
+  {
+   "ratio": "0.8-0.95",
+   "gagnant": {
+    "n": 88636,
+    "roi": -0.2286,
+    "hit": 0.044
+   }
+  },
+  {
+   "ratio": "0.95-1.05",
+   "gagnant": {
+    "n": 54828,
+    "roi": -0.1275,
+    "hit": 0.131
+   }
+  },
+  {
+   "ratio": "1.05-1.15",
+   "gagnant": {
+    "n": 22974,
+    "roi": -0.1184,
+    "hit": 0.301
+   }
+  },
+  {
+   "ratio": "1.15-1.3",
+   "gagnant": {
+    "n": 143,
+    "roi": -0.1224,
+    "hit": 0.385
+   }
+  },
+  {
+   "ratio": "1.3-100",
+   "gagnant": {
+    "n": 0,
+    "roi": null,
+    "hit": null
+   }
+  }
+ ],
+ "final_fav_roi": {
+  "n": 8821,
+  "roi": -0.0857,
+  "hit": 0.432
+ },
+ "final_vs_div": 0.017,
+ "rho_final": {
+  "courses": 18390,
+  "marche": 0.2057,
+  "combine": 0.2073,
+  "modele_seul": 0.1306,
+  "marche_matin": 0.1668
+ },
  "part_cote_directe": 0.0,
- "seconds": 173
+ "seconds": 149
 }

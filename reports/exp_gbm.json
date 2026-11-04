@@ -1,0 +1,179 @@
+{
+ "importance": {
+  "TROT": [
+   [
+    "class_jump",
+    196
+   ],
+   [
+    "drv_n",
+    171
+   ],
+   [
+    "trn_wr",
+    162
+   ],
+   [
+    "win_rate",
+    158
+   ],
+   [
+    "drv_wr",
+    144
+   ],
+   [
+    "log_prix",
+    136
+   ],
+   [
+    "red_resid",
+    108
+   ],
+   [
+    "log_courses",
+    90
+   ],
+   [
+    "log_gains_annee",
+    88
+   ],
+   [
+    "corde",
+    80
+   ],
+   [
+    "drv_ae",
+    78
+   ],
+   [
+    "red_best",
+    71
+   ]
+  ],
+  "PLAT": [
+   [
+    "trn_wr",
+    32
+   ],
+   [
+    "class_jump",
+    31
+   ],
+   [
+    "margin3",
+    21
+   ],
+   [
+    "drv_wr",
+    19
+   ],
+   [
+    "gains_per_race",
+    18
+   ],
+   [
+    "hist_beaten",
+    18
+   ],
+   [
+    "log_prix",
+    17
+   ],
+   [
+    "drv_n",
+    17
+   ],
+   [
+    "trn_ae",
+    16
+   ],
+   [
+    "log_gains_annee",
+    15
+   ],
+   [
+    "mus_form",
+    14
+   ],
+   [
+    "win_rate",
+    12
+   ]
+  ],
+  "OBSTACLE": [
+   [
+    "trn_wr",
+    54
+   ],
+   [
+    "drv_ae",
+    50
+   ],
+   [
+    "mus_form",
+    44
+   ],
+   [
+    "trn_n",
+    39
+   ],
+   [
+    "gains_per_race",
+    36
+   ],
+   [
+    "log_prix",
+    36
+   ],
+   [
+    "drv_n",
+    36
+   ],
+   [
+    "class_jump",
+    35
+   ],
+   [
+    "margin3",
+    33
+   ],
+   [
+    "place_rate",
+    28
+   ],
+   [
+    "drv_wr",
+    27
+   ],
+   [
+    "trn_ae",
+    27
+   ]
+  ]
+ },
+ "test_courses": 10185,
+ "periode_test": "2026-01-01 -> 2026-11-03",
+ "marche_final": 0.2072,
+ "logit_seul": 0.1416,
+ "gbm_seul": 0.0854,
+ "logit_plus_marche": 0.2088,
+ "gbm_plus_marche": 0.209,
+ "deux_plus_marche": 0.2089,
+ "poids": {
+  "logit": [
+   0.125,
+   1.007
+  ],
+  "gbm": [
+   0.409,
+   0.982
+  ],
+  "deux": [
+   0.221,
+   0.985
+  ]
+ },
+ "gain_logit_plus_marche": 0.0016,
+ "gain_gbm_plus_marche": 0.0018,
+ "gain_deux_plus_marche": 0.0017
+}

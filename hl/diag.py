@@ -33,16 +33,25 @@ def main():
         if len(prev) < 200:
             continue
         a, b = fit_stage2([oos[r["id"]] for r in prev], [mkt(r) for r in prev], [r["winner_idx"] for r in prev])
+        def mf(r):
+            of = [x["odds_final"] for x in r["rows"]]
+            return (np.array([1 / v for v in of]) / sum(1 / v for v in of)) if all(v and v > 1 for v in of) else None
+        prevf = [r for r in prev if mf(r) is not None]
+        af, bf = fit_stage2([oos[r["id"]] for r in prevf], [mf(r) for r in prevf], [r["winner_idx"] for r in prevf])
         gm, dl = fit_harville([combine(oos[r["id"]], mkt(r), a, b) for r in prev[-3000:]], [r["order"] for r in prev[-3000:]])
         for r in test:
             if r["id"] not in oos or r["winner_idx"] is None or mkt(r) is None or not r["div_sg"]:
                 continue
             pm = mkt(r); pc = combine(oos[r["id"]], pm, a, b); k = n_places(r["n"])
+            of = [x["odds_final"] for x in r["rows"]]
+            pmf = (np.array([1 / v for v in of]) / sum(1 / v for v in of)) if all(v and v > 1 for v in of) else None
+            pcf = combine(oos[r["id"]], pmf, af, bf) if pmf is not None else None
             pp = place_probs(pc, k, gm, dl) if k else np.zeros(r["n"])
             ppm = place_probs(pm, k, gm, dl) if k else np.zeros(r["n"])
             for i, x in enumerate(r["rows"]):
                 num = str(x["num"])
-                rows.append(dict(src=r.get("mkt_src"), month=r["month"], g=r["group"], n=r["n"], pc=float(pc[i]), pm=float(pm[i]), pf=float(oos[r["id"]][i]),
+                rows.append(dict(pmf=float(pmf[i]) if pmf is not None else None, pcf=float(pcf[i]) if pcf is not None else None,
+                                 src=r.get("mkt_src"), month=r["month"], g=r["group"], n=r["n"], pc=float(pc[i]), pm=float(pm[i]), pf=float(oos[r["id"]][i]),
                                  pp=float(pp[i]), ppm=float(ppm[i]), o_ref=x["odds_ref"], o_fin=x["odds_final"],
                                  win=int(i == r["winner_idx"]), dsg=r["div_sg"].get(num, 0.0),
                                  dsp=r["div_sp"].get(num, 0.0) if r["div_sp"] else None, k=k))
@@ -99,6 +108,21 @@ def main():
                           for lo, hi in [(1, 4), (4, 8), (8, 15), (15, 30), (30, 1000)]],
         ratio_1_5=roi([x for x in rows if x["g"] == "TROT" and x["pc"] / x["pm"] >= 1.5], "dsg"),
         ratio_1_2=roi([x for x in rows if x["g"] == "TROT" and x["pc"] / x["pm"] >= 1.2], "dsg"))
+    # 8. décision à la cote finale (proxy de la dernière minute) : ROI par écart modèle / marché final
+    fin = [x for x in rows if x["pmf"]]
+    out["final_odds_edge"] = [dict(ratio=f"{lo}-{hi}", gagnant=roi([x for x in fin if lo <= x["pcf"] / x["pmf"] < hi], "dsg"))
+                              for lo, hi in [(0, .8), (.8, .95), (.95, 1.05), (1.05, 1.15), (1.15, 1.3), (1.3, 100)]]
+    # contrôle de fuite : un marché final efficace doit rendre environ -15 % partout ; ROI du favori final
+    out["final_fav_roi"] = roi([x for x in fin if x["pmf"] >= 0.3], "dsg")
+    out["final_vs_div"] = round(sum(abs(1 / x["pmf"] * 0.85 - x["dsg"]) / x["dsg"] for x in fin if x["win"] and x["dsg"]) / max(1, sum(1 for x in fin if x["win"] and x["dsg"])), 3)
+    # 9. pouvoir prédictif face au marché final : ρ² modèle combiné (étage 2 réestimé sur le final) vs marché final
+    W = [x for x in fin if x["win"]]
+    if W:
+        ll0 = sum(-math.log(x["n"]) for x in W)
+        out["rho_final"] = dict(courses=len(W), marche=round(1 - sum(math.log(x["pmf"]) for x in W) / ll0, 4),
+                                combine=round(1 - sum(math.log(max(1e-9, x["pcf"])) for x in W) / ll0, 4),
+                                modele_seul=round(1 - sum(math.log(max(1e-9, x["pf"])) for x in W) / ll0, 4),
+                                marche_matin=round(1 - sum(math.log(x["pm"]) for x in W) / ll0, 4))
     out["part_cote_directe"] = round(sum(x["src"] == "DIRECT" for x in rows) / len(rows), 3)
     out["seconds"] = round(time.time() - t0)
     os.makedirs(os.path.join(ROOT, "reports"), exist_ok=True)
