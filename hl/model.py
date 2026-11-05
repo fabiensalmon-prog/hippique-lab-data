@@ -9,7 +9,9 @@ from .features import FEATURES
 class Design:
     """Courses -> matrice concaténée + index de segments (une course = un segment)."""
 
-    def __init__(self, races, means=None, stds=None):
+    def __init__(self, races, means=None, stds=None, features=None):
+        feats = list(features or FEATURES)
+        idx = {k: i for i, k in enumerate(FEATURES)}
         rows, starts, y, self.meta = [], [], [], []
         for r in races:
             if r["winner_idx"] is None:
@@ -17,12 +19,16 @@ class Design:
             starts.append(len(rows))
             y.append(len(rows) + r["winner_idx"])
             for x in r["rows"]:
-                rows.append([np.nan if x["x"].get(k) is None else float(x["x"][k]) for k in FEATURES])
+                v = x["x"]
+                if isinstance(v, np.ndarray):          # forme compacte (build_dataset compact=True), ordre FEATURES
+                    rows.append(v if feats == FEATURES else v[[idx[k] for k in feats]])
+                else:
+                    rows.append([np.nan if v.get(k) is None else float(v[k]) for k in feats])
             self.meta.append(r)
-        X = np.array(rows, dtype=float) if rows else np.zeros((0, len(FEATURES)))
+        X = np.array(rows, dtype=float) if rows else np.zeros((0, len(feats)))
         if means is None:
-            means = np.nanmean(X, axis=0) if len(X) else np.zeros(len(FEATURES))
-            stds = np.nanstd(X, axis=0) if len(X) else np.ones(len(FEATURES))
+            means = np.nanmean(X, axis=0) if len(X) else np.zeros(len(feats))
+            stds = np.nanstd(X, axis=0) if len(X) else np.ones(len(feats))
             means = np.nan_to_num(means); stds = np.where(np.nan_to_num(stds) < 1e-9, 1.0, np.nan_to_num(stds))
         self.means, self.stds = means, stds
         X = (X - means) / stds
@@ -184,11 +190,16 @@ def fit_pair_dividend(samples):
     b = np.array([math.log(dv) for *_, dv in samples])
     coef, *_ = np.linalg.lstsq(A, b, rcond=None)
     resid = b - A @ coef
-    return coef.tolist() + [float(np.var(resid))]       # dernier terme : variance résiduelle (correction log-normale)
+    # V1.2 : variance résiduelle qui dépend du niveau de cote (les couples de favoris varient beaucoup moins) ;
+    # une variance unique surestimait de ~10 % les dividendes attendus des couples courts
+    vc, *_ = np.linalg.lstsq(A[:, :2], resid ** 2, rcond=None)
+    return coef.tolist() + [float(np.var(resid)), float(vc[0]), float(vc[1])]
 
 
 def pair_expected(coef, oi, oj, n):
     if not coef:
         return None
-    mu = coef[0] + coef[1] * math.log(oi * oj) + coef[2] * math.log(n)
-    return math.exp(mu + 0.5 * coef[3])
+    lo = math.log(oi * oj)
+    mu = coef[0] + coef[1] * lo + coef[2] * math.log(n)
+    var = min(coef[3], max(0.01, coef[4] + coef[5] * lo)) if len(coef) >= 6 else coef[3]
+    return math.exp(mu + 0.5 * var)

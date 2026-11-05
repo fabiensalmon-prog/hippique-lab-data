@@ -61,15 +61,16 @@ def _days(a, b):
 
 class Decayed:
     """Compteurs à décroissance exponentielle (demi-vie 180 jours) : courses, victoires, victoires attendues par le marché."""
-    __slots__ = ("n", "w", "e", "d")
+    __slots__ = ("n", "w", "e", "d", "hl")
 
-    def __init__(self):
+    def __init__(self, hl=HALF_LIFE):
         self.n = self.w = self.e = 0.0
         self.d = None
+        self.hl = hl
 
     def _decay(self, d):
         if self.d:
-            f = 0.5 ** (_days(self.d, d) / HALF_LIFE)
+            f = 0.5 ** (_days(self.d, d) / self.hl)
             self.n *= f; self.w *= f; self.e *= f
         self.d = d
 
@@ -79,7 +80,7 @@ class Decayed:
     def stats(self, d, prior_n=20.0, prior_wr=0.1):
         n, w, e = self.n, self.w, self.e
         if self.d:
-            f = 0.5 ** (_days(self.d, d) / HALF_LIFE); n, w, e = n * f, w * f, e * f
+            f = 0.5 ** (_days(self.d, d) / self.hl); n, w, e = n * f, w * f, e * f
         wr = (w + prior_wr * prior_n) / (n + prior_n)
         ae = (w + 5.0) / (e + 5.0)        # victoires réelles / attendues par le marché, lissé
         return wr, math.log(ae), math.log1p(n)
@@ -101,7 +102,24 @@ FEATURES = [
     "h2h_score", "h2h_n", "margin3",
     # vitesses normalisées au trot (réduction kilométrique corrigée de la piste, de la distance, du départ et du jour)
     "spd_last", "spd_avg3", "spd_best5", "spd_dist", "spd_n",
+    # V1.2 (étude 2020-2026) : entourage par discipline / hippodrome / forme récente, duo entraîneur-driver, étalon, corde
+    "drv_disc_ae", "trn_disc_ae", "trn_hot_ae", "trn_track_ae", "drv_track_ae", "trn_drv_ae", "sire_ae", "draw_ae",
 ]
+
+
+def draw_key(race, u):
+    """Biais de corde / place derrière l'autostart, par hippodrome, discipline et distance."""
+    if race["group"] == "TROT" and not race["autostart"]:
+        return None
+    c = u["corde"] if race["group"] != "TROT" else u["num"]
+    try:
+        c = int(c)
+    except (TypeError, ValueError):
+        return None
+    if c <= 0:
+        return None
+    b = 1 if c <= 2 else 2 if c <= 4 else 3 if c <= 7 else 4 if c <= 10 else 5
+    return (race["hippodrome"], race["discipline"], int((race["distance"] or 0) / 200), b)
 
 
 class FeatureState:
@@ -113,6 +131,8 @@ class FeatureState:
         self.par = {}                           # (hippodrome, spécialité, autostart, distance arrondie) -> [réduction de référence, n]
         self.variant = {}                       # (date, hippodrome, spécialité) -> [somme des écarts du jour, n]
         self.h2h = {}                           # (cheval a, cheval b) trié -> [a devant b, b devant a]
+        self.ctx = defaultdict(lambda: Decayed(365.0))   # V1.2 : (type, clé...) -> victoires / attendues par le marché
+        self.hot = defaultdict(lambda: Decayed(21.0))    # V1.2 : forme des 3 dernières semaines
 
     # ---------- variables pré-course ----------
     def features(self, race):
@@ -196,6 +216,18 @@ class FeatureState:
                 f.update(spd_last=None, spd_avg3=None, spd_best5=None, spd_dist=None, spd_n=0.0)
             mg = [x["lengths"] for x in hist[-3:] if x.get("lengths") is not None] if hist else []
             f["margin3"] = -sum(mg) / len(mg) if mg else None
+            # V1.2 : log(victoires / victoires attendues par le marché), lissé, informations antérieures uniquement
+            tr, dr, sire = u["trainer"], u["driver"], u.get("sire")
+            ae = lambda store, key: store[key].stats(d)[1] if key in store else 0.0
+            dk = draw_key(race, u)
+            f.update(drv_disc_ae=ae(self.ctx, ("DC", dr, race["discipline"])) if dr else None,
+                     trn_disc_ae=ae(self.ctx, ("TC", tr, race["discipline"])) if tr else None,
+                     trn_hot_ae=ae(self.hot, tr) if tr else None,
+                     trn_track_ae=ae(self.ctx, ("TT", tr, race["hippodrome"])) if tr else None,
+                     drv_track_ae=ae(self.ctx, ("DT", dr, race["hippodrome"])) if dr else None,
+                     trn_drv_ae=ae(self.ctx, ("TD", tr, dr)) if tr and dr else None,
+                     sire_ae=ae(self.ctx, ("S", grp, sire)) if sire else None,
+                     draw_ae=ae(self.ctx, ("DR",) + dk) if dk else None)
             rows.append(dict(num=u["num"], nom=u["nom"], horse=u["horse"], driver=u["driver"], x=f,
                              odds_ref=u["odds_mkt"], odds_final=u["odds_final"], place=u["place"]))
         return rows
@@ -244,6 +276,17 @@ class FeatureState:
                 self.drv[u["driver"]].add(d, won, pe)
             if u["trainer"]:
                 self.trn[u["trainer"]].add(d, won, pe)
+                self.hot[u["trainer"]].add(d, won, pe)
+            tr, dr, sire = u["trainer"], u["driver"], u.get("sire")
+            keys = []
+            if dr: keys += [("DC", dr, race["discipline"]), ("DT", dr, race["hippodrome"])]
+            if tr: keys += [("TC", tr, race["discipline"]), ("TT", tr, race["hippodrome"])]
+            if tr and dr: keys.append(("TD", tr, dr))
+            if sire: keys.append(("S", race["group"], sire))
+            dk = draw_key(race, u)
+            if dk: keys.append(("DR",) + dk)
+            for k in keys:
+                self.ctx[k].add(d, won, pe)
             cb = self.combo.setdefault((u["horse"], u["driver"]), [0.0, 0.0]); cb[0] += 1; cb[1] += won
         # confrontations directes : qui a fini devant qui (non classés derniers)
         rank = {u["horse"]: (u["place"] if isinstance(u["place"], int) and u["place"] > 0 else 99) for u in runners}

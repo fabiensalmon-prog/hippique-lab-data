@@ -21,11 +21,16 @@ from .decide import analyse, size, RULES, MARKETS
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 GROUPS = ("TROT", "PLAT", "OBSTACLE")
 MIN_TRAIN_MONTHS = int(os.environ.get("HL_MIN_TRAIN_MONTHS", "2"))
+# V1.2 : l'historique couvre plusieurs saisons ; le backtest commence en TEST_FROM (entraînement sur tout ce qui précède)
+# et l'étage 1 est réestimé tous les REFIT_MONTHS mois (départ à chaud), l'étage 2 chaque mois.
+TEST_FROM = os.environ.get("HL_TEST_FROM", "2023-01")
+REFIT_MONTHS = int(os.environ.get("HL_REFIT_MONTHS", "3"))
 L2 = 2.0
 GATE = dict(min_races=1000, min_delta_rho=0.005, market_min_bets=300)
 
 
-def build_dataset():
+def build_dataset(compact=False):
+    """compact=True : variables stockées en tableau float32 (ordre FEATURES) pour tenir en mémoire sur 6+ saisons."""
     st = FeatureState()
     out = []
     for race in iter_races():
@@ -33,6 +38,9 @@ def build_dataset():
         st.update(race)
         if len(rows) < 4:
             continue
+        if compact:
+            for x in rows:
+                x["x"] = np.array([np.nan if x["x"].get(k) is None else x["x"][k] for k in FEATURES], dtype=np.float32)
         nums = [r["num"] for r in rows]
         w = race["arrivee"][0] if race["arrivee"] else None
         out.append(dict(id=race["id"], date=race["date"], month=race["date"][:7], group=race["group"], rows=rows,
@@ -43,16 +51,17 @@ def build_dataset():
     return out, st
 
 
-def fit_group(races):
+def fit_group(races, w0=None):
     D = Design(races)
     if len(D.starts) < 50:
         return None
-    w = fit_clogit(D.X, D.starts, D.seg, D.y, l2=L2)
-    return dict(w=w.tolist(), means=D.means.tolist(), stds=D.stds.tolist(), n_races=int(len(D.starts)))
+    w = fit_clogit(D.X, D.starts, D.seg, D.y, l2=L2, w0=w0)
+    return dict(w=w.tolist(), means=D.means.tolist(), stds=D.stds.tolist(), n_races=int(len(D.starts)), features=list(FEATURES))
 
 
 def predict_group(model, races):
-    D = Design(races, np.array(model["means"]), np.array(model["stds"]))
+    feats = model.get("features") or FEATURES[:len(model["w"])]     # modèles antérieurs à V1.2 : préfixe de FEATURES
+    D = Design(races, np.array(model["means"]), np.array(model["stds"]), features=feats)
     if not len(D.starts):
         return {}
     p = probs(D.X, D.starts, D.seg, np.array(model["w"]))
@@ -115,7 +124,7 @@ def settle(r, b):
 
 def main():
     t0 = time.time()
-    data, _ = build_dataset()
+    data, _ = build_dataset(compact=True)
     months = sorted({r["month"] for r in data})
     print(f"{len(data)} courses, {len(months)} mois : {months[:1]} -> {months[-1:]}", flush=True)
     oos = {}
@@ -125,15 +134,20 @@ def main():
     by_group = defaultdict(lambda: dict(races=0, ll_f=0.0, ll_m=0.0, ll_c=0.0, ll_0=0.0))
     bets_log = []
     top1 = defaultdict(lambda: dict(n=0, p1=0, p2=0, p3=0, p4=0, ret_win=0.0, n_place=0, ret_place=0.0))
+    stage1, last_fit = {}, None
     for mi, m in enumerate(months):
+        if mi < MIN_TRAIN_MONTHS or m < TEST_FROM:
+            continue
         train = [r for r in data if r["month"] < m]
         test = [r for r in data if r["month"] == m]
-        if mi < MIN_TRAIN_MONTHS:
-            continue
+        if last_fit is None or mi - last_fit >= REFIT_MONTHS:
+            for g in GROUPS:
+                w0 = np.array(stage1[g]["w"]) if stage1.get(g) else None
+                stage1[g] = fit_group([r for r in train if r["group"] == g], w0=w0)
+            last_fit = mi
         for g in GROUPS:
-            mdl = fit_group([r for r in train if r["group"] == g])
-            if mdl:
-                oos.update(predict_group(mdl, [r for r in test if r["group"] == g]))
+            if stage1.get(g):
+                oos.update(predict_group(stage1[g], [r for r in test if r["group"] == g]))
         prev = [r for r in train if r["id"] in oos and r["winner_idx"] is not None and mkt(r) is not None]
         if len(prev) < 200:
             continue
@@ -206,7 +220,7 @@ def main():
         print(f"{m}: {len(ev)} courses  ρ² fond {rho(ll_f):.4f} marché {rho(ll_m):.4f} combiné {rho(ll_c):.4f}  "
               f"α {alpha:.2f} β {beta:.2f}  paris {rec['bets']} P&L {rec['pnl']:+.2f}  capital {bank['capital']:.2f}", flush=True)
     # ---------- modèle final pour le live ----------
-    final = {g: fit_group([r for r in data if r["group"] == g]) for g in GROUPS}
+    final = {g: fit_group([r for r in data if r["group"] == g], w0=np.array(stage1[g]["w"]) if stage1.get(g) else None) for g in GROUPS}
     prev = [r for r in data if r["id"] in oos and r["winner_idx"] is not None and mkt(r) is not None]
     if len(prev) >= 200:
         alpha, beta = fit_stage2([oos[r["id"]] for r in prev], [mkt(r) for r in prev], [r["winner_idx"] for r in prev])
@@ -227,7 +241,7 @@ def main():
     markets = {mk: bool(gate["passed"] and flat_out.get(mk, {}).get("n", 0) >= GATE["market_min_bets"]
                         and (flat_out.get(mk, {}).get("roi") or -1) > 0) for mk in MARKETS}
     gate["markets"] = markets
-    latest = dict(version="HL-V1.1." + time.strftime("%Y%m%d", time.gmtime()), features=FEATURES, groups=final,
+    latest = dict(version="HL-V1.2." + time.strftime("%Y%m%d", time.gmtime()), features=FEATURES, groups=final,
                   stage2=dict(alpha=alpha if gate["passed"] else 0.0, alpha_fitted=alpha, beta=beta, gamma=gamma, delta=delta,
                               markets=markets, **dividend_params(data)),
                   gate=gate, data_range=[data[0]["date"], data[-1]["date"]] if data else None, rules=RULES,

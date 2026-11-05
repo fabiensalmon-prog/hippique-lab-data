@@ -6,7 +6,7 @@ Pilote : J1 = 2026-11-03 (moteur V0), J2 et suivants : moteur V1. Capital initia
 ## Qui fait quoi
 | Heure (Paris) | Où | Quoi |
 |---|---|---|
-| Toutes les heures | GitHub `collect.yml` | Remonte l'historique PMU, 30 jours par run, jusqu'au 01/11/2024 |
+| Toutes les heures | GitHub `collect.yml` | Remonte l'historique PMU, 45 jours par run, jusqu'au 01/01/2017 |
 | 04:40 | GitHub `train.yml` | Variables, logit conditionnel trot/plat, backtest walk-forward, second étage, porte de validation → `models/latest.json`, `reports/backtest.json` |
 | 08:50 | GitHub `daily.yml` morning | Programme + partants + rapports probables du jour → `live/<date>/morning.json` |
 | 09:33 | Tâche Claude « Run matin » | `python3 -m hl.sync morning …` → dashboard (courses, prédictions, tickets en euros) |
@@ -29,7 +29,8 @@ Pilote : J1 = 2026-11-03 (moteur V0), J2 et suivants : moteur V1. Capital initia
 - Laboratoire (500 € fictifs séparés, collection `labbets`) : un pari par course, choisi par croissance de Kelly parmi gagnant, placé, couplé gagnant, 2sur4, portes ignorées.
 
 ## Modèle V1
-- Étage 1 : logit conditionnel séparé trot / plat, 54 variables (`hl/features.py`), toutes calculées avec l'information antérieure à la course.
+- Étage 1 : logit conditionnel séparé trot / plat / obstacle, 68 variables (`hl/features.py`), toutes calculées avec l'information antérieure à la course.
+- V1.2 (05/11/2026) : entraînement sur tout l'historique collecté (depuis 2020), backtest 2023-2026 (étage 1 réestimé tous les 3 mois) ; 8 variables ajoutées après l'étude des récurrences (entraîneur et driver par discipline et par hippodrome, forme de l'entraîneur sur 3 semaines, duo entraîneur-driver, étalon, biais de corde) ; dividendes couplé / 2sur4 attendus avec une variance qui dépend du niveau de cote (fin de la surestimation d'environ 10 % sur les couples de favoris).
 - Étage 2 (Benter) : softmax(α·log P fondamentale + β·log P marché), estimé sur prédictions hors échantillon.
 - Placé : Harville corrigé (γ, δ estimés), dividende placé attendu par régression sur l'historique.
 - Exotiques : meilleur couplé gagnant enregistré en observation, jamais misé.

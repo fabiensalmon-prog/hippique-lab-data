@@ -22,6 +22,12 @@ def ecart_longueurs(d):
     except (ValueError, IndexError):
         return None
 from datetime import date
+import unicodedata
+
+
+def _norm_name(s):
+    s = unicodedata.normalize("NFD", (s or "").upper())
+    return "".join(ch for ch in s if unicodedata.category(ch) != "Mn").strip() or None
 
 ROOT = os.environ.get("HL_DATA") or os.path.join(os.path.dirname(__file__), "..", "data")
 DISC = {"ATTELE": "TROT", "MONTE": "TROT", "PLAT": "PLAT", "HAIE": "OBSTACLE", "STEEPLECHASE": "OBSTACLE", "CROSS": "OBSTACLE"}
@@ -114,6 +120,7 @@ def normalize(dayobj):
                 corde=p.get("placeCorde"), recul=p.get("handicapDistance"), deferre=p.get("deferre") or "",
                 oeilleres=p.get("oeilleres") or "", driver_change=bool(p.get("driverChange")),
                 inedit=bool(p.get("indicateurInedit")), avis=p.get("avisEntraineur") or "",
+                sire=_norm_name(p.get("nomPere")),
                 odds_ref=_rap(p, "dernierRapportReference"), odds_final=_rap(p, "dernierRapportDirect"),
                 # --- informations APRÈS course : jamais utilisées comme variables de cette course ---
                 place=p.get("ordreArrivee"), incident=p.get("incident") or "", red_km=p.get("reductionKilometrique"),
