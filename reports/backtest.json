@@ -3,242 +3,242 @@
   {
    "month": "2023-02",
    "races": 746,
-   "alpha": 0.323,
-   "beta": 0.833,
+   "alpha": 0.32,
+   "beta": 0.837,
    "gamma": 0.8,
    "delta": 0.7,
-   "rho_fund": 0.13910309002261934,
+   "rho_fund": 0.1405271272869938,
    "rho_mkt": 0.15486757173685406,
-   "rho_comb": 0.16438840704936286,
-   "delta_rho": 0.009520835312508802,
-   "bets": 59,
-   "pnl": 37.6,
+   "rho_comb": 0.1648816820296427,
+   "delta_rho": 0.010014110292788647,
+   "bets": 55,
+   "pnl": 19.5,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 21,
-     "pnl": 71.1
+     "n": 17,
+     "pnl": 86.2
     },
     "COUPLE_GAGNANT": {
-     "n": 12,
-     "pnl": -28.0
+     "n": 14,
+     "pnl": -31.5
     },
     "DEUX_SUR_QUATRE": {
-     "n": 25,
-     "pnl": -10.5
+     "n": 22,
+     "pnl": -35.7
     },
     "SIMPLE_PLACE": {
-     "n": 1,
-     "pnl": 5.0
+     "n": 2,
+     "pnl": 0.5
     }
    },
-   "capital": 537.6,
+   "capital": 519.5,
    "races_final": 746,
    "rho_mkt_final": 0.18845059115895435,
-   "rho_comb_final": 0.1906303835750104,
-   "delta_rho_final": 0.0021797924160560367
+   "rho_comb_final": 0.1906630773330058,
+   "delta_rho_final": 0.0022124861740514534
   },
   {
    "month": "2023-03",
    "races": 845,
-   "alpha": 0.357,
-   "beta": 0.786,
+   "alpha": 0.363,
+   "beta": 0.783,
    "gamma": 0.8,
    "delta": 0.7,
-   "rho_fund": 0.14513952646582418,
+   "rho_fund": 0.1464837825692964,
    "rho_mkt": 0.1711013212220338,
-   "rho_comb": 0.17802586433176226,
-   "delta_rho": 0.006924543109728454,
-   "bets": 103,
-   "pnl": -84.25,
+   "rho_comb": 0.1784690352920324,
+   "delta_rho": 0.007367714069998588,
+   "bets": 107,
+   "pnl": -46.45,
    "by_market": {
+    "DEUX_SUR_QUATRE": {
+     "n": 38,
+     "pnl": -43.35
+    },
     "COUPLE_GAGNANT": {
      "n": 26,
-     "pnl": 3.55
-    },
-    "DEUX_SUR_QUATRE": {
-     "n": 37,
-     "pnl": -70.5
+     "pnl": -17.7
     },
     "SIMPLE_GAGNANT": {
-     "n": 28,
-     "pnl": -25.6
+     "n": 29,
+     "pnl": 2.35
     },
     "SIMPLE_PLACE": {
-     "n": 12,
-     "pnl": 8.3
+     "n": 14,
+     "pnl": 12.25
     }
    },
-   "capital": 453.35,
+   "capital": 473.05,
    "races_final": 845,
    "rho_mkt_final": 0.20612656992278644,
-   "rho_comb_final": 0.2080405511820259,
-   "delta_rho_final": 0.0019139812592394723
+   "rho_comb_final": 0.20809676571279934,
+   "delta_rho_final": 0.0019701957900128964
   },
   {
    "month": "2023-04",
    "races": 846,
-   "alpha": 0.344,
-   "beta": 0.8,
+   "alpha": 0.353,
+   "beta": 0.795,
    "gamma": 0.8,
    "delta": 0.7,
-   "rho_fund": 0.13702693686473622,
+   "rho_fund": 0.13694401596509442,
    "rho_mkt": 0.14830010899504742,
-   "rho_comb": 0.15886446206406912,
-   "delta_rho": 0.010564353069021704,
-   "bets": 70,
-   "pnl": -88.75,
+   "rho_comb": 0.15898807813100713,
+   "delta_rho": 0.010687969135959707,
+   "bets": 80,
+   "pnl": -98.7,
    "by_market": {
-    "COUPLE_GAGNANT": {
-     "n": 21,
-     "pnl": -31.55
+    "SIMPLE_PLACE": {
+     "n": 10,
+     "pnl": -41.5
     },
-    "DEUX_SUR_QUATRE": {
-     "n": 28,
-     "pnl": -30.4
+    "COUPLE_GAGNANT": {
+     "n": 23,
+     "pnl": -18.5
     },
     "SIMPLE_GAGNANT": {
-     "n": 15,
-     "pnl": -11.2
+     "n": 17,
+     "pnl": -4.4
     },
-    "SIMPLE_PLACE": {
-     "n": 6,
-     "pnl": -15.6
+    "DEUX_SUR_QUATRE": {
+     "n": 30,
+     "pnl": -34.3
     }
    },
-   "capital": 364.6,
+   "capital": 374.35,
    "races_final": 846,
    "rho_mkt_final": 0.17855229832343567,
-   "rho_comb_final": 0.17969710005594808,
-   "delta_rho_final": 0.0011448017325124127
+   "rho_comb_final": 0.1797291990493809,
+   "delta_rho_final": 0.001176900725945229
   },
   {
    "month": "2023-05",
    "races": 924,
-   "alpha": 0.369,
-   "beta": 0.764,
+   "alpha": 0.376,
+   "beta": 0.761,
    "gamma": 0.8,
    "delta": 0.7,
-   "rho_fund": 0.1267549662026327,
+   "rho_fund": 0.12808659632467534,
    "rho_mkt": 0.14147155104672926,
-   "rho_comb": 0.1499867878449559,
-   "delta_rho": 0.008515236798226633,
-   "bets": 80,
-   "pnl": -66.6,
+   "rho_comb": 0.15047491923205936,
+   "delta_rho": 0.009003368185330096,
+   "bets": 98,
+   "pnl": -38.2,
    "by_market": {
     "DEUX_SUR_QUATRE": {
-     "n": 36,
-     "pnl": 6.45
+     "n": 37,
+     "pnl": 17.75
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 37,
+     "pnl": -13.6
     },
     "COUPLE_GAGNANT": {
-     "n": 16,
-     "pnl": -50.5
+     "n": 20,
+     "pnl": -36.3
     },
     "SIMPLE_PLACE": {
      "n": 4,
-     "pnl": -6.7
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 24,
-     "pnl": -15.85
+     "pnl": -6.05
     }
    },
-   "capital": 298.0,
+   "capital": 336.15,
    "races_final": 924,
    "rho_mkt_final": 0.17659398755717504,
-   "rho_comb_final": 0.17764211560299858,
-   "delta_rho_final": 0.0010481280458235487
+   "rho_comb_final": 0.17770182105400734,
+   "delta_rho_final": 0.0011078334968323
   },
   {
    "month": "2023-06",
    "races": 888,
-   "alpha": 0.372,
-   "beta": 0.75,
+   "alpha": 0.379,
+   "beta": 0.745,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.1464630959568407,
+   "rho_fund": 0.1466738280990979,
    "rho_mkt": 0.17453855503433013,
-   "rho_comb": 0.1819601780575999,
-   "delta_rho": 0.007421623023269763,
-   "bets": 78,
-   "pnl": -48.7,
+   "rho_comb": 0.1821894880595306,
+   "delta_rho": 0.007650933025200479,
+   "bets": 97,
+   "pnl": -79.0,
    "by_market": {
     "DEUX_SUR_QUATRE": {
-     "n": 11,
-     "pnl": -15.75
+     "n": 10,
+     "pnl": -13.95
     },
     "SIMPLE_GAGNANT": {
-     "n": 38,
-     "pnl": 18.85
+     "n": 46,
+     "pnl": 11.0
     },
     "COUPLE_GAGNANT": {
-     "n": 22,
-     "pnl": -21.9
+     "n": 33,
+     "pnl": -47.4
     },
     "SIMPLE_PLACE": {
-     "n": 7,
-     "pnl": -29.9
+     "n": 8,
+     "pnl": -28.65
     }
    },
-   "capital": 249.3,
+   "capital": 257.15,
    "races_final": 888,
    "rho_mkt_final": 0.20647267719011475,
-   "rho_comb_final": 0.20865986189753738,
-   "delta_rho_final": 0.002187184707422629
+   "rho_comb_final": 0.2086468630899524,
+   "delta_rho_final": 0.002174185899837644
   },
   {
    "month": "2023-07",
    "races": 947,
-   "alpha": 0.363,
-   "beta": 0.766,
+   "alpha": 0.37,
+   "beta": 0.761,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.1243319061853908,
+   "rho_fund": 0.12530772546949043,
    "rho_mkt": 0.16535941132817455,
-   "rho_comb": 0.16785013244348657,
-   "delta_rho": 0.0024907211153120112,
-   "bets": 43,
-   "pnl": -39.6,
+   "rho_comb": 0.16823798206785057,
+   "delta_rho": 0.002878570739676012,
+   "bets": 50,
+   "pnl": -41.85,
    "by_market": {
-    "SIMPLE_PLACE": {
-     "n": 7,
-     "pnl": -14.45
-    },
     "SIMPLE_GAGNANT": {
      "n": 15,
-     "pnl": -7.85
+     "pnl": -3.05
+    },
+    "SIMPLE_PLACE": {
+     "n": 8,
+     "pnl": -14.85
     },
     "COUPLE_GAGNANT": {
-     "n": 14,
-     "pnl": -2.5
+     "n": 19,
+     "pnl": -5.2
     },
     "DEUX_SUR_QUATRE": {
-     "n": 7,
-     "pnl": -14.8
+     "n": 8,
+     "pnl": -18.75
     }
    },
-   "capital": 209.7,
+   "capital": 215.3,
    "races_final": 947,
    "rho_mkt_final": 0.19254987289353698,
-   "rho_comb_final": 0.19369357392836584,
-   "delta_rho_final": 0.001143701034828859
+   "rho_comb_final": 0.19371280958633397,
+   "delta_rho_final": 0.0011629366927969897
   },
   {
    "month": "2023-08",
    "races": 931,
-   "alpha": 0.341,
-   "beta": 0.789,
+   "alpha": 0.348,
+   "beta": 0.783,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.11546060760519283,
+   "rho_fund": 0.11448571664544482,
    "rho_mkt": 0.1574058892147493,
-   "rho_comb": 0.16045825506741085,
-   "delta_rho": 0.003052365852661554,
+   "rho_comb": 0.1601952816413177,
+   "delta_rho": 0.0027893924265683934,
    "bets": 43,
-   "pnl": -1.65,
+   "pnl": -9.9,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 17,
-     "pnl": 21.1
+     "n": 19,
+     "pnl": 5.8
     },
     "SIMPLE_PLACE": {
      "n": 6,
@@ -246,69 +246,69 @@
     },
     "DEUX_SUR_QUATRE": {
      "n": 8,
-     "pnl": -26.1
+     "pnl": -25.6
     },
     "COUPLE_GAGNANT": {
-     "n": 12,
-     "pnl": 3.3
+     "n": 10,
+     "pnl": 9.85
     }
    },
-   "capital": 208.05,
+   "capital": 205.4,
    "races_final": 931,
    "rho_mkt_final": 0.18546735626761168,
-   "rho_comb_final": 0.18729797827311134,
-   "delta_rho_final": 0.0018306220054996603
+   "rho_comb_final": 0.18719394937340006,
+   "delta_rho_final": 0.0017265931057883765
   },
   {
    "month": "2023-09",
    "races": 887,
-   "alpha": 0.324,
-   "beta": 0.808,
+   "alpha": 0.329,
+   "beta": 0.804,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.14957047679558377,
+   "rho_fund": 0.15019878521950936,
    "rho_mkt": 0.17120371645288168,
-   "rho_comb": 0.1823548584183372,
-   "delta_rho": 0.011151141965455524,
-   "bets": 24,
-   "pnl": -12.1,
+   "rho_comb": 0.1827610848294362,
+   "delta_rho": 0.011557368376554522,
+   "bets": 26,
+   "pnl": -16.25,
    "by_market": {
     "COUPLE_GAGNANT": {
-     "n": 5,
-     "pnl": -11.0
+     "n": 6,
+     "pnl": -11.5
     },
     "SIMPLE_GAGNANT": {
-     "n": 8,
-     "pnl": 8.0
-    },
-    "SIMPLE_PLACE": {
-     "n": 4,
-     "pnl": 4.4
+     "n": 10,
+     "pnl": 4.0
     },
     "DEUX_SUR_QUATRE": {
      "n": 7,
-     "pnl": -13.5
+     "pnl": -13.55
+    },
+    "SIMPLE_PLACE": {
+     "n": 3,
+     "pnl": 4.8
     }
    },
-   "capital": 195.95,
+   "capital": 189.15,
    "races_final": 887,
    "rho_mkt_final": 0.20570919229584295,
-   "rho_comb_final": 0.20929367880592553,
-   "delta_rho_final": 0.003584486510082585
+   "rho_comb_final": 0.20932395931444148,
+   "delta_rho_final": 0.0036147670185985303
   },
   {
    "month": "2023-10",
    "races": 867,
-   "alpha": 0.334,
-   "beta": 0.807,
+   "alpha": 0.34,
+   "beta": 0.803,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.15178465525344764,
+   "rho_fund": 0.15328510342535484,
    "rho_mkt": 0.16694102217820517,
-   "rho_comb": 0.17909450029444318,
-   "delta_rho": 0.012153478116238015,
-   "bets": 29,
-   "pnl": -4.38,
+   "rho_comb": 0.17980075713731292,
+   "delta_rho": 0.01285973495910775,
+   "bets": 31,
+   "pnl": -5.78,
    "by_market": {
     "COUPLE_GAGNANT": {
      "n": 2,
@@ -319,1091 +319,1067 @@
      "pnl": -5.97
     },
     "SIMPLE_GAGNANT": {
-     "n": 7,
-     "pnl": -7.9
+     "n": 9,
+     "pnl": -6.4
     },
     "DEUX_SUR_QUATRE": {
      "n": 16,
-     "pnl": 14.0
+     "pnl": 11.1
     }
    },
-   "capital": 191.58,
+   "capital": 183.37,
    "races_final": 867,
    "rho_mkt_final": 0.20516423185239996,
-   "rho_comb_final": 0.2082246524539223,
-   "delta_rho_final": 0.00306042060152234
+   "rho_comb_final": 0.20830140464694946,
+   "delta_rho_final": 0.003137172794549503
   },
   {
    "month": "2023-11",
    "races": 833,
-   "alpha": 0.346,
-   "beta": 0.801,
+   "alpha": 0.353,
+   "beta": 0.796,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.12834150981652803,
+   "rho_fund": 0.12970957594817567,
    "rho_mkt": 0.15118117424690292,
-   "rho_comb": 0.1596918858004157,
-   "delta_rho": 0.008510711553512795,
-   "bets": 48,
-   "pnl": 37.65,
+   "rho_comb": 0.1602584923617647,
+   "delta_rho": 0.009077318114861788,
+   "bets": 49,
+   "pnl": 20.55,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 20,
-     "pnl": -7.65
+     "n": 21,
+     "pnl": -10.0
     },
     "DEUX_SUR_QUATRE": {
      "n": 17,
-     "pnl": 34.2
+     "pnl": 21.95
     },
     "COUPLE_GAGNANT": {
      "n": 7,
-     "pnl": 19.1
+     "pnl": 15.85
     },
     "SIMPLE_PLACE": {
      "n": 4,
-     "pnl": -8.0
+     "pnl": -7.25
     }
    },
-   "capital": 229.23,
+   "capital": 203.92,
    "races_final": 833,
    "rho_mkt_final": 0.18373905093475118,
-   "rho_comb_final": 0.18518181155106295,
-   "delta_rho_final": 0.0014427606163117668
+   "rho_comb_final": 0.18524944955938383,
+   "delta_rho_final": 0.0015103986246326473
   },
   {
    "month": "2023-12",
    "races": 822,
-   "alpha": 0.348,
-   "beta": 0.798,
+   "alpha": 0.355,
+   "beta": 0.793,
    "gamma": 0.8,
    "delta": 0.7,
-   "rho_fund": 0.10990349673238609,
+   "rho_fund": 0.11039212391492725,
    "rho_mkt": 0.14416792139229895,
-   "rho_comb": 0.14811978973139228,
-   "delta_rho": 0.003951868339093334,
-   "bets": 69,
-   "pnl": -5.65,
+   "rho_comb": 0.14841620347717543,
+   "delta_rho": 0.004248282084876487,
+   "bets": 63,
+   "pnl": -22.1,
    "by_market": {
     "COUPLE_GAGNANT": {
-     "n": 11,
-     "pnl": 2.2
+     "n": 10,
+     "pnl": -1.35
     },
     "SIMPLE_GAGNANT": {
-     "n": 13,
-     "pnl": -20.5
+     "n": 11,
+     "pnl": -10.1
     },
     "DEUX_SUR_QUATRE": {
-     "n": 43,
-     "pnl": 6.65
+     "n": 40,
+     "pnl": -15.45
     },
     "SIMPLE_PLACE": {
      "n": 2,
-     "pnl": 6.0
+     "pnl": 4.8
     }
    },
-   "capital": 223.58,
+   "capital": 181.82,
    "races_final": 822,
    "rho_mkt_final": 0.17724366396739089,
-   "rho_comb_final": 0.17735987014042076,
-   "delta_rho_final": 0.00011620617302987579
+   "rho_comb_final": 0.17733010271483085,
+   "delta_rho_final": 8.643874743996527e-05
   },
   {
    "month": "2024-01",
    "races": 793,
-   "alpha": 0.34,
-   "beta": 0.805,
+   "alpha": 0.348,
+   "beta": 0.799,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.170804084276169,
+   "rho_fund": 0.1713008377495162,
    "rho_mkt": 0.18528574440527967,
-   "rho_comb": 0.1999415742158126,
-   "delta_rho": 0.014655829810532928,
-   "bets": 52,
-   "pnl": -22.2,
+   "rho_comb": 0.20052802489603883,
+   "delta_rho": 0.015242280490759152,
+   "bets": 49,
+   "pnl": -8.05,
    "by_market": {
     "DEUX_SUR_QUATRE": {
-     "n": 21,
-     "pnl": 5.35
+     "n": 17,
+     "pnl": 5.5
     },
     "SIMPLE_GAGNANT": {
-     "n": 11,
-     "pnl": -1.0
+     "n": 14,
+     "pnl": 3.9
     },
     "COUPLE_GAGNANT": {
      "n": 11,
-     "pnl": -22.5
+     "pnl": -14.3
     },
     "SIMPLE_PLACE": {
-     "n": 9,
-     "pnl": -4.05
+     "n": 7,
+     "pnl": -3.15
     }
    },
-   "capital": 201.38,
+   "capital": 173.77,
    "races_final": 793,
    "rho_mkt_final": 0.21699944840655694,
-   "rho_comb_final": 0.22168775710040178,
-   "delta_rho_final": 0.004688308693844845
+   "rho_comb_final": 0.2218172071527168,
+   "delta_rho_final": 0.0048177587461598614
   },
   {
    "month": "2024-02",
    "races": 756,
-   "alpha": 0.35,
-   "beta": 0.803,
+   "alpha": 0.357,
+   "beta": 0.798,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.11955615116289697,
+   "rho_fund": 0.11932283751881212,
    "rho_mkt": 0.1619374589952195,
-   "rho_comb": 0.16437759397444685,
-   "delta_rho": 0.0024401349792273486,
-   "bets": 54,
-   "pnl": 40.8,
+   "rho_comb": 0.16444369921040614,
+   "delta_rho": 0.002506240215186639,
+   "bets": 53,
+   "pnl": 33.25,
    "by_market": {
-    "COUPLE_GAGNANT": {
-     "n": 16,
-     "pnl": 23.95
-    },
     "SIMPLE_GAGNANT": {
-     "n": 15,
-     "pnl": -4.5
+     "n": 14,
+     "pnl": -18.1
     },
     "SIMPLE_PLACE": {
      "n": 5,
-     "pnl": 3.35
+     "pnl": 3.25
+    },
+    "COUPLE_GAGNANT": {
+     "n": 15,
+     "pnl": 34.15
     },
     "DEUX_SUR_QUATRE": {
-     "n": 18,
-     "pnl": 18.0
+     "n": 19,
+     "pnl": 13.95
     }
    },
-   "capital": 242.18,
+   "capital": 207.02,
    "races_final": 756,
    "rho_mkt_final": 0.19175851278959832,
-   "rho_comb_final": 0.19285046771873326,
-   "delta_rho_final": 0.0010919549291349417
+   "rho_comb_final": 0.19281081971124947,
+   "delta_rho_final": 0.0010523069216511471
   },
   {
    "month": "2024-03",
    "races": 855,
-   "alpha": 0.34,
-   "beta": 0.812,
+   "alpha": 0.347,
+   "beta": 0.807,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.13602492411557432,
+   "rho_fund": 0.13654783412806393,
    "rho_mkt": 0.1555171141703211,
-   "rho_comb": 0.1625280879988269,
-   "delta_rho": 0.007010973828505795,
-   "bets": 72,
-   "pnl": -18.8,
+   "rho_comb": 0.16282782930546524,
+   "delta_rho": 0.007310715135144141,
+   "bets": 74,
+   "pnl": -5.8,
    "by_market": {
-    "COUPLE_GAGNANT": {
-     "n": 13,
-     "pnl": 15.95
-    },
     "DEUX_SUR_QUATRE": {
-     "n": 45,
-     "pnl": -21.75
+     "n": 44,
+     "pnl": -9.2
     },
     "SIMPLE_GAGNANT": {
-     "n": 8,
-     "pnl": -12.5
+     "n": 9,
+     "pnl": -13.0
+    },
+    "COUPLE_GAGNANT": {
+     "n": 15,
+     "pnl": 16.7
     },
     "SIMPLE_PLACE": {
      "n": 6,
-     "pnl": -0.5
+     "pnl": -0.3
     }
    },
-   "capital": 223.38,
+   "capital": 201.22,
    "races_final": 855,
    "rho_mkt_final": 0.18949706097035035,
-   "rho_comb_final": 0.1898176124917319,
-   "delta_rho_final": 0.0003205515213815513
+   "rho_comb_final": 0.18986489941653228,
+   "delta_rho_final": 0.00036783844618193395
   },
   {
    "month": "2024-04",
    "races": 827,
-   "alpha": 0.342,
-   "beta": 0.806,
+   "alpha": 0.349,
+   "beta": 0.801,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.12101802712848109,
+   "rho_fund": 0.12128582418917322,
    "rho_mkt": 0.15432859210347005,
-   "rho_comb": 0.1586574481508236,
-   "delta_rho": 0.0043288560473535576,
-   "bets": 50,
-   "pnl": -48.75,
+   "rho_comb": 0.1587768797543485,
+   "delta_rho": 0.0044482876508784575,
+   "bets": 49,
+   "pnl": -39.1,
    "by_market": {
-    "SIMPLE_GAGNANT": {
-     "n": 16,
-     "pnl": 0.4
-    },
     "DEUX_SUR_QUATRE": {
-     "n": 25,
-     "pnl": -38.3
+     "n": 24,
+     "pnl": -36.15
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 17,
+     "pnl": 8.7
     },
     "SIMPLE_PLACE": {
-     "n": 5,
-     "pnl": -5.85
+     "n": 4,
+     "pnl": -6.65
     },
     "COUPLE_GAGNANT": {
      "n": 4,
      "pnl": -5.0
     }
    },
-   "capital": 174.63,
+   "capital": 162.12,
    "races_final": 827,
    "rho_mkt_final": 0.18622224444399926,
-   "rho_comb_final": 0.18758357778236168,
-   "delta_rho_final": 0.0013613333383624138
+   "rho_comb_final": 0.18755091609053076,
+   "delta_rho_final": 0.0013286716465314985
   },
   {
    "month": "2024-05",
    "races": 955,
-   "alpha": 0.337,
-   "beta": 0.81,
+   "alpha": 0.343,
+   "beta": 0.805,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.11230554711659158,
+   "rho_fund": 0.11280539687202518,
    "rho_mkt": 0.13391277009055702,
-   "rho_comb": 0.14046226974897946,
-   "delta_rho": 0.006549499658422442,
-   "bets": 32,
-   "pnl": -15.8,
+   "rho_comb": 0.14070075715162333,
+   "delta_rho": 0.006787987061066314,
+   "bets": 34,
+   "pnl": -10.9,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 10,
-     "pnl": -3.3
+     "n": 11,
+     "pnl": -2.4
     },
     "DEUX_SUR_QUATRE": {
      "n": 12,
-     "pnl": -11.2
+     "pnl": -12.0
     },
     "COUPLE_GAGNANT": {
-     "n": 7,
-     "pnl": -3.7
+     "n": 9,
+     "pnl": 0.3
     },
     "SIMPLE_PLACE": {
-     "n": 3,
-     "pnl": 2.4
+     "n": 2,
+     "pnl": 3.2
     }
    },
-   "capital": 158.83,
+   "capital": 151.22,
    "races_final": 955,
    "rho_mkt_final": 0.16699488702475696,
-   "rho_comb_final": 0.1681216222909,
-   "delta_rho_final": 0.0011267352661430419
+   "rho_comb_final": 0.16812278430609806,
+   "delta_rho_final": 0.001127897281341106
   },
   {
    "month": "2024-06",
    "races": 874,
-   "alpha": 0.336,
-   "beta": 0.807,
+   "alpha": 0.343,
+   "beta": 0.802,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.12550883671921387,
+   "rho_fund": 0.12619287825851278,
    "rho_mkt": 0.15373133076157042,
-   "rho_comb": 0.15979064380665575,
-   "delta_rho": 0.006059313045085335,
-   "bets": 26,
-   "pnl": -23.5,
+   "rho_comb": 0.16010338290835557,
+   "delta_rho": 0.0063720521467851565,
+   "bets": 22,
+   "pnl": -17.05,
    "by_market": {
     "DEUX_SUR_QUATRE": {
-     "n": 6,
-     "pnl": -8.7
+     "n": 1,
+     "pnl": -3.0
     },
     "SIMPLE_GAGNANT": {
      "n": 13,
-     "pnl": -9.9
+     "pnl": -8.15
     },
     "SIMPLE_PLACE": {
      "n": 3,
      "pnl": 3.1
     },
     "COUPLE_GAGNANT": {
-     "n": 4,
-     "pnl": -8.0
+     "n": 5,
+     "pnl": -9.0
     }
    },
-   "capital": 135.32,
+   "capital": 134.17,
    "races_final": 874,
    "rho_mkt_final": 0.18623586763872946,
-   "rho_comb_final": 0.18730789570195105,
-   "delta_rho_final": 0.0010720280632215973
+   "rho_comb_final": 0.18730956740995885,
+   "delta_rho_final": 0.0010736997712293972
   },
   {
    "month": "2024-07",
    "races": 943,
-   "alpha": 0.334,
-   "beta": 0.808,
+   "alpha": 0.341,
+   "beta": 0.803,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.14538218337639985,
+   "rho_fund": 0.1470111259670669,
    "rho_mkt": 0.18326933990339356,
-   "rho_comb": 0.1888089394605974,
-   "delta_rho": 0.005539599557203845,
-   "bets": 20,
-   "pnl": 8.4,
+   "rho_comb": 0.1895465610624737,
+   "delta_rho": 0.0062772211590801374,
+   "bets": 23,
+   "pnl": 9.7,
    "by_market": {
+    "SIMPLE_GAGNANT": {
+     "n": 10,
+     "pnl": 9.5
+    },
     "SIMPLE_PLACE": {
      "n": 4,
      "pnl": -3.5
     },
     "COUPLE_GAGNANT": {
-     "n": 8,
-     "pnl": 4.7
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 8,
-     "pnl": 7.2
+     "n": 9,
+     "pnl": 3.7
     }
    },
-   "capital": 143.72,
+   "capital": 143.87,
    "races_final": 943,
    "rho_mkt_final": 0.2077585021436016,
-   "rho_comb_final": 0.21062468785289012,
-   "delta_rho_final": 0.002866185709288538
+   "rho_comb_final": 0.21069755598479334,
+   "delta_rho_final": 0.002939053841191752
   },
   {
    "month": "2024-08",
    "races": 924,
-   "alpha": 0.33,
-   "beta": 0.815,
+   "alpha": 0.337,
+   "beta": 0.809,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.13800013333858407,
+   "rho_fund": 0.13950471245095597,
    "rho_mkt": 0.16529531463266633,
-   "rho_comb": 0.17262924341291797,
-   "delta_rho": 0.007333928780251631,
-   "bets": 19,
-   "pnl": 17.0,
+   "rho_comb": 0.1732890506328253,
+   "delta_rho": 0.007993736000158957,
+   "bets": 23,
+   "pnl": 16.7,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 6,
-     "pnl": 2.65
+     "n": 8,
+     "pnl": 7.25
     },
     "COUPLE_GAGNANT": {
      "n": 7,
-     "pnl": 6.45
+     "pnl": 1.15
     },
     "SIMPLE_PLACE": {
-     "n": 4,
-     "pnl": -2.9
+     "n": 5,
+     "pnl": -3.4
     },
     "DEUX_SUR_QUATRE": {
-     "n": 2,
-     "pnl": 10.8
+     "n": 3,
+     "pnl": 11.7
     }
    },
-   "capital": 160.73,
+   "capital": 160.57,
    "races_final": 924,
    "rho_mkt_final": 0.20600167704008376,
-   "rho_comb_final": 0.2086845374665972,
-   "delta_rho_final": 0.002682860426513445
+   "rho_comb_final": 0.2086944656324029,
+   "delta_rho_final": 0.0026927885923191397
   },
   {
    "month": "2024-09",
    "races": 868,
-   "alpha": 0.331,
-   "beta": 0.815,
+   "alpha": 0.338,
+   "beta": 0.809,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.12411823869512395,
+   "rho_fund": 0.12537484918036212,
    "rho_mkt": 0.1487833843066283,
-   "rho_comb": 0.15572691767960456,
-   "delta_rho": 0.006943533372976263,
-   "bets": 24,
-   "pnl": -15.45,
-   "by_market": {
-    "SIMPLE_GAGNANT": {
-     "n": 7,
-     "pnl": -5.7
-    },
-    "COUPLE_GAGNANT": {
-     "n": 13,
-     "pnl": 2.25
-    },
-    "DEUX_SUR_QUATRE": {
-     "n": 4,
-     "pnl": -12.0
-    }
-   },
-   "capital": 145.28,
-   "races_final": 868,
-   "rho_mkt_final": 0.18943244839806195,
-   "rho_comb_final": 0.19113216738987882,
-   "delta_rho_final": 0.0016997189918168676
-  },
-  {
-   "month": "2024-10",
-   "races": 859,
-   "alpha": 0.331,
-   "beta": 0.812,
-   "gamma": 0.8,
-   "delta": 0.6,
-   "rho_fund": 0.13821401392546961,
-   "rho_mkt": 0.1751829930432135,
-   "rho_comb": 0.18107164608231985,
-   "delta_rho": 0.005888653039106351,
-   "bets": 20,
-   "pnl": 15.55,
-   "by_market": {
-    "SIMPLE_GAGNANT": {
-     "n": 7,
-     "pnl": -8.5
-    },
-    "COUPLE_GAGNANT": {
-     "n": 10,
-     "pnl": 29.45
-    },
-    "DEUX_SUR_QUATRE": {
-     "n": 2,
-     "pnl": -2.4
-    },
-    "SIMPLE_PLACE": {
-     "n": 1,
-     "pnl": -3.0
-    }
-   },
-   "capital": 160.83,
-   "races_final": 859,
-   "rho_mkt_final": 0.20885331568723198,
-   "rho_comb_final": 0.2122625271931704,
-   "delta_rho_final": 0.0034092115059384254
-  },
-  {
-   "month": "2024-11",
-   "races": 872,
-   "alpha": 0.329,
-   "beta": 0.817,
-   "gamma": 0.8,
-   "delta": 0.6,
-   "rho_fund": 0.15259464434659087,
-   "rho_mkt": 0.1677822812295241,
-   "rho_comb": 0.17945105110682114,
-   "delta_rho": 0.011668769877297036,
-   "bets": 28,
-   "pnl": -8.05,
-   "by_market": {
-    "DEUX_SUR_QUATRE": {
-     "n": 5,
-     "pnl": 6.0
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 7,
-     "pnl": -8.5
-    },
-    "COUPLE_GAGNANT": {
-     "n": 10,
-     "pnl": -1.5
-    },
-    "SIMPLE_PLACE": {
-     "n": 6,
-     "pnl": -4.05
-    }
-   },
-   "capital": 152.78,
-   "races_final": 872,
-   "rho_mkt_final": 0.2114011830576895,
-   "rho_comb_final": 0.21424514613379297,
-   "delta_rho_final": 0.0028439630761034618
-  },
-  {
-   "month": "2024-12",
-   "races": 809,
-   "alpha": 0.336,
-   "beta": 0.813,
-   "gamma": 0.8,
-   "delta": 0.6,
-   "rho_fund": 0.14228292486079352,
-   "rho_mkt": 0.1731148015745927,
-   "rho_comb": 0.1801500523115631,
-   "delta_rho": 0.007035250736970422,
-   "bets": 17,
-   "pnl": -2.85,
-   "by_market": {
-    "COUPLE_GAGNANT": {
-     "n": 7,
-     "pnl": -5.5
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 9,
-     "pnl": 1.75
-    },
-    "SIMPLE_PLACE": {
-     "n": 1,
-     "pnl": 0.9
-    }
-   },
-   "capital": 149.93,
-   "races_final": 809,
-   "rho_mkt_final": 0.20294918181981225,
-   "rho_comb_final": 0.20442825758846617,
-   "delta_rho_final": 0.0014790757686539147
-  },
-  {
-   "month": "2025-01",
-   "races": 797,
-   "alpha": 0.335,
-   "beta": 0.815,
-   "gamma": 0.8,
-   "delta": 0.7,
-   "rho_fund": 0.16198743185562725,
-   "rho_mkt": 0.18397287975677346,
-   "rho_comb": 0.19394712268679049,
-   "delta_rho": 0.00997424293001703,
-   "bets": 19,
-   "pnl": 2.4,
-   "by_market": {
-    "SIMPLE_GAGNANT": {
-     "n": 6,
-     "pnl": -0.25
-    },
-    "COUPLE_GAGNANT": {
-     "n": 5,
-     "pnl": 8.4
-    },
-    "SIMPLE_PLACE": {
-     "n": 3,
-     "pnl": -0.35
-    },
-    "DEUX_SUR_QUATRE": {
-     "n": 5,
-     "pnl": -5.4
-    }
-   },
-   "capital": 152.33,
-   "races_final": 797,
-   "rho_mkt_final": 0.2198181685314029,
-   "rho_comb_final": 0.22214780606495477,
-   "delta_rho_final": 0.002329637533551865
-  },
-  {
-   "month": "2025-02",
-   "races": 729,
-   "alpha": 0.337,
-   "beta": 0.815,
-   "gamma": 0.8,
-   "delta": 0.6,
-   "rho_fund": 0.15557200871695653,
-   "rho_mkt": 0.18746678122444627,
-   "rho_comb": 0.195775070809445,
-   "delta_rho": 0.00830828958499874,
-   "bets": 24,
-   "pnl": -17.45,
-   "by_market": {
-    "COUPLE_GAGNANT": {
-     "n": 10,
-     "pnl": -16.5
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 10,
-     "pnl": -3.6
-    },
-    "DEUX_SUR_QUATRE": {
-     "n": 1,
-     "pnl": 0.3
-    },
-    "SIMPLE_PLACE": {
-     "n": 3,
-     "pnl": 2.35
-    }
-   },
-   "capital": 134.88,
-   "races_final": 729,
-   "rho_mkt_final": 0.22342794625370832,
-   "rho_comb_final": 0.226705575007484,
-   "delta_rho_final": 0.0032776287537756854
-  },
-  {
-   "month": "2025-03",
-   "races": 870,
-   "alpha": 0.337,
-   "beta": 0.818,
-   "gamma": 0.8,
-   "delta": 0.6,
-   "rho_fund": 0.15520782665947996,
-   "rho_mkt": 0.17605169545796862,
-   "rho_comb": 0.1857316672977687,
-   "delta_rho": 0.009679971839800072,
-   "bets": 12,
-   "pnl": 0.9,
-   "by_market": {
-    "COUPLE_GAGNANT": {
-     "n": 4,
-     "pnl": -5.0
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 7,
-     "pnl": 6.9
-    },
-    "SIMPLE_PLACE": {
-     "n": 1,
-     "pnl": -1.0
-    }
-   },
-   "capital": 135.78,
-   "races_final": 870,
-   "rho_mkt_final": 0.21551708649431345,
-   "rho_comb_final": 0.21716960769587013,
-   "delta_rho_final": 0.0016525212015566781
-  },
-  {
-   "month": "2025-04",
-   "races": 827,
-   "alpha": 0.339,
-   "beta": 0.817,
-   "gamma": 0.8,
-   "delta": 0.6,
-   "rho_fund": 0.1286485890811142,
-   "rho_mkt": 0.14361399744476167,
-   "rho_comb": 0.15239828990929472,
-   "delta_rho": 0.00878429246453305,
-   "bets": 18,
-   "pnl": 10.55,
-   "by_market": {
-    "COUPLE_GAGNANT": {
-     "n": 7,
-     "pnl": 3.3
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 11,
-     "pnl": 7.25
-    }
-   },
-   "capital": 146.33,
-   "races_final": 827,
-   "rho_mkt_final": 0.17833384417438092,
-   "rho_comb_final": 0.17828305166307068,
-   "delta_rho_final": -5.07925113102381e-05
-  },
-  {
-   "month": "2025-05",
-   "races": 926,
-   "alpha": 0.341,
-   "beta": 0.814,
-   "gamma": 0.8,
-   "delta": 0.6,
-   "rho_fund": 0.1251634347767263,
-   "rho_mkt": 0.15090466269821534,
-   "rho_comb": 0.15614699797482812,
-   "delta_rho": 0.005242335276612775,
-   "bets": 21,
-   "pnl": 4.45,
+   "rho_comb": 0.15634263841523532,
+   "delta_rho": 0.0075592541086070275,
+   "bets": 23,
+   "pnl": -14.25,
    "by_market": {
     "SIMPLE_GAGNANT": {
      "n": 8,
-     "pnl": 10.5
-    },
-    "COUPLE_GAGNANT": {
-     "n": 7,
-     "pnl": -4.4
-    },
-    "SIMPLE_PLACE": {
-     "n": 2,
-     "pnl": -2.85
-    },
-    "DEUX_SUR_QUATRE": {
-     "n": 4,
-     "pnl": 1.2
-    }
-   },
-   "capital": 150.78,
-   "races_final": 926,
-   "rho_mkt_final": 0.18241947967048544,
-   "rho_comb_final": 0.18264398218923472,
-   "delta_rho_final": 0.00022450251874928107
-  },
-  {
-   "month": "2025-06",
-   "races": 889,
-   "alpha": 0.339,
-   "beta": 0.813,
-   "gamma": 0.8,
-   "delta": 0.7,
-   "rho_fund": 0.1541629139527747,
-   "rho_mkt": 0.1634501719814876,
-   "rho_comb": 0.17631498569308746,
-   "delta_rho": 0.012864813711599865,
-   "bets": 32,
-   "pnl": -3.65,
-   "by_market": {
-    "DEUX_SUR_QUATRE": {
-     "n": 5,
-     "pnl": -11.1
+     "pnl": -8.0
     },
     "COUPLE_GAGNANT": {
      "n": 12,
-     "pnl": -2.9
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 13,
-     "pnl": 12.85
-    },
-    "SIMPLE_PLACE": {
-     "n": 2,
-     "pnl": -2.5
-    }
-   },
-   "capital": 147.13,
-   "races_final": 889,
-   "rho_mkt_final": 0.2027269474974983,
-   "rho_comb_final": 0.2047738424348372,
-   "delta_rho_final": 0.0020468949373388945
-  },
-  {
-   "month": "2025-07",
-   "races": 950,
-   "alpha": 0.344,
-   "beta": 0.809,
-   "gamma": 0.8,
-   "delta": 0.7,
-   "rho_fund": 0.11579949449530036,
-   "rho_mkt": 0.16180693806000335,
-   "rho_comb": 0.16588446656300782,
-   "delta_rho": 0.004077528503004468,
-   "bets": 11,
-   "pnl": -0.53,
-   "by_market": {
-    "SIMPLE_GAGNANT": {
-     "n": 4,
-     "pnl": -2.15
-    },
-    "SIMPLE_PLACE": {
-     "n": 3,
-     "pnl": 1.12
-    },
-    "COUPLE_GAGNANT": {
-     "n": 4,
-     "pnl": 0.5
-    }
-   },
-   "capital": 146.6,
-   "races_final": 950,
-   "rho_mkt_final": 0.19627316115309146,
-   "rho_comb_final": 0.1974062457841269,
-   "delta_rho_final": 0.0011330846310354525
-  },
-  {
-   "month": "2025-08",
-   "races": 938,
-   "alpha": 0.341,
-   "beta": 0.814,
-   "gamma": 0.8,
-   "delta": 0.7,
-   "rho_fund": 0.13697084929200665,
-   "rho_mkt": 0.15772100115341592,
-   "rho_comb": 0.16780059459498964,
-   "delta_rho": 0.01007959344157372,
-   "bets": 28,
-   "pnl": -7.85,
-   "by_market": {
-    "SIMPLE_GAGNANT": {
-     "n": 12,
-     "pnl": -1.4
-    },
-    "SIMPLE_PLACE": {
-     "n": 3,
-     "pnl": -4.1
-    },
-    "COUPLE_GAGNANT": {
-     "n": 10,
-     "pnl": 6.65
+     "pnl": 2.75
     },
     "DEUX_SUR_QUATRE": {
      "n": 3,
      "pnl": -9.0
     }
    },
-   "capital": 138.75,
-   "races_final": 938,
-   "rho_mkt_final": 0.19946029560731304,
-   "rho_comb_final": 0.20106823862546241,
-   "delta_rho_final": 0.0016079430181493715
+   "capital": 146.32,
+   "races_final": 868,
+   "rho_mkt_final": 0.18943244839806195,
+   "rho_comb_final": 0.19114222974452721,
+   "delta_rho_final": 0.0017097813464652667
   },
   {
-   "month": "2025-09",
-   "races": 853,
-   "alpha": 0.343,
-   "beta": 0.812,
-   "gamma": 0.8,
-   "delta": 0.7,
-   "rho_fund": 0.1289322947208743,
-   "rho_mkt": 0.1619695500587367,
-   "rho_comb": 0.16867654509724583,
-   "delta_rho": 0.006706995038509134,
-   "bets": 16,
-   "pnl": -17.45,
-   "by_market": {
-    "COUPLE_GAGNANT": {
-     "n": 2,
-     "pnl": -2.0
-    },
-    "SIMPLE_PLACE": {
-     "n": 4,
-     "pnl": 1.05
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 10,
-     "pnl": -16.5
-    }
-   },
-   "capital": 121.3,
-   "races_final": 853,
-   "rho_mkt_final": 0.19744472841188676,
-   "rho_comb_final": 0.1993690119648851,
-   "delta_rho_final": 0.0019242835529983404
-  },
-  {
-   "month": "2025-10",
-   "races": 855,
-   "alpha": 0.342,
-   "beta": 0.814,
-   "gamma": 0.9,
-   "delta": 0.7,
-   "rho_fund": 0.12573423015454288,
-   "rho_mkt": 0.15332109784735937,
-   "rho_comb": 0.16080186541985186,
-   "delta_rho": 0.007480767572492497,
-   "bets": 29,
-   "pnl": 11.8,
-   "by_market": {
-    "COUPLE_GAGNANT": {
-     "n": 13,
-     "pnl": -4.35
-    },
-    "SIMPLE_GAGNANT": {
-     "n": 10,
-     "pnl": 11.55
-    },
-    "SIMPLE_PLACE": {
-     "n": 6,
-     "pnl": 4.6
-    }
-   },
-   "capital": 133.1,
-   "races_final": 855,
-   "rho_mkt_final": 0.19183716890843516,
-   "rho_comb_final": 0.19352194022604674,
-   "delta_rho_final": 0.0016847713176115775
-  },
-  {
-   "month": "2025-11",
-   "races": 889,
-   "alpha": 0.342,
-   "beta": 0.814,
+   "month": "2024-10",
+   "races": 859,
+   "alpha": 0.339,
+   "beta": 0.806,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.14362092234422708,
-   "rho_mkt": 0.1676701282475639,
-   "rho_comb": 0.17831220652605462,
-   "delta_rho": 0.01064207827849073,
-   "bets": 33,
-   "pnl": -2.4,
+   "rho_fund": 0.13823917023314836,
+   "rho_mkt": 0.1751829930432135,
+   "rho_comb": 0.18125841002403142,
+   "delta_rho": 0.006075416980817927,
+   "bets": 22,
+   "pnl": 14.45,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 13,
-     "pnl": 15.7
+     "n": 9,
+     "pnl": -11.0
     },
     "COUPLE_GAGNANT": {
-     "n": 16,
-     "pnl": -10.8
-    },
-    "SIMPLE_PLACE": {
-     "n": 3,
-     "pnl": -4.3
+     "n": 9,
+     "pnl": 29.95
     },
     "DEUX_SUR_QUATRE": {
+     "n": 3,
+     "pnl": -1.5
+    },
+    "SIMPLE_PLACE": {
      "n": 1,
      "pnl": -3.0
     }
    },
-   "capital": 130.7,
+   "capital": 160.77,
+   "races_final": 859,
+   "rho_mkt_final": 0.20885331568723198,
+   "rho_comb_final": 0.2122208095965249,
+   "delta_rho_final": 0.003367493909292918
+  },
+  {
+   "month": "2024-11",
+   "races": 872,
+   "alpha": 0.337,
+   "beta": 0.811,
+   "gamma": 0.8,
+   "delta": 0.6,
+   "rho_fund": 0.15378293050670966,
+   "rho_mkt": 0.1677822812295241,
+   "rho_comb": 0.18017031486630242,
+   "delta_rho": 0.012388033636778317,
+   "bets": 35,
+   "pnl": -10.65,
+   "by_market": {
+    "SIMPLE_GAGNANT": {
+     "n": 12,
+     "pnl": -5.9
+    },
+    "DEUX_SUR_QUATRE": {
+     "n": 6,
+     "pnl": 3.0
+    },
+    "COUPLE_GAGNANT": {
+     "n": 10,
+     "pnl": -1.5
+    },
+    "SIMPLE_PLACE": {
+     "n": 7,
+     "pnl": -6.25
+    }
+   },
+   "capital": 150.12,
+   "races_final": 872,
+   "rho_mkt_final": 0.2114011830576895,
+   "rho_comb_final": 0.21432000955967034,
+   "delta_rho_final": 0.0029188265019808313
+  },
+  {
+   "month": "2024-12",
+   "races": 809,
+   "alpha": 0.343,
+   "beta": 0.806,
+   "gamma": 0.8,
+   "delta": 0.6,
+   "rho_fund": 0.143260967660091,
+   "rho_mkt": 0.1731148015745927,
+   "rho_comb": 0.1805985034034553,
+   "delta_rho": 0.007483701828862599,
+   "bets": 19,
+   "pnl": -6.3,
+   "by_market": {
+    "COUPLE_GAGNANT": {
+     "n": 8,
+     "pnl": -6.5
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 10,
+     "pnl": -0.7
+    },
+    "SIMPLE_PLACE": {
+     "n": 1,
+     "pnl": 0.9
+    }
+   },
+   "capital": 143.82,
+   "races_final": 809,
+   "rho_mkt_final": 0.20294918181981225,
+   "rho_comb_final": 0.20447540623781124,
+   "delta_rho_final": 0.0015262244179989892
+  },
+  {
+   "month": "2025-01",
+   "races": 797,
+   "alpha": 0.343,
+   "beta": 0.808,
+   "gamma": 0.8,
+   "delta": 0.7,
+   "rho_fund": 0.1621638601928297,
+   "rho_mkt": 0.18397287975677346,
+   "rho_comb": 0.19433567213203706,
+   "delta_rho": 0.010362792375263608,
+   "bets": 16,
+   "pnl": -3.0,
+   "by_market": {
+    "SIMPLE_GAGNANT": {
+     "n": 7,
+     "pnl": -1.75
+    },
+    "COUPLE_GAGNANT": {
+     "n": 5,
+     "pnl": 0.6
+    },
+    "SIMPLE_PLACE": {
+     "n": 4,
+     "pnl": -1.85
+    }
+   },
+   "capital": 140.82,
+   "races_final": 797,
+   "rho_mkt_final": 0.2198181685314029,
+   "rho_comb_final": 0.22222495307829992,
+   "delta_rho_final": 0.002406784546897023
+  },
+  {
+   "month": "2025-02",
+   "races": 729,
+   "alpha": 0.345,
+   "beta": 0.808,
+   "gamma": 0.8,
+   "delta": 0.6,
+   "rho_fund": 0.15615757412257403,
+   "rho_mkt": 0.18746678122444627,
+   "rho_comb": 0.1962571695072859,
+   "delta_rho": 0.008790388282839623,
+   "bets": 24,
+   "pnl": -19.1,
+   "by_market": {
+    "COUPLE_GAGNANT": {
+     "n": 10,
+     "pnl": -15.5
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 10,
+     "pnl": -4.6
+    },
+    "SIMPLE_PLACE": {
+     "n": 4,
+     "pnl": 1.0
+    }
+   },
+   "capital": 121.72,
+   "races_final": 729,
+   "rho_mkt_final": 0.22342794625370832,
+   "rho_comb_final": 0.2267035747030225,
+   "delta_rho_final": 0.003275628449314172
+  },
+  {
+   "month": "2025-03",
+   "races": 870,
+   "alpha": 0.344,
+   "beta": 0.811,
+   "gamma": 0.8,
+   "delta": 0.6,
+   "rho_fund": 0.15492384755912514,
+   "rho_mkt": 0.17605169545796862,
+   "rho_comb": 0.185864117138813,
+   "delta_rho": 0.009812421680844396,
+   "bets": 14,
+   "pnl": -1.0,
+   "by_market": {
+    "COUPLE_GAGNANT": {
+     "n": 5,
+     "pnl": -5.5
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 7,
+     "pnl": 5.1
+    },
+    "SIMPLE_PLACE": {
+     "n": 2,
+     "pnl": -0.6
+    }
+   },
+   "capital": 120.72,
+   "races_final": 870,
+   "rho_mkt_final": 0.21551708649431345,
+   "rho_comb_final": 0.21720076135564292,
+   "delta_rho_final": 0.001683674861329476
+  },
+  {
+   "month": "2025-04",
+   "races": 827,
+   "alpha": 0.346,
+   "beta": 0.811,
+   "gamma": 0.8,
+   "delta": 0.6,
+   "rho_fund": 0.12910547702952013,
+   "rho_mkt": 0.14361399744476167,
+   "rho_comb": 0.1527585986804777,
+   "delta_rho": 0.009144601235716032,
+   "bets": 15,
+   "pnl": 3.7,
+   "by_market": {
+    "COUPLE_GAGNANT": {
+     "n": 4,
+     "pnl": -1.6
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 11,
+     "pnl": 5.3
+    }
+   },
+   "capital": 124.42,
+   "races_final": 827,
+   "rho_mkt_final": 0.17833384417438092,
+   "rho_comb_final": 0.17837031957474137,
+   "delta_rho_final": 3.6475400360447274e-05
+  },
+  {
+   "month": "2025-05",
+   "races": 926,
+   "alpha": 0.348,
+   "beta": 0.807,
+   "gamma": 0.8,
+   "delta": 0.6,
+   "rho_fund": 0.12412762019509282,
+   "rho_mkt": 0.15090466269821534,
+   "rho_comb": 0.15595609296936963,
+   "delta_rho": 0.005051430271154289,
+   "bets": 17,
+   "pnl": 2.32,
+   "by_market": {
+    "SIMPLE_GAGNANT": {
+     "n": 10,
+     "pnl": 6.6
+    },
+    "COUPLE_GAGNANT": {
+     "n": 5,
+     "pnl": -1.9
+    },
+    "SIMPLE_PLACE": {
+     "n": 2,
+     "pnl": -2.38
+    }
+   },
+   "capital": 126.75,
+   "races_final": 926,
+   "rho_mkt_final": 0.18241947967048544,
+   "rho_comb_final": 0.18258681150857559,
+   "delta_rho_final": 0.00016733183809014562
+  },
+  {
+   "month": "2025-06",
+   "races": 889,
+   "alpha": 0.346,
+   "beta": 0.807,
+   "gamma": 0.8,
+   "delta": 0.7,
+   "rho_fund": 0.15390777876043593,
+   "rho_mkt": 0.1634501719814876,
+   "rho_comb": 0.1764700450996044,
+   "delta_rho": 0.01301987311811681,
+   "bets": 23,
+   "pnl": -2.2,
+   "by_market": {
+    "COUPLE_GAGNANT": {
+     "n": 10,
+     "pnl": -4.6
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 10,
+     "pnl": 4.15
+    },
+    "SIMPLE_PLACE": {
+     "n": 3,
+     "pnl": -1.75
+    }
+   },
+   "capital": 124.55,
+   "races_final": 889,
+   "rho_mkt_final": 0.2027269474974983,
+   "rho_comb_final": 0.2048399470692681,
+   "delta_rho_final": 0.0021129995717698025
+  },
+  {
+   "month": "2025-07",
+   "races": 950,
+   "alpha": 0.35,
+   "beta": 0.804,
+   "gamma": 0.8,
+   "delta": 0.7,
+   "rho_fund": 0.09387763285689577,
+   "rho_mkt": 0.16180693806000335,
+   "rho_comb": 0.16520910977295888,
+   "delta_rho": 0.0034021717129555373,
+   "bets": 23,
+   "pnl": 3.45,
+   "by_market": {
+    "SIMPLE_GAGNANT": {
+     "n": 13,
+     "pnl": -1.05
+    },
+    "COUPLE_GAGNANT": {
+     "n": 5,
+     "pnl": -0.6
+    },
+    "SIMPLE_PLACE": {
+     "n": 5,
+     "pnl": 5.1
+    }
+   },
+   "capital": 128.0,
+   "races_final": 950,
+   "rho_mkt_final": 0.19627316115309146,
+   "rho_comb_final": 0.19751081052422637,
+   "delta_rho_final": 0.001237649371134908
+  },
+  {
+   "month": "2025-08",
+   "races": 938,
+   "alpha": 0.345,
+   "beta": 0.812,
+   "gamma": 0.8,
+   "delta": 0.7,
+   "rho_fund": 0.11956431927058242,
+   "rho_mkt": 0.15772100115341592,
+   "rho_comb": 0.167958957015383,
+   "delta_rho": 0.010237955861967074,
+   "bets": 29,
+   "pnl": -11.7,
+   "by_market": {
+    "SIMPLE_GAGNANT": {
+     "n": 17,
+     "pnl": -7.3
+    },
+    "SIMPLE_PLACE": {
+     "n": 2,
+     "pnl": -1.3
+    },
+    "COUPLE_GAGNANT": {
+     "n": 10,
+     "pnl": -3.1
+    }
+   },
+   "capital": 116.3,
+   "races_final": 938,
+   "rho_mkt_final": 0.19946029560731304,
+   "rho_comb_final": 0.20127440476699898,
+   "delta_rho_final": 0.0018141091596859393
+  },
+  {
+   "month": "2025-09",
+   "races": 853,
+   "alpha": 0.346,
+   "beta": 0.812,
+   "gamma": 0.8,
+   "delta": 0.7,
+   "rho_fund": 0.11278013578814627,
+   "rho_mkt": 0.1619695500587367,
+   "rho_comb": 0.16826579852488377,
+   "delta_rho": 0.00629624846614707,
+   "bets": 18,
+   "pnl": -12.9,
+   "by_market": {
+    "SIMPLE_PLACE": {
+     "n": 3,
+     "pnl": 0.6
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 14,
+     "pnl": -12.5
+    },
+    "COUPLE_GAGNANT": {
+     "n": 1,
+     "pnl": -1.0
+    }
+   },
+   "capital": 103.4,
+   "races_final": 853,
+   "rho_mkt_final": 0.19744472841188676,
+   "rho_comb_final": 0.19939514735705066,
+   "delta_rho_final": 0.001950418945163901
+  },
+  {
+   "month": "2025-10",
+   "races": 855,
+   "alpha": 0.344,
+   "beta": 0.816,
+   "gamma": 0.9,
+   "delta": 0.7,
+   "rho_fund": 0.12542555964848856,
+   "rho_mkt": 0.15332109784735937,
+   "rho_comb": 0.16096124653523392,
+   "delta_rho": 0.007640148687874548,
+   "bets": 32,
+   "pnl": 15.15,
+   "by_market": {
+    "COUPLE_GAGNANT": {
+     "n": 13,
+     "pnl": -1.85
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 12,
+     "pnl": 11.5
+    },
+    "SIMPLE_PLACE": {
+     "n": 7,
+     "pnl": 5.5
+    }
+   },
+   "capital": 118.55,
+   "races_final": 855,
+   "rho_mkt_final": 0.19183716890843516,
+   "rho_comb_final": 0.19350529816687423,
+   "delta_rho_final": 0.0016681292584390661
+  },
+  {
+   "month": "2025-11",
+   "races": 889,
+   "alpha": 0.343,
+   "beta": 0.816,
+   "gamma": 0.8,
+   "delta": 0.7,
+   "rho_fund": 0.1439055815961493,
+   "rho_mkt": 0.1676701282475639,
+   "rho_comb": 0.17871610048713737,
+   "delta_rho": 0.011045972239573487,
+   "bets": 24,
+   "pnl": -11.6,
+   "by_market": {
+    "COUPLE_GAGNANT": {
+     "n": 10,
+     "pnl": -9.2
+    },
+    "SIMPLE_GAGNANT": {
+     "n": 9,
+     "pnl": -0.5
+    },
+    "SIMPLE_PLACE": {
+     "n": 5,
+     "pnl": -1.9
+    }
+   },
+   "capital": 106.95,
    "races_final": 889,
    "rho_mkt_final": 0.2079927164481814,
-   "rho_comb_final": 0.20971431822580522,
-   "delta_rho_final": 0.0017216017776238157
+   "rho_comb_final": 0.2097793240541208,
+   "delta_rho_final": 0.0017866076059394054
   },
   {
    "month": "2025-12",
    "races": 810,
-   "alpha": 0.344,
-   "beta": 0.813,
+   "alpha": 0.345,
+   "beta": 0.815,
    "gamma": 0.8,
    "delta": 0.7,
-   "rho_fund": 0.11037954156360696,
+   "rho_fund": 0.10943962215556235,
    "rho_mkt": 0.14780439473557938,
-   "rho_comb": 0.15019664650631226,
-   "delta_rho": 0.0023922517707328783,
-   "bets": 16,
+   "rho_comb": 0.15003243758668183,
+   "delta_rho": 0.002228042851102452,
+   "bets": 15,
    "pnl": -4.95,
    "by_market": {
     "SIMPLE_PLACE": {
-     "n": 4,
-     "pnl": 3.9
+     "n": 3,
+     "pnl": 2.4
     },
     "SIMPLE_GAGNANT": {
-     "n": 10,
+     "n": 11,
      "pnl": -5.35
     },
     "COUPLE_GAGNANT": {
-     "n": 2,
-     "pnl": -3.5
+     "n": 1,
+     "pnl": -2.0
     }
    },
-   "capital": 125.75,
+   "capital": 102.0,
    "races_final": 810,
    "rho_mkt_final": 0.18155133654437516,
-   "rho_comb_final": 0.18123300979900514,
-   "delta_rho_final": -0.00031832674537002337
+   "rho_comb_final": 0.18110973131731622,
+   "delta_rho_final": -0.0004416052270589388
   },
   {
    "month": "2026-01",
    "races": 810,
-   "alpha": 0.34,
-   "beta": 0.815,
+   "alpha": 0.342,
+   "beta": 0.817,
    "gamma": 0.8,
    "delta": 0.7,
-   "rho_fund": 0.14673705091708966,
+   "rho_fund": 0.1455446038438759,
    "rho_mkt": 0.17835774654832937,
-   "rho_comb": 0.184611580726034,
-   "delta_rho": 0.0062538341777046424,
-   "bets": 30,
-   "pnl": 0.65,
+   "rho_comb": 0.18450532580262735,
+   "delta_rho": 0.006147579254297986,
+   "bets": 24,
+   "pnl": 2.4,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 14,
-     "pnl": -13.4
+     "n": 9,
+     "pnl": -8.05
     },
     "SIMPLE_PLACE": {
-     "n": 8,
-     "pnl": -4.0
+     "n": 7,
+     "pnl": -3.0
     },
     "COUPLE_GAGNANT": {
      "n": 8,
-     "pnl": 18.05
+     "pnl": 13.45
     }
    },
-   "capital": 126.4,
+   "capital": 104.4,
    "races_final": 810,
    "rho_mkt_final": 0.21655844963281023,
-   "rho_comb_final": 0.219005736680283,
-   "delta_rho_final": 0.002447287047472768
+   "rho_comb_final": 0.21895335944150085,
+   "delta_rho_final": 0.002394909808690615
   },
   {
    "month": "2026-02",
    "races": 763,
-   "alpha": 0.339,
-   "beta": 0.816,
+   "alpha": 0.34,
+   "beta": 0.818,
    "gamma": 0.8,
    "delta": 0.7,
-   "rho_fund": 0.15000422390555934,
+   "rho_fund": 0.14958037459876272,
    "rho_mkt": 0.18615418991733768,
-   "rho_comb": 0.1928108680962739,
-   "delta_rho": 0.006656678178936226,
+   "rho_comb": 0.19289720223584794,
+   "delta_rho": 0.006743012318510266,
    "bets": 21,
-   "pnl": -11.35,
+   "pnl": -8.05,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 13,
-     "pnl": -2.75
+     "n": 12,
+     "pnl": -0.75
     },
     "COUPLE_GAGNANT": {
      "n": 3,
-     "pnl": 0.9
+     "pnl": 0.3
     },
     "SIMPLE_PLACE": {
-     "n": 5,
-     "pnl": -9.5
+     "n": 6,
+     "pnl": -7.6
     }
    },
-   "capital": 115.05,
+   "capital": 96.35,
    "races_final": 763,
    "rho_mkt_final": 0.22187778521555612,
-   "rho_comb_final": 0.2244111287540499,
-   "delta_rho_final": 0.002533343538493771
+   "rho_comb_final": 0.2243615558277653,
+   "delta_rho_final": 0.0024837706122091685
   },
   {
    "month": "2026-03",
    "races": 879,
-   "alpha": 0.337,
-   "beta": 0.819,
+   "alpha": 0.339,
+   "beta": 0.821,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.1590357168298645,
+   "rho_fund": 0.15857336357746032,
    "rho_mkt": 0.18922976953191006,
-   "rho_comb": 0.19650857583084091,
-   "delta_rho": 0.007278806298930851,
+   "rho_comb": 0.19657401397795182,
+   "delta_rho": 0.007344244446041759,
    "bets": 32,
-   "pnl": 15.45,
+   "pnl": 26.25,
    "by_market": {
     "COUPLE_GAGNANT": {
-     "n": 22,
-     "pnl": 22.8
+     "n": 21,
+     "pnl": 23.4
     },
     "SIMPLE_GAGNANT": {
-     "n": 8,
-     "pnl": -6.35
+     "n": 9,
+     "pnl": 3.55
     },
     "SIMPLE_PLACE": {
      "n": 2,
-     "pnl": -1.0
+     "pnl": -0.7
     }
    },
-   "capital": 130.5,
+   "capital": 122.6,
    "races_final": 879,
    "rho_mkt_final": 0.23232126652711205,
-   "rho_comb_final": 0.23565443020454468,
-   "delta_rho_final": 0.003333163677432638
+   "rho_comb_final": 0.23559859889621193,
+   "delta_rho_final": 0.0032773323690998835
   },
   {
    "month": "2026-04",
    "races": 827,
-   "alpha": 0.337,
-   "beta": 0.821,
+   "alpha": 0.338,
+   "beta": 0.822,
    "gamma": 0.7,
    "delta": 0.6,
-   "rho_fund": 0.1208331599827761,
+   "rho_fund": 0.11954433599070691,
    "rho_mkt": 0.16952317137506911,
-   "rho_comb": 0.1700590073302818,
-   "delta_rho": 0.0005358359552126712,
-   "bets": 29,
-   "pnl": -32.65,
+   "rho_comb": 0.1697677170931804,
+   "delta_rho": 0.00024454571811127757,
+   "bets": 30,
+   "pnl": -20.75,
    "by_market": {
     "SIMPLE_GAGNANT": {
      "n": 13,
-     "pnl": -13.9
+     "pnl": -12.6
     },
     "COUPLE_GAGNANT": {
-     "n": 12,
-     "pnl": -20.0
+     "n": 13,
+     "pnl": -9.4
     },
     "SIMPLE_PLACE": {
      "n": 4,
      "pnl": 1.25
     }
    },
-   "capital": 97.85,
+   "capital": 101.85,
    "races_final": 827,
    "rho_mkt_final": 0.20889482572774776,
-   "rho_comb_final": 0.2104236024872208,
-   "delta_rho_final": 0.0015287767594730495
+   "rho_comb_final": 0.21022743371274089,
+   "delta_rho_final": 0.0013326079849931283
   },
   {
    "month": "2026-05",
    "races": 931,
-   "alpha": 0.332,
-   "beta": 0.824,
+   "alpha": 0.333,
+   "beta": 0.826,
    "gamma": 0.7,
    "delta": 0.6,
-   "rho_fund": 0.15609669429633755,
+   "rho_fund": 0.15564764618562932,
    "rho_mkt": 0.1759439997210921,
-   "rho_comb": 0.18616248771770272,
-   "delta_rho": 0.010218487996610626,
-   "bets": 24,
-   "pnl": -17.35,
+   "rho_comb": 0.18615777019895907,
+   "delta_rho": 0.010213770477866979,
+   "bets": 25,
+   "pnl": -12.3,
    "by_market": {
     "COUPLE_GAGNANT": {
-     "n": 12,
-     "pnl": -6.75
+     "n": 13,
+     "pnl": -1.45
     },
     "SIMPLE_PLACE": {
      "n": 2,
@@ -1411,237 +1387,241 @@
     },
     "SIMPLE_GAGNANT": {
      "n": 10,
-     "pnl": -7.6
+     "pnl": -7.85
     }
    },
-   "capital": 80.5,
+   "capital": 89.55,
    "races_final": 931,
    "rho_mkt_final": 0.22153383611551658,
-   "rho_comb_final": 0.22501338235609136,
-   "delta_rho_final": 0.0034795462405747823
+   "rho_comb_final": 0.22503095974428688,
+   "delta_rho_final": 0.0034971236287703045
   },
   {
    "month": "2026-06",
    "races": 890,
-   "alpha": 0.334,
-   "beta": 0.822,
+   "alpha": 0.335,
+   "beta": 0.824,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.13541081738583094,
+   "rho_fund": 0.13513404355102798,
    "rho_mkt": 0.17028349914445473,
-   "rho_comb": 0.17496268605881338,
-   "delta_rho": 0.004679186914358646,
-   "bets": 38,
-   "pnl": -24.9,
+   "rho_comb": 0.17510613955929144,
+   "delta_rho": 0.00482264041483671,
+   "bets": 40,
+   "pnl": -21.8,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 12,
-     "pnl": -9.7
-    },
-    "COUPLE_GAGNANT": {
-     "n": 25,
-     "pnl": -14.2
+     "n": 11,
+     "pnl": -8.3
     },
     "SIMPLE_PLACE": {
-     "n": 1,
-     "pnl": -1.0
+     "n": 2,
+     "pnl": -2.0
+    },
+    "COUPLE_GAGNANT": {
+     "n": 27,
+     "pnl": -11.5
     }
    },
-   "capital": 55.6,
+   "capital": 67.75,
    "races_final": 890,
    "rho_mkt_final": 0.20702345520653354,
-   "rho_comb_final": 0.2074424635380665,
-   "delta_rho_final": 0.00041900833153296624
+   "rho_comb_final": 0.20740520184769273,
+   "delta_rho_final": 0.00038174664115919743
   },
   {
    "month": "2026-07",
    "races": 933,
-   "alpha": 0.333,
-   "beta": 0.822,
+   "alpha": 0.334,
+   "beta": 0.824,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.15499703719960622,
+   "rho_fund": 0.15448328051601257,
    "rho_mkt": 0.1804686856018387,
-   "rho_comb": 0.19067090867466852,
-   "delta_rho": 0.010202223072829808,
-   "bets": 10,
-   "pnl": -5.7,
+   "rho_comb": 0.19062438136145632,
+   "delta_rho": 0.010155695759617611,
+   "bets": 37,
+   "pnl": -18.0,
    "by_market": {
     "SIMPLE_GAGNANT": {
-     "n": 3,
-     "pnl": 1.3
+     "n": 10,
+     "pnl": -5.7
     },
     "COUPLE_GAGNANT": {
-     "n": 7,
-     "pnl": -7.0
+     "n": 26,
+     "pnl": -12.9
+    },
+    "SIMPLE_PLACE": {
+     "n": 1,
+     "pnl": 0.6
     }
    },
-   "capital": 49.9,
+   "capital": 49.75,
    "races_final": 933,
    "rho_mkt_final": 0.22599247562969826,
-   "rho_comb_final": 0.2285664656758455,
-   "delta_rho_final": 0.002573990046147223
+   "rho_comb_final": 0.22853846857301363,
+   "delta_rho_final": 0.002545992943315367
   },
   {
    "month": "2026-08",
    "races": 926,
-   "alpha": 0.334,
-   "beta": 0.821,
+   "alpha": 0.335,
+   "beta": 0.823,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.13639291552861665,
+   "rho_fund": 0.13585763201314838,
    "rho_mkt": 0.1617369294658736,
-   "rho_comb": 0.16933824908554518,
-   "delta_rho": 0.007601319619671587,
+   "rho_comb": 0.16933015816506003,
+   "delta_rho": 0.007593228699186438,
    "bets": 0,
    "pnl": 0,
    "by_market": {},
-   "capital": 49.9,
+   "capital": 49.75,
    "races_final": 926,
    "rho_mkt_final": 0.20680421945209604,
-   "rho_comb_final": 0.20762956690428436,
-   "delta_rho_final": 0.0008253474521883186
+   "rho_comb_final": 0.20761360012186802,
+   "delta_rho_final": 0.0008093806697719863
   },
   {
    "month": "2026-09",
    "races": 877,
-   "alpha": 0.334,
-   "beta": 0.819,
+   "alpha": 0.335,
+   "beta": 0.821,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.13215972878225657,
+   "rho_fund": 0.1322434210543193,
    "rho_mkt": 0.16265510915006576,
-   "rho_comb": 0.1691322095502763,
-   "delta_rho": 0.006477100400210545,
+   "rho_comb": 0.16935650877767872,
+   "delta_rho": 0.006701399627612958,
    "bets": 0,
    "pnl": 0,
    "by_market": {},
-   "capital": 49.9,
+   "capital": 49.75,
    "races_final": 877,
    "rho_mkt_final": 0.20456141219456248,
-   "rho_comb_final": 0.2057530204700201,
-   "delta_rho_final": 0.0011916082754576118
+   "rho_comb_final": 0.20572422386059674,
+   "delta_rho_final": 0.0011628116660342691
   },
   {
    "month": "2026-10",
    "races": 939,
-   "alpha": 0.334,
-   "beta": 0.82,
+   "alpha": 0.335,
+   "beta": 0.821,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.12708947480418642,
+   "rho_fund": 0.12671054626324285,
    "rho_mkt": 0.1600075682856622,
-   "rho_comb": 0.16485330798436582,
-   "delta_rho": 0.0048457396987036105,
+   "rho_comb": 0.1649042573516194,
+   "delta_rho": 0.004896689065957194,
    "bets": 0,
    "pnl": 0,
    "by_market": {},
-   "capital": 49.9,
+   "capital": 49.75,
    "races_final": 926,
    "rho_mkt_final": 0.19697517637165352,
-   "rho_comb_final": 0.1977472547896063,
-   "delta_rho_final": 0.0007720784179527929
+   "rho_comb_final": 0.19769388249236364,
+   "delta_rho_final": 0.000718706120710122
   },
   {
    "month": "2026-11",
    "races": 115,
    "alpha": 0.333,
-   "beta": 0.82,
+   "beta": 0.822,
    "gamma": 0.8,
    "delta": 0.6,
-   "rho_fund": 0.17036183928180326,
+   "rho_fund": 0.167023474554017,
    "rho_mkt": 0.18358857015081265,
-   "rho_comb": 0.19684531945227912,
-   "delta_rho": 0.013256749301466475,
+   "rho_comb": 0.1961298025172814,
+   "delta_rho": 0.012541232366468757,
    "bets": 0,
    "pnl": 0,
    "by_market": {},
-   "capital": 49.9,
+   "capital": 49.75,
    "races_final": 115,
    "rho_mkt_final": 0.2505823267823889,
-   "rho_comb_final": 0.2562086211179032,
-   "delta_rho_final": 0.005626294335514315
+   "rho_comb_final": 0.2561090038917794,
+   "delta_rho_final": 0.0055266771093904765
   }
  ],
- "built_at": "2026-11-05T08:46:00Z",
- "n_races": 83151,
+ "built_at": "2026-11-06T00:01:52Z",
+ "n_races": 123691,
  "summary": {
   "races_oos": 39094,
-  "rho_fund": 0.13683010942389573,
+  "rho_fund": 0.13574377673624974,
   "rho_mkt": 0.1642118964169945,
-  "rho_comb": 0.1715701680546109,
-  "delta_rho": 0.00735827163761641,
-  "final_capital": 49.9,
-  "max_drawdown": 0.9123,
+  "rho_comb": 0.1717814311112494,
+  "delta_rho": 0.007569534694254922,
+  "final_capital": 49.75,
+  "max_drawdown": 0.9134,
   "flat": {
    "SIMPLE_GAGNANT": {
-    "n": 510,
-    "staked": 510.0,
-    "ret": 472.59999999999997,
-    "wins": 132,
-    "roi": -0.0733333333333334
+    "n": 571,
+    "staked": 571.0,
+    "ret": 525.8999999999997,
+    "wins": 146,
+    "roi": -0.07898423817863441
    },
    "GAGNANT_JOUE_PLACE": {
-    "n": 510,
-    "staked": 510.0,
-    "ret": 460.5000000000001,
-    "wins": 257,
-    "roi": -0.09705882352941154
+    "n": 571,
+    "staked": 571.0,
+    "ret": 511.29999999999984,
+    "wins": 285,
+    "roi": -0.10455341506129626
    },
    "COUPLE_GAGNANT": {
-    "n": 439,
-    "staked": 439.0,
-    "ret": 359.89999999999986,
-    "wins": 71,
-    "roi": -0.18018223234624176
+    "n": 474,
+    "staked": 474.0,
+    "ret": 395.59999999999997,
+    "wins": 78,
+    "roi": -0.1654008438818566
    },
    "DEUX_SUR_QUATRE": {
-    "n": 394,
-    "staked": 394.0,
-    "ret": 359.5999999999998,
-    "wins": 151,
-    "roi": -0.08730964467005128
+    "n": 365,
+    "staked": 365.0,
+    "ret": 331.29999999999984,
+    "wins": 140,
+    "roi": -0.09232876712328811
    },
    "SIMPLE_PLACE": {
-    "n": 160,
-    "staked": 160.0,
-    "ret": 127.05000000000003,
-    "wins": 86,
-    "roi": -0.20593749999999983
+    "n": 174,
+    "staked": 174.0,
+    "ret": 141.15000000000006,
+    "wins": 94,
+    "roi": -0.1887931034482755
    }
   },
   "by_group": {
    "PLAT": {
     "races": 14997,
-    "rho_fund": 0.09661892987099607,
+    "rho_fund": 0.09702527986217135,
     "rho_mkt": 0.11635907149289437,
-    "rho_comb": 0.12337594470377222
+    "rho_comb": 0.12355054682591426
    },
    "TROT": {
     "races": 19854,
-    "rho_fund": 0.1697294343456539,
+    "rho_fund": 0.16722676080931087,
     "rho_mkt": 0.20530495214408895,
-    "rho_comb": 0.21269662311546722
+    "rho_comb": 0.21296663524538584
    },
    "OBSTACLE": {
     "races": 4243,
-    "rho_fund": 0.11286137052722478,
+    "rho_fund": 0.11382645888894893,
     "rho_mkt": 0.12568181535436884,
-    "rho_comb": 0.13408763173735394
+    "rho_comb": 0.13413162079138052
    }
   },
   "top1": {
    "modele": {
     "n": 39094,
-    "p1": 11759,
-    "p2": 6766,
-    "p3": 4461,
-    "p4": 16108,
-    "ret_win": 33707.899999999965,
+    "p1": 11766,
+    "p2": 6756,
+    "p3": 4455,
+    "p4": 16117,
+    "ret_win": 33771.09999999998,
     "n_place": 39094,
-    "ret_place": 35437.350000000006,
-    "roi_win": -0.1377730598045745,
-    "roi_place": -0.09353481352637219
+    "ret_place": 35452.399999999994,
+    "roi_win": -0.13615644344400735,
+    "roi_place": -0.09314984396582611
    },
    "favori_marche": {
     "n": 39094,
@@ -1656,14 +1636,14 @@
     "roi_place": -0.09424080421547859
    }
   },
-  "bets": 1503,
+  "bets": 1584,
   "gate": {
    "min_races": 1000,
    "min_delta_rho": 0.005,
    "n_races_oos": 39094,
-   "delta_rho_oos": 0.00735827163761641,
+   "delta_rho_oos": 0.007569534694254922,
    "n_races_final": 39081,
-   "delta_rho_final": 0.0017952909110002034,
+   "delta_rho_final": 0.001806054396292951,
    "reference": "march\u00e9 final",
    "passed": false,
    "markets": {
@@ -1673,258 +1653,27 @@
     "DEUX_SUR_QUATRE": false
    }
   },
-  "seconds": 739
+  "seconds": 905
  },
  "bets_sample": [
-  {
-   "date": "2025-08-07",
-   "race": "2025-08-07_R1C3",
-   "market": "SIMPLE_GAGNANT",
-   "num": 7,
-   "p": 0.3197,
-   "odds": 4.2,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2025-08-10",
-   "race": "2025-08-10_R1C2",
-   "market": "COUPLE_GAGNANT",
-   "num": "7-11",
-   "p": 0.0653,
-   "odds": 66.39,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
-  {
-   "date": "2025-08-11",
-   "race": "2025-08-11_R4C2",
-   "market": "COUPLE_GAGNANT",
-   "num": "4-5",
-   "p": 0.2,
-   "odds": 15.71,
-   "stake": 2.5,
-   "div": 4.7,
-   "pnl": 9.25
-  },
-  {
-   "date": "2025-08-13",
-   "race": "2025-08-13_R1C5",
-   "market": "SIMPLE_GAGNANT",
-   "num": 3,
-   "p": 0.2127,
-   "odds": 7.1,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
-  {
-   "date": "2025-08-14",
-   "race": "2025-08-14_R5C3",
-   "market": "DEUX_SUR_QUATRE",
-   "num": "8-14",
-   "p": 0.4053,
-   "odds": 3.86,
-   "stake": 3.0,
-   "div": 0.0,
-   "pnl": -3.0
-  },
-  {
-   "date": "2025-08-15",
-   "race": "2025-08-15_R7C6",
-   "market": "SIMPLE_GAGNANT",
-   "num": 2,
-   "p": 0.1627,
-   "odds": 10.0,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
-  {
-   "date": "2025-08-15",
-   "race": "2025-08-15_R3C8",
-   "market": "DEUX_SUR_QUATRE",
-   "num": "8-14",
-   "p": 0.4733,
-   "odds": 3.1,
-   "stake": 3.0,
-   "div": 0.0,
-   "pnl": -3.0
-  },
-  {
-   "date": "2025-08-16",
-   "race": "2025-08-16_R3C3",
-   "market": "SIMPLE_GAGNANT",
-   "num": 2,
-   "p": 0.2541,
-   "odds": 6.8,
-   "stake": 2.5,
-   "div": 0.0,
-   "pnl": -2.5
-  },
-  {
-   "date": "2025-08-19",
-   "race": "2025-08-19_R5C4",
-   "market": "COUPLE_GAGNANT",
-   "num": "8-10",
-   "p": 0.247,
-   "odds": 5.71,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2025-08-20",
-   "race": "2025-08-20_R1C7",
-   "market": "SIMPLE_GAGNANT",
-   "num": 9,
-   "p": 0.3118,
-   "odds": 4.4,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2025-08-22",
-   "race": "2025-08-22_R2C5",
-   "market": "COUPLE_GAGNANT",
-   "num": "3-4",
-   "p": 0.1973,
-   "odds": 9.7,
-   "stake": 2.5,
-   "div": 0.0,
-   "pnl": -2.5
-  },
-  {
-   "date": "2025-08-22",
-   "race": "2025-08-22_R1C4",
-   "market": "SIMPLE_GAGNANT",
-   "num": 7,
-   "p": 0.4491,
-   "odds": 3.2,
-   "stake": 2.5,
-   "div": 0.0,
-   "pnl": -2.5
-  },
-  {
-   "date": "2025-08-23",
-   "race": "2025-08-23_R3C8",
-   "market": "SIMPLE_GAGNANT",
-   "num": 12,
-   "p": 0.4594,
-   "odds": 3.0,
-   "stake": 2.0,
-   "div": 4.2,
-   "pnl": 6.4
-  },
-  {
-   "date": "2025-08-25",
-   "race": "2025-08-25_R1C2",
-   "market": "SIMPLE_PLACE",
-   "num": 6,
-   "p": 0.5213,
-   "odds": 12.0,
-   "stake": 2.5,
-   "div": 0.0,
-   "pnl": -2.5
-  },
-  {
-   "date": "2025-08-26",
-   "race": "2025-08-26_R1C2",
-   "market": "SIMPLE_PLACE",
-   "num": 4,
-   "p": 0.5254,
-   "odds": 10.0,
-   "stake": 2.0,
-   "div": 0.0,
-   "pnl": -2.0
-  },
-  {
-   "date": "2025-08-26",
-   "race": "2025-08-26_R2C7",
-   "market": "COUPLE_GAGNANT",
-   "num": "5-6",
-   "p": 0.1357,
-   "odds": 15.22,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
-  {
-   "date": "2025-08-26",
-   "race": "2025-08-26_R4C4",
-   "market": "SIMPLE_GAGNANT",
-   "num": 10,
-   "p": 0.3369,
-   "odds": 4.0,
-   "stake": 1.0,
-   "div": 3.1,
-   "pnl": 2.1
-  },
-  {
-   "date": "2025-08-26",
-   "race": "2025-08-26_R4C6",
-   "market": "COUPLE_GAGNANT",
-   "num": "3-6",
-   "p": 0.125,
-   "odds": 13.57,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2025-08-27",
-   "race": "2025-08-27_R5C2",
-   "market": "SIMPLE_GAGNANT",
-   "num": 4,
-   "p": 0.3653,
-   "odds": 3.8,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
   {
    "date": "2025-08-28",
    "race": "2025-08-28_R4C4",
    "market": "COUPLE_GAGNANT",
    "num": "7-9",
-   "p": 0.0997,
+   "p": 0.1077,
    "odds": 17.96,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
   },
   {
-   "date": "2025-08-29",
-   "race": "2025-08-29_R1C4",
-   "market": "SIMPLE_GAGNANT",
-   "num": 8,
-   "p": 0.5484,
-   "odds": 2.5,
-   "stake": 2.5,
-   "div": 2.0,
-   "pnl": 2.5
-  },
-  {
    "date": "2025-08-30",
    "race": "2025-08-30_R1C3",
    "market": "COUPLE_GAGNANT",
    "num": "1-7",
-   "p": 0.0907,
+   "p": 0.1023,
    "odds": 21.52,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2025-09-02",
-   "race": "2025-09-02_R3C8",
-   "market": "COUPLE_GAGNANT",
-   "num": "3-8",
-   "p": 0.1167,
-   "odds": 14.67,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -1934,118 +1683,129 @@
    "race": "2025-09-02_R4C6",
    "market": "SIMPLE_PLACE",
    "num": 8,
-   "p": 0.5601,
+   "p": 0.5903,
    "odds": 9.3,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-09-03",
    "race": "2025-09-03_R1C4",
    "market": "SIMPLE_PLACE",
    "num": 7,
-   "p": 0.6027,
+   "p": 0.6192,
    "odds": 8.7,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 2.1,
-   "pnl": 2.75
+   "pnl": 2.2
+  },
+  {
+   "date": "2025-09-03",
+   "race": "2025-09-03_R1C5",
+   "market": "SIMPLE_GAGNANT",
+   "num": 4,
+   "p": 0.469,
+   "odds": 3.4,
+   "stake": 2.0,
+   "div": 0.0,
+   "pnl": -2.0
   },
   {
    "date": "2025-09-05",
    "race": "2025-09-05_R4C2",
    "market": "SIMPLE_GAGNANT",
    "num": 7,
-   "p": 0.3183,
+   "p": 0.3188,
    "odds": 4.9,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-09-05",
    "race": "2025-09-05_R1C6",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.429,
+   "p": 0.4102,
    "odds": 3.5,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-09-06",
    "race": "2025-09-06_R9C8",
    "market": "SIMPLE_GAGNANT",
    "num": 4,
-   "p": 0.1545,
+   "p": 0.1928,
    "odds": 10.0,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2025-09-07",
    "race": "2025-09-07_R1C4",
    "market": "SIMPLE_GAGNANT",
    "num": 11,
-   "p": 0.3187,
+   "p": 0.3211,
    "odds": 7.2,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
-   "date": "2025-09-07",
-   "race": "2025-09-07_R13C8",
-   "market": "SIMPLE_GAGNANT",
-   "num": 2,
-   "p": 0.3381,
-   "odds": 4.2,
-   "stake": 1.5,
+   "date": "2025-09-08",
+   "race": "2025-09-08_R3C7",
+   "market": "COUPLE_GAGNANT",
+   "num": "6-10",
+   "p": 0.2103,
+   "odds": 7.18,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
+  },
+  {
+   "date": "2025-09-08",
+   "race": "2025-09-08_R1C8",
+   "market": "SIMPLE_GAGNANT",
+   "num": 14,
+   "p": 0.3497,
+   "odds": 3.9,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
   },
   {
    "date": "2025-09-09",
    "race": "2025-09-09_R3C5",
    "market": "SIMPLE_GAGNANT",
    "num": 5,
-   "p": 0.3025,
+   "p": 0.3014,
    "odds": 5.6,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
-   "date": "2025-09-12",
-   "race": "2025-09-12_R1C5",
+   "date": "2025-09-10",
+   "race": "2025-09-10_R1C2",
    "market": "SIMPLE_GAGNANT",
-   "num": 11,
-   "p": 0.2276,
-   "odds": 6.4,
+   "num": 10,
+   "p": 0.212,
+   "odds": 7.7,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
   },
   {
-   "date": "2025-09-14",
-   "race": "2025-09-14_R1C5",
+   "date": "2025-09-17",
+   "race": "2025-09-17_R3C4",
    "market": "SIMPLE_GAGNANT",
-   "num": 3,
-   "p": 0.242,
-   "odds": 5.8,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2025-09-14",
-   "race": "2025-09-14_R5C4",
-   "market": "COUPLE_GAGNANT",
-   "num": "3-9",
-   "p": 0.164,
-   "odds": 9.87,
+   "num": 10,
+   "p": 0.2214,
+   "odds": 7.3,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -2055,41 +1815,63 @@
    "race": "2025-09-17_R1C2",
    "market": "SIMPLE_PLACE",
    "num": 8,
-   "p": 0.7933,
+   "p": 0.7757,
    "odds": 5.1,
    "stake": 2.0,
    "div": 1.2,
    "pnl": 0.4
   },
   {
-   "date": "2025-09-17",
-   "race": "2025-09-17_R1C5",
+   "date": "2025-09-19",
+   "race": "2025-09-19_R2C7",
    "market": "SIMPLE_GAGNANT",
    "num": 2,
-   "p": 0.3391,
-   "odds": 4.0,
+   "p": 0.1721,
+   "odds": 9.3,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
   },
   {
-   "date": "2025-09-23",
-   "race": "2025-09-23_R2C8",
-   "market": "SIMPLE_PLACE",
-   "num": 9,
-   "p": 0.5554,
-   "odds": 7.4,
+   "date": "2025-09-20",
+   "race": "2025-09-20_R5C5",
+   "market": "SIMPLE_GAGNANT",
+   "num": 5,
+   "p": 0.1757,
+   "odds": 10.0,
    "stake": 1.0,
-   "div": 1.4,
-   "pnl": 0.4
+   "div": 3.5,
+   "pnl": 2.5
   },
   {
-   "date": "2025-09-25",
-   "race": "2025-09-25_R4C1",
+   "date": "2025-09-23",
+   "race": "2025-09-23_R2C5",
    "market": "SIMPLE_GAGNANT",
-   "num": 4,
-   "p": 0.3121,
-   "odds": 4.4,
+   "num": 9,
+   "p": 0.4208,
+   "odds": 3.2,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2025-09-26",
+   "race": "2025-09-26_R2C7",
+   "market": "SIMPLE_GAGNANT",
+   "num": 16,
+   "p": 0.3511,
+   "odds": 3.9,
+   "stake": 1.0,
+   "div": 3.5,
+   "pnl": 2.5
+  },
+  {
+   "date": "2025-09-28",
+   "race": "2025-09-28_R1C1",
+   "market": "SIMPLE_GAGNANT",
+   "num": 12,
+   "p": 0.1911,
+   "odds": 8.4,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -2099,18 +1881,18 @@
    "race": "2025-10-01_R1C8",
    "market": "COUPLE_GAGNANT",
    "num": "2-7",
-   "p": 0.2007,
+   "p": 0.2,
    "odds": 8.31,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2025-10-04",
    "race": "2025-10-04_R4C2",
    "market": "COUPLE_GAGNANT",
    "num": "6-10",
-   "p": 0.254,
+   "p": 0.2573,
    "odds": 6.85,
    "stake": 2.0,
    "div": 0.0,
@@ -2121,7 +1903,7 @@
    "race": "2025-10-04_R1C3",
    "market": "SIMPLE_GAGNANT",
    "num": 9,
-   "p": 0.3423,
+   "p": 0.3522,
    "odds": 4.4,
    "stake": 2.0,
    "div": 0.0,
@@ -2132,7 +1914,7 @@
    "race": "2025-10-04_R5C1",
    "market": "COUPLE_GAGNANT",
    "num": "8-12",
-   "p": 0.1987,
+   "p": 0.2003,
    "odds": 8.11,
    "stake": 1.0,
    "div": 0.0,
@@ -2143,7 +1925,7 @@
    "race": "2025-10-04_R10C9",
    "market": "SIMPLE_GAGNANT",
    "num": 7,
-   "p": 0.2429,
+   "p": 0.2465,
    "odds": 6.2,
    "stake": 1.0,
    "div": 3.0,
@@ -2154,73 +1936,95 @@
    "race": "2025-10-07_R4C3",
    "market": "SIMPLE_PLACE",
    "num": 1,
-   "p": 0.5668,
+   "p": 0.5724,
    "odds": 9.4,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 1.7,
-   "pnl": 1.4
+   "pnl": 1.05
   },
   {
    "date": "2025-10-09",
    "race": "2025-10-09_R3C5",
    "market": "SIMPLE_PLACE",
    "num": 6,
-   "p": 0.5246,
+   "p": 0.5226,
    "odds": 15.0,
    "stake": 2.0,
    "div": 0.0,
    "pnl": -2.0
   },
   {
+   "date": "2025-10-10",
+   "race": "2025-10-10_R3C3",
+   "market": "SIMPLE_GAGNANT",
+   "num": 7,
+   "p": 0.3935,
+   "odds": 3.4,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
    "date": "2025-10-11",
    "race": "2025-10-11_R10C7",
    "market": "SIMPLE_GAGNANT",
    "num": 2,
-   "p": 0.5296,
+   "p": 0.5247,
    "odds": 2.5,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 3.0,
-   "pnl": 3.0
+   "pnl": 2.0
   },
   {
    "date": "2025-10-12",
    "race": "2025-10-12_R4C7",
    "market": "SIMPLE_PLACE",
    "num": 2,
-   "p": 0.555,
+   "p": 0.5621,
    "odds": 10.0,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 1.3,
-   "pnl": 0.6
+   "pnl": 0.45
   },
   {
    "date": "2025-10-12",
    "race": "2025-10-12_R11C7",
    "market": "SIMPLE_GAGNANT",
    "num": 7,
-   "p": 0.4555,
+   "p": 0.4576,
    "odds": 2.9,
    "stake": 1.0,
    "div": 3.4,
    "pnl": 2.4
   },
   {
-   "date": "2025-10-13",
-   "race": "2025-10-13_R4C1",
+   "date": "2025-10-12",
+   "race": "2025-10-12_R5C8",
    "market": "COUPLE_GAGNANT",
    "num": "7-8",
-   "p": 0.5797,
-   "odds": 2.72,
-   "stake": 2.0,
+   "p": 0.1347,
+   "odds": 15.05,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -1.0
+  },
+  {
+   "date": "2025-10-13",
+   "race": "2025-10-13_R4C1",
+   "market": "SIMPLE_PLACE",
+   "num": 7,
+   "p": 0.8127,
+   "odds": 5.1,
+   "stake": 2.0,
+   "div": 1.8,
+   "pnl": 1.6
   },
   {
    "date": "2025-10-14",
    "race": "2025-10-14_R1C2",
    "market": "SIMPLE_PLACE",
    "num": 2,
-   "p": 0.637,
+   "p": 0.6399,
    "odds": 8.1,
    "stake": 2.0,
    "div": 2.6,
@@ -2231,29 +2035,40 @@
    "race": "2025-10-14_R7C7",
    "market": "SIMPLE_GAGNANT",
    "num": 14,
-   "p": 0.1771,
+   "p": 0.1762,
    "odds": 9.0,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
   },
   {
+   "date": "2025-10-14",
+   "race": "2025-10-14_R4C6",
+   "market": "SIMPLE_GAGNANT",
+   "num": 8,
+   "p": 0.3078,
+   "odds": 4.6,
+   "stake": 1.0,
+   "div": 3.2,
+   "pnl": 2.2
+  },
+  {
    "date": "2025-10-16",
    "race": "2025-10-16_R4C6",
    "market": "SIMPLE_PLACE",
    "num": 6,
-   "p": 0.6157,
+   "p": 0.6126,
    "odds": 7.1,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 1.4,
-   "pnl": 0.6
+   "pnl": 0.4
   },
   {
    "date": "2025-10-17",
    "race": "2025-10-17_R1C7",
    "market": "COUPLE_GAGNANT",
    "num": "8-11",
-   "p": 0.3723,
+   "p": 0.374,
    "odds": 4.57,
    "stake": 2.0,
    "div": 0.0,
@@ -2264,7 +2079,7 @@
    "race": "2025-10-17_R1C8",
    "market": "COUPLE_GAGNANT",
    "num": "5-7",
-   "p": 0.214,
+   "p": 0.2143,
    "odds": 12.56,
    "stake": 2.0,
    "div": 0.0,
@@ -2275,7 +2090,7 @@
    "race": "2025-10-19_R5C3",
    "market": "SIMPLE_PLACE",
    "num": 5,
-   "p": 0.5612,
+   "p": 0.5676,
    "odds": 7.9,
    "stake": 1.0,
    "div": 1.8,
@@ -2286,7 +2101,7 @@
    "race": "2025-10-22_R1C8",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.2914,
+   "p": 0.2915,
    "odds": 4.8,
    "stake": 1.0,
    "div": 0.0,
@@ -2297,7 +2112,7 @@
    "race": "2025-10-23_R3C1",
    "market": "COUPLE_GAGNANT",
    "num": "2-6",
-   "p": 0.3933,
+   "p": 0.3953,
    "odds": 3.52,
    "stake": 1.5,
    "div": 1.9,
@@ -2310,27 +2125,27 @@
    "num": "3-4",
    "p": 0.2017,
    "odds": 8.12,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2025-10-24",
    "race": "2025-10-24_R1C7",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.6309,
+   "p": 0.6269,
    "odds": 2.1,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 2.5,
-   "pnl": 3.0
+   "pnl": 2.25
   },
   {
    "date": "2025-10-25",
    "race": "2025-10-25_R3C7",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.4491,
+   "p": 0.4531,
    "odds": 3.1,
    "stake": 2.0,
    "div": 3.4,
@@ -2341,7 +2156,7 @@
    "race": "2025-10-25_R1C4",
    "market": "COUPLE_GAGNANT",
    "num": "1-8",
-   "p": 0.266,
+   "p": 0.264,
    "odds": 7.9,
    "stake": 2.0,
    "div": 3.0,
@@ -2352,18 +2167,18 @@
    "race": "2025-10-26_R1C4",
    "market": "COUPLE_GAGNANT",
    "num": "6-7",
-   "p": 0.346,
+   "p": 0.3457,
    "odds": 4.71,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-10-26",
    "race": "2025-10-26_R4C7",
    "market": "COUPLE_GAGNANT",
    "num": "11-12",
-   "p": 0.2277,
+   "p": 0.229,
    "odds": 6.53,
    "stake": 1.0,
    "div": 0.0,
@@ -2374,7 +2189,7 @@
    "race": "2025-10-27_R2C5",
    "market": "COUPLE_GAGNANT",
    "num": "1-2",
-   "p": 0.1327,
+   "p": 0.1367,
    "odds": 12.4,
    "stake": 1.0,
    "div": 7.8,
@@ -2385,7 +2200,7 @@
    "race": "2025-10-29_R3C4",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.3647,
+   "p": 0.3687,
    "odds": 3.8,
    "stake": 1.5,
    "div": 2.9,
@@ -2396,18 +2211,18 @@
    "race": "2025-10-31_R1C2",
    "market": "SIMPLE_GAGNANT",
    "num": 7,
-   "p": 0.2269,
+   "p": 0.2279,
    "odds": 8.2,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-10-31",
    "race": "2025-10-31_R5C7",
    "market": "COUPLE_GAGNANT",
    "num": "1-8",
-   "p": 0.1263,
+   "p": 0.1307,
    "odds": 12.82,
    "stake": 1.0,
    "div": 0.0,
@@ -2415,109 +2230,54 @@
   },
   {
    "date": "2025-11-01",
-   "race": "2025-11-01_R9C7",
-   "market": "SIMPLE_GAGNANT",
-   "num": 13,
-   "p": 0.2189,
-   "odds": 8.2,
-   "stake": 2.0,
-   "div": 6.6,
-   "pnl": 11.2
-  },
-  {
-   "date": "2025-11-01",
    "race": "2025-11-01_R4C4",
    "market": "COUPLE_GAGNANT",
    "num": "4-7",
-   "p": 0.1387,
+   "p": 0.1367,
    "odds": 59.9,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-11-03",
    "race": "2025-11-03_R3C5",
    "market": "COUPLE_GAGNANT",
    "num": "3-8",
-   "p": 0.271,
+   "p": 0.2723,
    "odds": 5.29,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
-  {
-   "date": "2025-11-06",
-   "race": "2025-11-06_R1C1",
-   "market": "COUPLE_GAGNANT",
-   "num": "4-9",
-   "p": 0.0783,
-   "odds": 27.69,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
-  },
-  {
-   "date": "2025-11-06",
-   "race": "2025-11-06_R1C9",
-   "market": "SIMPLE_GAGNANT",
-   "num": 5,
-   "p": 0.3083,
-   "odds": 4.4,
-   "stake": 1.0,
-   "div": 2.7,
-   "pnl": 1.7
-  },
-  {
-   "date": "2025-11-07",
-   "race": "2025-11-07_R4C7",
-   "market": "SIMPLE_GAGNANT",
-   "num": 3,
-   "p": 0.2305,
-   "odds": 6.4,
-   "stake": 1.0,
-   "div": 4.8,
-   "pnl": 3.8
   },
   {
    "date": "2025-11-09",
    "race": "2025-11-09_R10C5",
    "market": "SIMPLE_GAGNANT",
    "num": 6,
-   "p": 0.2793,
+   "p": 0.2808,
    "odds": 5.1,
-   "stake": 1.5,
-   "div": 2.5,
-   "pnl": 2.25
-  },
-  {
-   "date": "2025-11-09",
-   "race": "2025-11-09_R4C3",
-   "market": "COUPLE_GAGNANT",
-   "num": "5-9",
-   "p": 0.121,
-   "odds": 13.72,
    "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
+   "div": 2.5,
+   "pnl": 1.5
   },
   {
    "date": "2025-11-11",
    "race": "2025-11-11_R7C6",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.3701,
+   "p": 0.3822,
    "odds": 4.3,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 4.5,
-   "pnl": 8.75
+   "pnl": 7.0
   },
   {
    "date": "2025-11-11",
    "race": "2025-11-11_R1C7",
    "market": "SIMPLE_PLACE",
    "num": 1,
-   "p": 0.403,
+   "p": 0.4094,
    "odds": 16.0,
    "stake": 1.0,
    "div": 1.2,
@@ -2528,19 +2288,8 @@
    "race": "2025-11-11_R4C8",
    "market": "COUPLE_GAGNANT",
    "num": "2-11",
-   "p": 0.1277,
+   "p": 0.126,
    "odds": 16.17,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
-  {
-   "date": "2025-11-13",
-   "race": "2025-11-13_R3C2",
-   "market": "COUPLE_GAGNANT",
-   "num": "4-9",
-   "p": 0.1637,
-   "odds": 9.41,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -2552,39 +2301,17 @@
    "num": "3-8",
    "p": 0.2453,
    "odds": 6.07,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 4.8,
-   "pnl": 5.7
+   "pnl": 3.8
   },
   {
    "date": "2025-11-13",
    "race": "2025-11-13_R4C6",
    "market": "SIMPLE_GAGNANT",
    "num": 4,
-   "p": 0.227,
+   "p": 0.2326,
    "odds": 6.2,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2025-11-14",
-   "race": "2025-11-14_R1C1",
-   "market": "DEUX_SUR_QUATRE",
-   "num": "11-15",
-   "p": 0.595,
-   "odds": 2.43,
-   "stake": 3.0,
-   "div": 0.0,
-   "pnl": -3.0
-  },
-  {
-   "date": "2025-11-15",
-   "race": "2025-11-15_R2C7",
-   "market": "COUPLE_GAGNANT",
-   "num": "2-3",
-   "p": 0.105,
-   "odds": 16.34,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -2594,52 +2321,41 @@
    "race": "2025-11-15_R1C8",
    "market": "COUPLE_GAGNANT",
    "num": "3-5",
-   "p": 0.2487,
+   "p": 0.2517,
    "odds": 9.43,
-   "stake": 3.0,
+   "stake": 2.5,
    "div": 0.0,
-   "pnl": -3.0
+   "pnl": -2.5
   },
   {
    "date": "2025-11-15",
    "race": "2025-11-15_R3C2",
    "market": "SIMPLE_GAGNANT",
    "num": 2,
-   "p": 0.2196,
+   "p": 0.2228,
    "odds": 6.8,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2025-11-15",
    "race": "2025-11-15_R3C3",
    "market": "SIMPLE_PLACE",
    "num": 3,
-   "p": 0.5472,
+   "p": 0.5648,
    "odds": 9.1,
-   "stake": 2.0,
+   "stake": 2.5,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -2.5
   },
   {
    "date": "2025-11-15",
    "race": "2025-11-15_R3C6",
    "market": "COUPLE_GAGNANT",
    "num": "1-4",
-   "p": 0.1203,
+   "p": 0.1213,
    "odds": 14.51,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2025-11-16",
-   "race": "2025-11-16_R15C6",
-   "market": "SIMPLE_GAGNANT",
-   "num": 12,
-   "p": 0.1079,
-   "odds": 16.0,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -2649,7 +2365,7 @@
    "race": "2025-11-16_R15C7",
    "market": "SIMPLE_GAGNANT",
    "num": 14,
-   "p": 0.1788,
+   "p": 0.1796,
    "odds": 8.5,
    "stake": 1.0,
    "div": 0.0,
@@ -2660,18 +2376,18 @@
    "race": "2025-11-16_R1C8",
    "market": "COUPLE_GAGNANT",
    "num": "8-9",
-   "p": 0.1723,
+   "p": 0.168,
    "odds": 10.71,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -1.5
   },
   {
    "date": "2025-11-16",
    "race": "2025-11-16_R4C3",
    "market": "COUPLE_GAGNANT",
    "num": "1-6",
-   "p": 0.1927,
+   "p": 0.197,
    "odds": 7.87,
    "stake": 1.0,
    "div": 0.0,
@@ -2682,51 +2398,40 @@
    "race": "2025-11-17_R1C5",
    "market": "SIMPLE_GAGNANT",
    "num": 6,
-   "p": 0.3451,
+   "p": 0.351,
    "odds": 4.5,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
-  },
-  {
-   "date": "2025-11-18",
-   "race": "2025-11-18_R2C4",
-   "market": "COUPLE_GAGNANT",
-   "num": "11-12",
-   "p": 0.28,
-   "odds": 6.9,
-   "stake": 2.5,
-   "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-11-21",
    "race": "2025-11-21_R4C5",
    "market": "COUPLE_GAGNANT",
    "num": "13-14",
-   "p": 0.158,
+   "p": 0.1587,
    "odds": 23.02,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-11-21",
    "race": "2025-11-21_R1C4",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.2922,
+   "p": 0.2899,
    "odds": 6.1,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-11-22",
    "race": "2025-11-22_R1C9",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.1659,
+   "p": 0.1709,
    "odds": 9.3,
    "stake": 1.0,
    "div": 0.0,
@@ -2737,51 +2442,62 @@
    "race": "2025-11-24_R1C1",
    "market": "SIMPLE_GAGNANT",
    "num": 16,
-   "p": 0.2318,
+   "p": 0.2324,
    "odds": 6.6,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2025-11-27",
    "race": "2025-11-27_R4C1",
    "market": "COUPLE_GAGNANT",
    "num": "3-7",
-   "p": 0.09,
+   "p": 0.091,
    "odds": 32.96,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
+  },
+  {
+   "date": "2025-11-28",
+   "race": "2025-11-28_R2C3",
+   "market": "SIMPLE_PLACE",
+   "num": 6,
+   "p": 0.6775,
+   "odds": 5.7,
+   "stake": 1.0,
+   "div": 1.2,
+   "pnl": 0.2
   },
   {
    "date": "2025-11-30",
    "race": "2025-11-30_R5C3",
-   "market": "COUPLE_GAGNANT",
-   "num": "2-5",
-   "p": 0.2353,
-   "odds": 6.03,
-   "stake": 1.0,
-   "div": 7.5,
-   "pnl": 6.5
+   "market": "SIMPLE_PLACE",
+   "num": 5,
+   "p": 0.5535,
+   "odds": 7.9,
+   "stake": 2.0,
+   "div": 2.1,
+   "pnl": 2.2
   },
   {
    "date": "2025-11-30",
    "race": "2025-11-30_R1C2",
    "market": "SIMPLE_PLACE",
    "num": 10,
-   "p": 0.5033,
+   "p": 0.5214,
    "odds": 13.0,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-12-01",
    "race": "2025-12-01_R1C4",
    "market": "SIMPLE_PLACE",
    "num": 9,
-   "p": 0.5586,
+   "p": 0.5631,
    "odds": 8.4,
    "stake": 1.0,
    "div": 1.6,
@@ -2792,40 +2508,40 @@
    "race": "2025-12-01_R1C8",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.1432,
+   "p": 0.1429,
    "odds": 13.0,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2025-12-04",
    "race": "2025-12-04_R1C8",
    "market": "SIMPLE_GAGNANT",
    "num": 9,
-   "p": 0.2288,
+   "p": 0.2284,
    "odds": 6.8,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2025-12-06",
    "race": "2025-12-06_R4C4",
    "market": "COUPLE_GAGNANT",
    "num": "2-3",
-   "p": 0.099,
+   "p": 0.0977,
    "odds": 115.88,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2025-12-07",
    "race": "2025-12-07_R9C7",
    "market": "SIMPLE_GAGNANT",
    "num": 11,
-   "p": 0.2224,
+   "p": 0.2245,
    "odds": 6.7,
    "stake": 1.0,
    "div": 0.0,
@@ -2836,22 +2552,22 @@
    "race": "2025-12-07_R1C6",
    "market": "SIMPLE_PLACE",
    "num": 7,
-   "p": 0.7301,
+   "p": 0.7254,
    "odds": 6.5,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 2.4,
-   "pnl": 3.5
+   "pnl": 2.8
   },
   {
    "date": "2025-12-08",
    "race": "2025-12-08_R7C5",
    "market": "SIMPLE_GAGNANT",
    "num": 4,
-   "p": 0.2776,
+   "p": 0.2715,
    "odds": 5.3,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 1.9,
-   "pnl": 1.35
+   "pnl": 0.9
   },
   {
    "date": "2025-12-09",
@@ -2860,27 +2576,16 @@
    "num": 7,
    "p": 0.3027,
    "odds": 5.3,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
-  },
-  {
-   "date": "2025-12-13",
-   "race": "2025-12-13_R3C2",
-   "market": "COUPLE_GAGNANT",
-   "num": "5-9",
-   "p": 0.2147,
-   "odds": 6.74,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
+   "pnl": -2.0
   },
   {
    "date": "2025-12-13",
    "race": "2025-12-13_R5C4",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.1702,
+   "p": 0.1732,
    "odds": 9.1,
    "stake": 1.0,
    "div": 4.6,
@@ -2891,7 +2596,7 @@
    "race": "2025-12-13_R5C7",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.2355,
+   "p": 0.2409,
    "odds": 6.6,
    "stake": 1.5,
    "div": 0.0,
@@ -2902,7 +2607,7 @@
    "race": "2025-12-18_R3C4",
    "market": "SIMPLE_GAGNANT",
    "num": 6,
-   "p": 0.3606,
+   "p": 0.3682,
    "odds": 4.1,
    "stake": 2.0,
    "div": 0.0,
@@ -2913,52 +2618,41 @@
    "race": "2025-12-18_R4C1",
    "market": "SIMPLE_PLACE",
    "num": 2,
-   "p": 0.5378,
+   "p": 0.5372,
    "odds": 8.2,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
   },
   {
-   "date": "2025-12-19",
-   "race": "2025-12-19_R1C7",
-   "market": "SIMPLE_PLACE",
-   "num": 8,
-   "p": 0.5968,
-   "odds": 6.9,
-   "stake": 1.0,
-   "div": 1.8,
-   "pnl": 0.8
-  },
-  {
    "date": "2025-12-20",
    "race": "2025-12-20_R1C7",
    "market": "SIMPLE_GAGNANT",
    "num": 4,
-   "p": 0.4447,
+   "p": 0.4501,
    "odds": 3.1,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 2.1,
-   "pnl": 2.2
+   "pnl": 1.65
   },
   {
    "date": "2025-12-27",
    "race": "2025-12-27_R5C8",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.3199,
+   "p": 0.3176,
    "odds": 5.0,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
-   "date": "2026-01-02",
-   "race": "2026-01-02_R2C5",
+   "date": "2025-12-29",
+   "race": "2025-12-29_R3C1",
    "market": "SIMPLE_GAGNANT",
-   "num": 8,
-   "p": 0.3898,
-   "odds": 3.4,
+   "num": 9,
+   "p": 0.3269,
+   "odds": 4.3,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -2968,7 +2662,7 @@
    "race": "2026-01-03_R2C6",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.2769,
+   "p": 0.2806,
    "odds": 5.4,
    "stake": 1.5,
    "div": 0.0,
@@ -2979,7 +2673,7 @@
    "race": "2026-01-04_R9C5",
    "market": "SIMPLE_GAGNANT",
    "num": 4,
-   "p": 0.0991,
+   "p": 0.1008,
    "odds": 21.0,
    "stake": 1.0,
    "div": 0.0,
@@ -2990,18 +2684,18 @@
    "race": "2026-01-05_R3C7",
    "market": "SIMPLE_PLACE",
    "num": 8,
-   "p": 0.5075,
+   "p": 0.5111,
    "odds": 9.2,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 1.4,
-   "pnl": 0.8
+   "pnl": 0.6
   },
   {
    "date": "2026-01-06",
    "race": "2026-01-06_R1C4",
    "market": "COUPLE_GAGNANT",
    "num": "1-7",
-   "p": 0.4383,
+   "p": 0.4387,
    "odds": 4.11,
    "stake": 2.0,
    "div": 2.3,
@@ -3012,29 +2706,29 @@
    "race": "2026-01-08_R3C4",
    "market": "SIMPLE_PLACE",
    "num": 3,
-   "p": 0.5233,
+   "p": 0.5284,
    "odds": 12.0,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 1.3,
-   "pnl": 0.75
+   "pnl": 0.6
   },
   {
    "date": "2026-01-10",
    "race": "2026-01-10_R4C4",
    "market": "COUPLE_GAGNANT",
    "num": "1-7",
-   "p": 0.214,
+   "p": 0.2163,
    "odds": 7.41,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2026-01-11",
    "race": "2026-01-11_R5C5",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.3149,
+   "p": 0.3241,
    "odds": 5.2,
    "stake": 2.0,
    "div": 0.0,
@@ -3045,129 +2739,85 @@
    "race": "2026-01-11_R5C7",
    "market": "COUPLE_GAGNANT",
    "num": "2-6",
-   "p": 0.1853,
+   "p": 0.1883,
    "odds": 8.95,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 3.8,
-   "pnl": 4.2
+   "pnl": 2.8
   },
   {
    "date": "2026-01-12",
    "race": "2026-01-12_R3C1",
    "market": "COUPLE_GAGNANT",
    "num": "2-12",
-   "p": 0.138,
+   "p": 0.1403,
    "odds": 19.66,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 3.6,
-   "pnl": 5.2
+   "pnl": 3.9
   },
   {
    "date": "2026-01-13",
    "race": "2026-01-13_R3C5",
    "market": "COUPLE_GAGNANT",
    "num": "1-3",
-   "p": 0.341,
+   "p": 0.3413,
    "odds": 8.4,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 1.9,
-   "pnl": 2.25
-  },
-  {
-   "date": "2026-01-13",
-   "race": "2026-01-13_R1C4",
-   "market": "SIMPLE_GAGNANT",
-   "num": 8,
-   "p": 0.3498,
-   "odds": 3.8,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2026-01-14",
-   "race": "2026-01-14_R3C1",
-   "market": "SIMPLE_PLACE",
-   "num": 2,
-   "p": 0.5803,
-   "odds": 6.9,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
+   "pnl": 1.8
   },
   {
    "date": "2026-01-16",
    "race": "2026-01-16_R4C7",
    "market": "SIMPLE_PLACE",
    "num": 8,
-   "p": 0.8382,
+   "p": 0.8351,
    "odds": 4.9,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 1.3,
-   "pnl": 0.75
+   "pnl": 0.6
   },
   {
    "date": "2026-01-17",
    "race": "2026-01-17_R1C8",
    "market": "SIMPLE_GAGNANT",
    "num": 11,
-   "p": 0.566,
+   "p": 0.5668,
    "odds": 2.4,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-01-18",
    "race": "2026-01-18_R1C2",
    "market": "SIMPLE_PLACE",
    "num": 8,
-   "p": 0.4706,
+   "p": 0.4662,
    "odds": 15.0,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-01-20",
    "race": "2026-01-20_R4C3",
    "market": "SIMPLE_PLACE",
    "num": 5,
-   "p": 0.5889,
+   "p": 0.5933,
    "odds": 6.7,
    "stake": 1.5,
    "div": 1.8,
    "pnl": 1.2
   },
   {
-   "date": "2026-01-20",
-   "race": "2026-01-20_R4C7",
-   "market": "SIMPLE_GAGNANT",
-   "num": 1,
-   "p": 0.1703,
-   "odds": 9.2,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
    "date": "2026-01-21",
    "race": "2026-01-21_R1C5",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.3888,
+   "p": 0.3831,
    "odds": 3.5,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
-  {
-   "date": "2026-01-22",
-   "race": "2026-01-22_R1C2",
-   "market": "SIMPLE_GAGNANT",
-   "num": 9,
-   "p": 0.135,
-   "odds": 12.0,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -3177,7 +2827,7 @@
    "race": "2026-01-23_R2C1",
    "market": "COUPLE_GAGNANT",
    "num": "1-7",
-   "p": 0.155,
+   "p": 0.1573,
    "odds": 13.16,
    "stake": 1.5,
    "div": 0.0,
@@ -3188,7 +2838,7 @@
    "race": "2026-01-26_R3C4",
    "market": "SIMPLE_PLACE",
    "num": 5,
-   "p": 0.7453,
+   "p": 0.7538,
    "odds": 5.6,
    "stake": 2.0,
    "div": 0.0,
@@ -3199,7 +2849,7 @@
    "race": "2026-01-28_R4C5",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.3525,
+   "p": 0.3624,
    "odds": 4.3,
    "stake": 2.0,
    "div": 0.0,
@@ -3210,7 +2860,7 @@
    "race": "2026-01-28_R4C6",
    "market": "SIMPLE_PLACE",
    "num": 1,
-   "p": 0.729,
+   "p": 0.7378,
    "odds": 5.5,
    "stake": 2.0,
    "div": 0.0,
@@ -3221,7 +2871,7 @@
    "race": "2026-01-29_R3C8",
    "market": "COUPLE_GAGNANT",
    "num": "1-6",
-   "p": 0.2457,
+   "p": 0.25,
    "odds": 5.98,
    "stake": 1.0,
    "div": 0.0,
@@ -3232,29 +2882,18 @@
    "race": "2026-01-29_R1C5",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.4288,
+   "p": 0.4274,
    "odds": 3.3,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 3.3,
-   "pnl": 4.6
-  },
-  {
-   "date": "2026-01-30",
-   "race": "2026-01-30_R4C7",
-   "market": "SIMPLE_GAGNANT",
-   "num": 5,
-   "p": 0.2023,
-   "odds": 7.4,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
+   "pnl": 3.45
   },
   {
    "date": "2026-01-31",
    "race": "2026-01-31_R1C1",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.1989,
+   "p": 0.2006,
    "odds": 7.9,
    "stake": 1.0,
    "div": 0.0,
@@ -3265,51 +2904,62 @@
    "race": "2026-01-31_R1C8",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.2701,
+   "p": 0.2741,
    "odds": 5.5,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2026-01-31",
    "race": "2026-01-31_R4C6",
    "market": "COUPLE_GAGNANT",
    "num": "3-6",
-   "p": 0.298,
+   "p": 0.3013,
    "odds": 5.22,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 4.9,
-   "pnl": 7.8
+   "pnl": 5.85
   },
   {
    "date": "2026-02-01",
    "race": "2026-02-01_R11C4",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.3961,
+   "p": 0.4029,
    "odds": 3.4,
    "stake": 1.0,
    "div": 2.6,
    "pnl": 1.6
   },
   {
+   "date": "2026-02-03",
+   "race": "2026-02-03_R1C1",
+   "market": "SIMPLE_GAGNANT",
+   "num": 7,
+   "p": 0.2628,
+   "odds": 5.4,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
    "date": "2026-02-06",
    "race": "2026-02-06_R1C6",
    "market": "SIMPLE_GAGNANT",
    "num": 11,
-   "p": 0.4436,
+   "p": 0.4544,
    "odds": 3.2,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 2.1,
-   "pnl": 2.75
+   "pnl": 2.2
   },
   {
    "date": "2026-02-07",
    "race": "2026-02-07_R5C7",
    "market": "COUPLE_GAGNANT",
    "num": "7-8",
-   "p": 0.2497,
+   "p": 0.251,
    "odds": 5.75,
    "stake": 1.0,
    "div": 0.0,
@@ -3320,30 +2970,8 @@
    "race": "2026-02-08_R3C2",
    "market": "SIMPLE_GAGNANT",
    "num": 5,
-   "p": 0.3878,
+   "p": 0.3928,
    "odds": 3.5,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
-  {
-   "date": "2026-02-08",
-   "race": "2026-02-08_R1C4",
-   "market": "SIMPLE_GAGNANT",
-   "num": 4,
-   "p": 0.1825,
-   "odds": 8.5,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2026-02-09",
-   "race": "2026-02-09_R3C4",
-   "market": "SIMPLE_GAGNANT",
-   "num": 6,
-   "p": 0.3034,
-   "odds": 4.5,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -3353,7 +2981,7 @@
    "race": "2026-02-09_R3C6",
    "market": "SIMPLE_GAGNANT",
    "num": 9,
-   "p": 0.3644,
+   "p": 0.3642,
    "odds": 3.7,
    "stake": 1.0,
    "div": 3.4,
@@ -3364,7 +2992,7 @@
    "race": "2026-02-10_R4C3",
    "market": "SIMPLE_GAGNANT",
    "num": 2,
-   "p": 0.2327,
+   "p": 0.2345,
    "odds": 6.3,
    "stake": 1.0,
    "div": 0.0,
@@ -3375,18 +3003,18 @@
    "race": "2026-02-11_R1C2",
    "market": "SIMPLE_GAGNANT",
    "num": 7,
-   "p": 0.533,
+   "p": 0.5384,
    "odds": 2.7,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-02-12",
    "race": "2026-02-12_R1C2",
    "market": "SIMPLE_PLACE",
    "num": 4,
-   "p": 0.5009,
+   "p": 0.5054,
    "odds": 10.0,
    "stake": 1.5,
    "div": 0.0,
@@ -3397,40 +3025,40 @@
    "race": "2026-02-12_R1C3",
    "market": "COUPLE_GAGNANT",
    "num": "7-8",
-   "p": 0.2457,
+   "p": 0.2393,
    "odds": 6.95,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 3.2,
-   "pnl": 4.4
+   "pnl": 3.3
   },
   {
    "date": "2026-02-13",
    "race": "2026-02-13_R4C2",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.3722,
+   "p": 0.3796,
    "odds": 4.0,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-02-14",
    "race": "2026-02-14_R1C5",
    "market": "COUPLE_GAGNANT",
    "num": "1-2",
-   "p": 0.1837,
+   "p": 0.1847,
    "odds": 19.82,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-02-15",
    "race": "2026-02-15_R1C5",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.4183,
+   "p": 0.4212,
    "odds": 3.2,
    "stake": 1.0,
    "div": 2.2,
@@ -3441,18 +3069,29 @@
    "race": "2026-02-16_R4C5",
    "market": "SIMPLE_PLACE",
    "num": 9,
-   "p": 0.4206,
+   "p": 0.4182,
    "odds": 16.0,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -1.5
+  },
+  {
+   "date": "2026-02-17",
+   "race": "2026-02-17_R4C2",
+   "market": "SIMPLE_PLACE",
+   "num": 6,
+   "p": 0.6916,
+   "odds": 5.3,
+   "stake": 1.0,
+   "div": 1.4,
+   "pnl": 0.4
   },
   {
    "date": "2026-02-17",
    "race": "2026-02-17_R4C8",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.3987,
+   "p": 0.4051,
    "odds": 3.3,
    "stake": 1.0,
    "div": 0.0,
@@ -3463,7 +3102,7 @@
    "race": "2026-02-18_R3C6",
    "market": "SIMPLE_PLACE",
    "num": 6,
-   "p": 0.5829,
+   "p": 0.5934,
    "odds": 9.1,
    "stake": 2.0,
    "div": 0.0,
@@ -3474,95 +3113,84 @@
    "race": "2026-02-19_R5C6",
    "market": "SIMPLE_PLACE",
    "num": 3,
-   "p": 0.492,
+   "p": 0.4927,
    "odds": 12.0,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -1.5
   },
   {
    "date": "2026-02-21",
    "race": "2026-02-21_R1C6",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.45,
+   "p": 0.4505,
    "odds": 6.8,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -1.5
   },
   {
    "date": "2026-02-22",
    "race": "2026-02-22_R10C4",
    "market": "SIMPLE_GAGNANT",
    "num": 6,
-   "p": 0.3315,
+   "p": 0.3349,
    "odds": 4.7,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 1.9,
-   "pnl": 1.8
+   "pnl": 1.35
   },
   {
    "date": "2026-02-28",
    "race": "2026-02-28_R4C7",
    "market": "SIMPLE_PLACE",
    "num": 1,
-   "p": 0.4591,
+   "p": 0.4608,
    "odds": 16.0,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -1.5
   },
   {
    "date": "2026-03-01",
    "race": "2026-03-01_R1C6",
    "market": "COUPLE_GAGNANT",
    "num": "2-4",
-   "p": 0.1477,
+   "p": 0.152,
    "odds": 56.94,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -2.0
-  },
-  {
-   "date": "2026-03-03",
-   "race": "2026-03-03_R3C1",
-   "market": "COUPLE_GAGNANT",
-   "num": "5-8",
-   "p": 0.276,
-   "odds": 5.07,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-03-03",
    "race": "2026-03-03_R3C4",
    "market": "COUPLE_GAGNANT",
    "num": "1-2",
-   "p": 0.1957,
+   "p": 0.1963,
    "odds": 10.22,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -1.5
   },
   {
    "date": "2026-03-03",
    "race": "2026-03-03_R4C4",
    "market": "SIMPLE_GAGNANT",
    "num": 7,
-   "p": 0.2243,
+   "p": 0.2208,
    "odds": 7.9,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -1.5
   },
   {
    "date": "2026-03-07",
    "race": "2026-03-07_R5C1",
    "market": "COUPLE_GAGNANT",
    "num": "5-9",
-   "p": 0.1463,
+   "p": 0.147,
    "odds": 12.15,
    "stake": 1.0,
    "div": 0.0,
@@ -3570,32 +3198,43 @@
   },
   {
    "date": "2026-03-08",
+   "race": "2026-03-08_R11C4",
+   "market": "SIMPLE_GAGNANT",
+   "num": 10,
+   "p": 0.1567,
+   "odds": 11.0,
+   "stake": 1.0,
+   "div": 10.4,
+   "pnl": 9.4
+  },
+  {
+   "date": "2026-03-08",
    "race": "2026-03-08_R1C7",
    "market": "COUPLE_GAGNANT",
    "num": "3-5",
-   "p": 0.2167,
+   "p": 0.215,
    "odds": 9.74,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 9.8,
-   "pnl": 17.6
+   "pnl": 13.2
   },
   {
    "date": "2026-03-08",
    "race": "2026-03-08_R1C9",
    "market": "SIMPLE_PLACE",
    "num": 1,
-   "p": 0.7025,
+   "p": 0.7092,
    "odds": 6.1,
-   "stake": 2.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -2.0
+   "pnl": -1.5
   },
   {
    "date": "2026-03-12",
    "race": "2026-03-12_R3C3",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.3561,
+   "p": 0.362,
    "odds": 3.8,
    "stake": 1.0,
    "div": 2.5,
@@ -3606,18 +3245,18 @@
    "race": "2026-03-14_R1C5",
    "market": "COUPLE_GAGNANT",
    "num": "2-4",
-   "p": 0.0663,
+   "p": 0.0657,
    "odds": 114.63,
-   "stake": 1.5,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2026-03-15",
    "race": "2026-03-15_R1C7",
    "market": "COUPLE_GAGNANT",
    "num": "3-4",
-   "p": 0.168,
+   "p": 0.1693,
    "odds": 31.42,
    "stake": 2.0,
    "div": 0.0,
@@ -3628,7 +3267,7 @@
    "race": "2026-03-20_R2C5",
    "market": "SIMPLE_GAGNANT",
    "num": 10,
-   "p": 0.616,
+   "p": 0.6194,
    "odds": 2.1,
    "stake": 1.5,
    "div": 2.1,
@@ -3639,7 +3278,7 @@
    "race": "2026-03-20_R1C7",
    "market": "SIMPLE_GAGNANT",
    "num": 10,
-   "p": 0.5337,
+   "p": 0.5408,
    "odds": 4.6,
    "stake": 2.0,
    "div": 0.0,
@@ -3650,7 +3289,7 @@
    "race": "2026-03-21_R1C6",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.1948,
+   "p": 0.1997,
    "odds": 15.0,
    "stake": 2.0,
    "div": 0.0,
@@ -3661,7 +3300,7 @@
    "race": "2026-03-21_R1C7",
    "market": "COUPLE_GAGNANT",
    "num": "1-9",
-   "p": 0.1727,
+   "p": 0.1757,
    "odds": 10.88,
    "stake": 1.5,
    "div": 6.0,
@@ -3672,22 +3311,22 @@
    "race": "2026-03-22_R1C2",
    "market": "COUPLE_GAGNANT",
    "num": "1-3",
-   "p": 0.185,
+   "p": 0.1777,
    "odds": 47.84,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-03-22",
    "race": "2026-03-22_R4C8",
    "market": "COUPLE_GAGNANT",
-   "num": "3-14",
-   "p": 0.1437,
-   "odds": 64.81,
-   "stake": 2.5,
+   "num": "1-14",
+   "p": 0.1283,
+   "odds": 86.31,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-03-22",
@@ -3716,7 +3355,7 @@
    "race": "2026-03-23_R4C4",
    "market": "COUPLE_GAGNANT",
    "num": "1-6",
-   "p": 0.349,
+   "p": 0.353,
    "odds": 26.61,
    "stake": 2.0,
    "div": 0.0,
@@ -3727,7 +3366,7 @@
    "race": "2026-03-24_R4C1",
    "market": "SIMPLE_GAGNANT",
    "num": 5,
-   "p": 0.2919,
+   "p": 0.2962,
    "odds": 5.0,
    "stake": 1.5,
    "div": 0.0,
@@ -3738,18 +3377,18 @@
    "race": "2026-03-24_R1C7",
    "market": "COUPLE_GAGNANT",
    "num": "1-8",
-   "p": 0.2177,
+   "p": 0.2163,
    "odds": 62.9,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-03-25",
    "race": "2026-03-25_R1C4",
    "market": "COUPLE_GAGNANT",
    "num": "6-8",
-   "p": 0.2307,
+   "p": 0.231,
    "odds": 26.45,
    "stake": 2.0,
    "div": 0.0,
@@ -3760,7 +3399,7 @@
    "race": "2026-03-25_R4C3",
    "market": "COUPLE_GAGNANT",
    "num": "1-7",
-   "p": 0.2037,
+   "p": 0.205,
    "odds": 42.03,
    "stake": 2.0,
    "div": 4.5,
@@ -3771,18 +3410,18 @@
    "race": "2026-03-26_R1C5",
    "market": "COUPLE_GAGNANT",
    "num": "3-10",
-   "p": 0.1413,
+   "p": 0.142,
    "odds": 38.49,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-03-26",
    "race": "2026-03-26_R4C1",
    "market": "COUPLE_GAGNANT",
    "num": "9-11",
-   "p": 0.0967,
+   "p": 0.097,
    "odds": 54.07,
    "stake": 2.0,
    "div": 0.0,
@@ -3793,7 +3432,7 @@
    "race": "2026-03-27_R2C2",
    "market": "SIMPLE_GAGNANT",
    "num": 7,
-   "p": 0.1714,
+   "p": 0.1762,
    "odds": 9.3,
    "stake": 1.0,
    "div": 0.0,
@@ -3804,7 +3443,7 @@
    "race": "2026-03-27_R4C5",
    "market": "COUPLE_GAGNANT",
    "num": "6-13",
-   "p": 0.047,
+   "p": 0.0463,
    "odds": 247.07,
    "stake": 1.0,
    "div": 0.0,
@@ -3815,7 +3454,7 @@
    "race": "2026-03-27_R1C6",
    "market": "COUPLE_GAGNANT",
    "num": "11-14",
-   "p": 0.1183,
+   "p": 0.117,
    "odds": 51.02,
    "stake": 2.0,
    "div": 7.9,
@@ -3826,7 +3465,7 @@
    "race": "2026-03-28_R3C5",
    "market": "COUPLE_GAGNANT",
    "num": "11-15",
-   "p": 0.1267,
+   "p": 0.1293,
    "odds": 94.01,
    "stake": 2.5,
    "div": 0.0,
@@ -3848,29 +3487,29 @@
    "race": "2026-03-29_R4C4",
    "market": "SIMPLE_PLACE",
    "num": 6,
-   "p": 0.7203,
+   "p": 0.7278,
    "odds": 4.8,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 1.4,
-   "pnl": 1.0
+   "pnl": 0.8
   },
   {
    "date": "2026-03-29",
    "race": "2026-03-29_R1C2",
    "market": "COUPLE_GAGNANT",
    "num": "6-13",
-   "p": 0.1123,
+   "p": 0.113,
    "odds": 42.86,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-04-01",
    "race": "2026-04-01_R1C6",
    "market": "SIMPLE_GAGNANT",
    "num": 9,
-   "p": 0.2425,
+   "p": 0.2445,
    "odds": 5.8,
    "stake": 1.0,
    "div": 0.0,
@@ -3881,40 +3520,29 @@
    "race": "2026-04-01_R4C6",
    "market": "COUPLE_GAGNANT",
    "num": "4-5",
-   "p": 0.1373,
+   "p": 0.139,
    "odds": 11.93,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
   },
   {
-   "date": "2026-04-02",
-   "race": "2026-04-02_R1C8",
-   "market": "SIMPLE_GAGNANT",
-   "num": 16,
-   "p": 0.1178,
-   "odds": 22.0,
-   "stake": 1.5,
-   "div": 0.0,
-   "pnl": -1.5
-  },
-  {
    "date": "2026-04-03",
    "race": "2026-04-03_R1C8",
    "market": "SIMPLE_GAGNANT",
    "num": 5,
-   "p": 0.3007,
+   "p": 0.2977,
    "odds": 5.4,
-   "stake": 2.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -2.5
+   "pnl": -2.0
   },
   {
    "date": "2026-04-04",
    "race": "2026-04-04_R1C2",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.1668,
+   "p": 0.1672,
    "odds": 9.5,
    "stake": 1.0,
    "div": 0.0,
@@ -3925,7 +3553,7 @@
    "race": "2026-04-04_R1C3",
    "market": "SIMPLE_GAGNANT",
    "num": 6,
-   "p": 0.1848,
+   "p": 0.1889,
    "odds": 9.6,
    "stake": 1.5,
    "div": 0.0,
@@ -3936,7 +3564,7 @@
    "race": "2026-04-04_R1C7",
    "market": "SIMPLE_GAGNANT",
    "num": 2,
-   "p": 0.241,
+   "p": 0.2356,
    "odds": 12.0,
    "stake": 2.0,
    "div": 0.0,
@@ -3954,11 +3582,22 @@
    "pnl": -2.0
   },
   {
+   "date": "2026-04-05",
+   "race": "2026-04-05_R10C7",
+   "market": "SIMPLE_GAGNANT",
+   "num": 2,
+   "p": 0.2176,
+   "odds": 6.7,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
    "date": "2026-04-06",
    "race": "2026-04-06_R4C8",
    "market": "COUPLE_GAGNANT",
    "num": "4-7",
-   "p": 0.1403,
+   "p": 0.1423,
    "odds": 19.39,
    "stake": 2.0,
    "div": 0.0,
@@ -3969,7 +3608,7 @@
    "race": "2026-04-06_R5C2",
    "market": "SIMPLE_PLACE",
    "num": 1,
-   "p": 0.4049,
+   "p": 0.4023,
    "odds": 30.0,
    "stake": 2.0,
    "div": 1.4,
@@ -3980,7 +3619,7 @@
    "race": "2026-04-09_R1C5",
    "market": "COUPLE_GAGNANT",
    "num": "1-3",
-   "p": 0.099,
+   "p": 0.0993,
    "odds": 125.8,
    "stake": 2.0,
    "div": 0.0,
@@ -3991,7 +3630,7 @@
    "race": "2026-04-10_R2C6",
    "market": "COUPLE_GAGNANT",
    "num": "4-7",
-   "p": 0.1697,
+   "p": 0.1683,
    "odds": 16.34,
    "stake": 2.0,
    "div": 0.0,
@@ -4002,7 +3641,7 @@
    "race": "2026-04-10_R3C6",
    "market": "SIMPLE_GAGNANT",
    "num": 11,
-   "p": 0.3416,
+   "p": 0.3386,
    "odds": 4.3,
    "stake": 1.5,
    "div": 0.0,
@@ -4012,19 +3651,19 @@
    "date": "2026-04-11",
    "race": "2026-04-11_R1C8",
    "market": "COUPLE_GAGNANT",
-   "num": "8-10",
-   "p": 0.299,
-   "odds": 13.8,
+   "num": "1-8",
+   "p": 0.158,
+   "odds": 45.79,
    "stake": 2.0,
-   "div": 0.0,
-   "pnl": -2.0
+   "div": 3.8,
+   "pnl": 5.6
   },
   {
    "date": "2026-04-12",
    "race": "2026-04-12_R14C1",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.1935,
+   "p": 0.1966,
    "odds": 8.3,
    "stake": 1.0,
    "div": 0.0,
@@ -4035,7 +3674,7 @@
    "race": "2026-04-12_R1C5",
    "market": "COUPLE_GAGNANT",
    "num": "1-7",
-   "p": 0.1077,
+   "p": 0.1083,
    "odds": 47.4,
    "stake": 2.0,
    "div": 0.0,
@@ -4046,7 +3685,7 @@
    "race": "2026-04-14_R3C3",
    "market": "SIMPLE_PLACE",
    "num": 7,
-   "p": 0.5331,
+   "p": 0.5367,
    "odds": 11.0,
    "stake": 2.0,
    "div": 0.0,
@@ -4057,7 +3696,7 @@
    "race": "2026-04-15_R9C6",
    "market": "SIMPLE_GAGNANT",
    "num": 5,
-   "p": 0.6309,
+   "p": 0.6365,
    "odds": 2.4,
    "stake": 2.0,
    "div": 0.0,
@@ -4079,7 +3718,7 @@
    "race": "2026-04-17_R1C4",
    "market": "SIMPLE_PLACE",
    "num": 9,
-   "p": 0.5775,
+   "p": 0.5799,
    "odds": 8.1,
    "stake": 2.0,
    "div": 1.4,
@@ -4090,7 +3729,7 @@
    "race": "2026-04-18_R1C5",
    "market": "COUPLE_GAGNANT",
    "num": "10-11",
-   "p": 0.2453,
+   "p": 0.2457,
    "odds": 35.4,
    "stake": 2.0,
    "div": 0.0,
@@ -4101,29 +3740,29 @@
    "race": "2026-04-18_R1C6",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.4765,
+   "p": 0.4818,
    "odds": 2.9,
-   "stake": 1.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -2.0
   },
   {
    "date": "2026-04-21",
    "race": "2026-04-21_R4C3",
    "market": "SIMPLE_GAGNANT",
    "num": 10,
-   "p": 0.3583,
+   "p": 0.3651,
    "odds": 3.9,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 2.6,
-   "pnl": 1.6
+   "pnl": 2.4
   },
   {
    "date": "2026-04-21",
    "race": "2026-04-21_R4C5",
    "market": "SIMPLE_GAGNANT",
    "num": 6,
-   "p": 0.3546,
+   "p": 0.3562,
    "odds": 4.4,
    "stake": 1.5,
    "div": 0.0,
@@ -4134,7 +3773,7 @@
    "race": "2026-04-23_R1C6",
    "market": "SIMPLE_PLACE",
    "num": 2,
-   "p": 0.3387,
+   "p": 0.3374,
    "odds": 26.0,
    "stake": 1.5,
    "div": 2.1,
@@ -4155,23 +3794,34 @@
    "date": "2026-04-28",
    "race": "2026-04-28_R1C5",
    "market": "COUPLE_GAGNANT",
-   "num": "1-2",
-   "p": 0.2523,
-   "odds": 6.88,
-   "stake": 1.5,
+   "num": "1-6",
+   "p": 0.1323,
+   "odds": 15.43,
+   "stake": 1.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -1.0
   },
   {
    "date": "2026-04-29",
    "race": "2026-04-29_R10C6",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.4523,
+   "p": 0.4482,
    "odds": 3.4,
    "stake": 1.5,
    "div": 2.0,
    "pnl": 1.5
+  },
+  {
+   "date": "2026-04-30",
+   "race": "2026-04-30_R3C2",
+   "market": "COUPLE_GAGNANT",
+   "num": "5-8",
+   "p": 0.2453,
+   "odds": 5.92,
+   "stake": 1.0,
+   "div": 4.0,
+   "pnl": 3.0
   },
   {
    "date": "2026-04-30",
@@ -4180,16 +3830,16 @@
    "num": "8-11",
    "p": 0.114,
    "odds": 67.17,
-   "stake": 1.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -2.0
   },
   {
    "date": "2026-05-02",
    "race": "2026-05-02_R1C7",
    "market": "COUPLE_GAGNANT",
    "num": "6-8",
-   "p": 0.1303,
+   "p": 0.1323,
    "odds": 17.21,
    "stake": 1.0,
    "div": 0.0,
@@ -4211,7 +3861,7 @@
    "race": "2026-05-03_R4C2",
    "market": "SIMPLE_PLACE",
    "num": 2,
-   "p": 0.5535,
+   "p": 0.5563,
    "odds": 17.0,
    "stake": 1.5,
    "div": 0.0,
@@ -4222,7 +3872,7 @@
    "race": "2026-05-03_R12C6",
    "market": "SIMPLE_GAGNANT",
    "num": 13,
-   "p": 0.1883,
+   "p": 0.1886,
    "odds": 9.2,
    "stake": 1.0,
    "div": 0.0,
@@ -4233,7 +3883,7 @@
    "race": "2026-05-07_R3C6",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.1993,
+   "p": 0.1994,
    "odds": 16.0,
    "stake": 1.5,
    "div": 0.0,
@@ -4255,29 +3905,29 @@
    "race": "2026-05-09_R11C4",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.3506,
+   "p": 0.3588,
    "odds": 4.0,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-05-09",
    "race": "2026-05-09_R5C8",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.2897,
+   "p": 0.2879,
    "odds": 8.0,
-   "stake": 1.5,
+   "stake": 2.0,
    "div": 0.0,
-   "pnl": -1.5
+   "pnl": -2.0
   },
   {
    "date": "2026-05-10",
    "race": "2026-05-10_R8C7",
    "market": "SIMPLE_GAGNANT",
    "num": 13,
-   "p": 0.3585,
+   "p": 0.3572,
    "odds": 4.1,
    "stake": 1.5,
    "div": 0.0,
@@ -4288,7 +3938,7 @@
    "race": "2026-05-12_R4C4",
    "market": "SIMPLE_GAGNANT",
    "num": 2,
-   "p": 0.3015,
+   "p": 0.3099,
    "odds": 4.7,
    "stake": 1.0,
    "div": 0.0,
@@ -4299,7 +3949,7 @@
    "race": "2026-05-15_R6C6",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.5887,
+   "p": 0.5975,
    "odds": 2.3,
    "stake": 1.5,
    "div": 1.6,
@@ -4309,9 +3959,9 @@
    "date": "2026-05-16",
    "race": "2026-05-16_R4C2",
    "market": "COUPLE_GAGNANT",
-   "num": "3-5",
-   "p": 0.0777,
-   "odds": 67.08,
+   "num": "2-3",
+   "p": 0.064,
+   "odds": 96.13,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -4321,18 +3971,18 @@
    "race": "2026-05-17_R12C6",
    "market": "SIMPLE_GAGNANT",
    "num": 15,
-   "p": 0.5091,
+   "p": 0.5185,
    "odds": 2.6,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 2.5,
-   "pnl": 1.5
+   "pnl": 2.25
   },
   {
    "date": "2026-05-18",
    "race": "2026-05-18_R1C6",
    "market": "COUPLE_GAGNANT",
    "num": "6-7",
-   "p": 0.1523,
+   "p": 0.1517,
    "odds": 31.95,
    "stake": 1.5,
    "div": 0.0,
@@ -4343,7 +3993,7 @@
    "race": "2026-05-18_R3C1",
    "market": "COUPLE_GAGNANT",
    "num": "2-3",
-   "p": 0.2073,
+   "p": 0.2033,
    "odds": 7.69,
    "stake": 1.0,
    "div": 0.0,
@@ -4376,7 +4026,7 @@
    "race": "2026-05-23_R1C6",
    "market": "COUPLE_GAGNANT",
    "num": "5-8",
-   "p": 0.1757,
+   "p": 0.1777,
    "odds": 9.51,
    "stake": 1.0,
    "div": 0.0,
@@ -4387,7 +4037,7 @@
    "race": "2026-05-23_R4C4",
    "market": "COUPLE_GAGNANT",
    "num": "4-9",
-   "p": 0.088,
+   "p": 0.0877,
    "odds": 69.46,
    "stake": 1.0,
    "div": 0.0,
@@ -4409,7 +4059,7 @@
    "race": "2026-05-28_R3C5",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.3285,
+   "p": 0.335,
    "odds": 10.0,
    "stake": 1.5,
    "div": 0.0,
@@ -4420,7 +4070,7 @@
    "race": "2026-05-29_R3C3",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.4541,
+   "p": 0.4553,
    "odds": 3.0,
    "stake": 1.0,
    "div": 0.0,
@@ -4442,18 +4092,29 @@
    "race": "2026-05-29_R5C5",
    "market": "SIMPLE_PLACE",
    "num": 4,
-   "p": 0.34,
+   "p": 0.3346,
    "odds": 27.0,
    "stake": 1.5,
    "div": 0.0,
    "pnl": -1.5
   },
   {
+   "date": "2026-05-30",
+   "race": "2026-05-30_R3C5",
+   "market": "COUPLE_GAGNANT",
+   "num": "12-15",
+   "p": 0.0873,
+   "odds": 36.2,
+   "stake": 1.0,
+   "div": 6.3,
+   "pnl": 5.3
+  },
+  {
    "date": "2026-06-01",
    "race": "2026-06-01_R1C8",
    "market": "SIMPLE_GAGNANT",
    "num": 10,
-   "p": 0.2582,
+   "p": 0.2535,
    "odds": 6.1,
    "stake": 1.0,
    "div": 0.0,
@@ -4464,7 +4125,7 @@
    "race": "2026-06-01_R3C2",
    "market": "SIMPLE_GAGNANT",
    "num": 8,
-   "p": 0.2061,
+   "p": 0.2059,
    "odds": 14.0,
    "stake": 1.5,
    "div": 0.0,
@@ -4475,22 +4136,44 @@
    "race": "2026-06-02_R5C4",
    "market": "SIMPLE_GAGNANT",
    "num": 5,
-   "p": 0.1964,
+   "p": 0.1995,
    "odds": 14.0,
    "stake": 1.5,
    "div": 0.0,
    "pnl": -1.5
   },
   {
+   "date": "2026-06-03",
+   "race": "2026-06-03_R3C7",
+   "market": "SIMPLE_PLACE",
+   "num": 6,
+   "p": 0.3433,
+   "odds": 18.0,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
    "date": "2026-06-04",
    "race": "2026-06-04_R4C3",
    "market": "COUPLE_GAGNANT",
    "num": "6-7",
-   "p": 0.2303,
+   "p": 0.2333,
    "odds": 31.65,
    "stake": 1.5,
    "div": 0.0,
    "pnl": -1.5
+  },
+  {
+   "date": "2026-06-05",
+   "race": "2026-06-05_R2C1",
+   "market": "SIMPLE_GAGNANT",
+   "num": 14,
+   "p": 0.3745,
+   "odds": 3.7,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
   },
   {
    "date": "2026-06-06",
@@ -4499,16 +4182,16 @@
    "num": "1-4",
    "p": 0.1617,
    "odds": 35.49,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 3.5,
-   "pnl": 2.5
+   "pnl": 3.75
   },
   {
    "date": "2026-06-08",
    "race": "2026-06-08_R1C3",
    "market": "SIMPLE_GAGNANT",
    "num": 4,
-   "p": 0.1169,
+   "p": 0.117,
    "odds": 24.0,
    "stake": 1.0,
    "div": 0.0,
@@ -4519,7 +4202,7 @@
    "race": "2026-06-09_R1C4",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.1897,
+   "p": 0.1881,
    "odds": 12.0,
    "stake": 1.5,
    "div": 0.0,
@@ -4530,30 +4213,19 @@
    "race": "2026-06-10_R2C6",
    "market": "COUPLE_GAGNANT",
    "num": "5-13",
-   "p": 0.164,
+   "p": 0.1677,
    "odds": 41.31,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-10",
    "race": "2026-06-10_R1C4",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.3631,
+   "p": 0.3657,
    "odds": 3.9,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2026-06-12",
-   "race": "2026-06-12_R4C6",
-   "market": "SIMPLE_GAGNANT",
-   "num": 11,
-   "p": 0.1318,
-   "odds": 18.0,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -4563,62 +4235,62 @@
    "race": "2026-06-14_R4C4",
    "market": "SIMPLE_GAGNANT",
    "num": 11,
-   "p": 0.6462,
+   "p": 0.63,
    "odds": 2.3,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-14",
    "race": "2026-06-14_R1C6",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.4122,
+   "p": 0.411,
    "odds": 3.6,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 3.8,
-   "pnl": 2.8
+   "pnl": 4.2
   },
   {
    "date": "2026-06-15",
    "race": "2026-06-15_R3C7",
    "market": "COUPLE_GAGNANT",
    "num": "5-10",
-   "p": 0.2387,
+   "p": 0.2453,
    "odds": 10.4,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-15",
    "race": "2026-06-15_R4C2",
    "market": "COUPLE_GAGNANT",
    "num": "5-11",
-   "p": 0.174,
+   "p": 0.177,
    "odds": 45.36,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-17",
    "race": "2026-06-17_R4C8",
    "market": "COUPLE_GAGNANT",
    "num": "1-2",
-   "p": 0.105,
+   "p": 0.104,
    "odds": 64.62,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-18",
    "race": "2026-06-18_R2C7",
    "market": "COUPLE_GAGNANT",
    "num": "2-4",
-   "p": 0.0877,
+   "p": 0.0847,
    "odds": 168.37,
    "stake": 1.0,
    "div": 0.0,
@@ -4629,117 +4301,117 @@
    "race": "2026-06-18_R3C7",
    "market": "COUPLE_GAGNANT",
    "num": "8-9",
-   "p": 0.112,
+   "p": 0.1147,
    "odds": 58.17,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-19",
    "race": "2026-06-19_R2C7",
    "market": "COUPLE_GAGNANT",
    "num": "6-9",
-   "p": 0.1747,
+   "p": 0.1723,
    "odds": 33.64,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 3.4,
-   "pnl": 2.4
+   "pnl": 3.6
   },
   {
    "date": "2026-06-20",
    "race": "2026-06-20_R1C4",
    "market": "COUPLE_GAGNANT",
    "num": "2-10",
-   "p": 0.1897,
+   "p": 0.191,
    "odds": 23.8,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-20",
    "race": "2026-06-20_R5C3",
    "market": "COUPLE_GAGNANT",
    "num": "2-5",
-   "p": 0.2273,
+   "p": 0.227,
    "odds": 11.94,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-24",
    "race": "2026-06-24_R2C6",
    "market": "SIMPLE_GAGNANT",
    "num": 9,
-   "p": 0.3137,
+   "p": 0.3104,
    "odds": 6.9,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-24",
    "race": "2026-06-24_R5C4",
    "market": "COUPLE_GAGNANT",
-   "num": "2-11",
-   "p": 0.1367,
-   "odds": 17.79,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
+   "num": "2-4",
+   "p": 0.1883,
+   "odds": 11.59,
+   "stake": 1.5,
+   "div": 3.3,
+   "pnl": 3.45
   },
   {
    "date": "2026-06-24",
    "race": "2026-06-24_R5C6",
    "market": "COUPLE_GAGNANT",
    "num": "7-11",
-   "p": 0.1423,
+   "p": 0.147,
    "odds": 54.05,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-26",
    "race": "2026-06-26_R3C2",
    "market": "COUPLE_GAGNANT",
    "num": "1-8",
-   "p": 0.1663,
+   "p": 0.1683,
    "odds": 87.27,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-26",
    "race": "2026-06-26_R2C3",
    "market": "COUPLE_GAGNANT",
    "num": "1-5",
-   "p": 0.2423,
+   "p": 0.2363,
    "odds": 219.3,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-26",
    "race": "2026-06-26_R5C4",
    "market": "COUPLE_GAGNANT",
    "num": "1-6",
-   "p": 0.1897,
+   "p": 0.191,
    "odds": 83.22,
-   "stake": 1.0,
+   "stake": 1.5,
    "div": 0.0,
-   "pnl": -1.0
+   "pnl": -1.5
   },
   {
    "date": "2026-06-27",
    "race": "2026-06-27_R7C5",
    "market": "COUPLE_GAGNANT",
    "num": "2-9",
-   "p": 0.2647,
+   "p": 0.265,
    "odds": 11.99,
    "stake": 1.0,
    "div": 0.0,
@@ -4750,7 +4422,7 @@
    "race": "2026-06-27_R2C7",
    "market": "COUPLE_GAGNANT",
    "num": "6-8",
-   "p": 0.381,
+   "p": 0.3783,
    "odds": 8.57,
    "stake": 1.0,
    "div": 0.0,
@@ -4768,11 +4440,22 @@
    "pnl": -1.0
   },
   {
+   "date": "2026-06-27",
+   "race": "2026-06-27_R1C7",
+   "market": "COUPLE_GAGNANT",
+   "num": "4-8",
+   "p": 0.2487,
+   "odds": 13.55,
+   "stake": 1.0,
+   "div": 3.3,
+   "pnl": 2.3
+  },
+  {
    "date": "2026-06-28",
    "race": "2026-06-28_R3C6",
    "market": "COUPLE_GAGNANT",
    "num": "7-8",
-   "p": 0.1053,
+   "p": 0.1073,
    "odds": 45.95,
    "stake": 1.0,
    "div": 0.0,
@@ -4783,7 +4466,7 @@
    "race": "2026-06-28_R5C3",
    "market": "COUPLE_GAGNANT",
    "num": "7-8",
-   "p": 0.165,
+   "p": 0.167,
    "odds": 125.98,
    "stake": 1.0,
    "div": 2.2,
@@ -4794,7 +4477,7 @@
    "race": "2026-06-28_R5C7",
    "market": "COUPLE_GAGNANT",
    "num": "6-10",
-   "p": 0.421,
+   "p": 0.424,
    "odds": 5.98,
    "stake": 1.0,
    "div": 2.2,
@@ -4805,7 +4488,7 @@
    "race": "2026-06-29_R3C7",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.1737,
+   "p": 0.1763,
    "odds": 19.0,
    "stake": 1.0,
    "div": 0.0,
@@ -4816,7 +4499,7 @@
    "race": "2026-06-29_R4C1",
    "market": "SIMPLE_PLACE",
    "num": 4,
-   "p": 0.5528,
+   "p": 0.551,
    "odds": 11.0,
    "stake": 1.0,
    "div": 0.0,
@@ -4827,8 +4510,19 @@
    "race": "2026-06-29_R1C3",
    "market": "COUPLE_GAGNANT",
    "num": "3-6",
-   "p": 0.0997,
+   "p": 0.0987,
    "odds": 54.54,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-06-29",
+   "race": "2026-06-29_R4C4",
+   "market": "COUPLE_GAGNANT",
+   "num": "1-5",
+   "p": 0.1757,
+   "odds": 29.73,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -4838,19 +4532,8 @@
    "race": "2026-06-30_R3C5",
    "market": "COUPLE_GAGNANT",
    "num": "1-8",
-   "p": 0.2633,
+   "p": 0.2677,
    "odds": 27.09,
-   "stake": 1.0,
-   "div": 0.0,
-   "pnl": -1.0
-  },
-  {
-   "date": "2026-06-30",
-   "race": "2026-06-30_R2C7",
-   "market": "SIMPLE_GAGNANT",
-   "num": 3,
-   "p": 0.2379,
-   "odds": 13.0,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -4860,7 +4543,7 @@
    "race": "2026-06-30_R4C5",
    "market": "COUPLE_GAGNANT",
    "num": "2-5",
-   "p": 0.169,
+   "p": 0.1687,
    "odds": 52.04,
    "stake": 1.0,
    "div": 0.0,
@@ -4871,7 +4554,7 @@
    "race": "2026-07-01_R3C7",
    "market": "SIMPLE_GAGNANT",
    "num": 3,
-   "p": 0.2858,
+   "p": 0.2837,
    "odds": 10.0,
    "stake": 1.0,
    "div": 4.3,
@@ -4882,7 +4565,7 @@
    "race": "2026-07-02_R3C5",
    "market": "COUPLE_GAGNANT",
    "num": "6-7",
-   "p": 0.094,
+   "p": 0.0947,
    "odds": 69.5,
    "stake": 1.0,
    "div": 0.0,
@@ -4893,7 +4576,7 @@
    "race": "2026-07-02_R4C5",
    "market": "COUPLE_GAGNANT",
    "num": "7-10",
-   "p": 0.4707,
+   "p": 0.4727,
    "odds": 16.68,
    "stake": 1.0,
    "div": 0.0,
@@ -4904,7 +4587,7 @@
    "race": "2026-07-03_R3C7",
    "market": "COUPLE_GAGNANT",
    "num": "1-7",
-   "p": 0.1493,
+   "p": 0.153,
    "odds": 38.42,
    "stake": 1.0,
    "div": 0.0,
@@ -4915,8 +4598,19 @@
    "race": "2026-07-03_R4C5",
    "market": "SIMPLE_GAGNANT",
    "num": 1,
-   "p": 0.2864,
+   "p": 0.2851,
    "odds": 10.0,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-03",
+   "race": "2026-07-03_R5C2",
+   "market": "COUPLE_GAGNANT",
+   "num": "2-3",
+   "p": 0.0767,
+   "odds": 133.88,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
@@ -4926,7 +4620,7 @@
    "race": "2026-07-04_R4C6",
    "market": "SIMPLE_GAGNANT",
    "num": 12,
-   "p": 0.1974,
+   "p": 0.1947,
    "odds": 14.0,
    "stake": 1.0,
    "div": 0.0,
@@ -4937,7 +4631,7 @@
    "race": "2026-07-04_R6C5",
    "market": "COUPLE_GAGNANT",
    "num": "6-7",
-   "p": 0.1447,
+   "p": 0.147,
    "odds": 37.17,
    "stake": 1.0,
    "div": 0.0,
@@ -4948,7 +4642,7 @@
    "race": "2026-07-06_R3C6",
    "market": "COUPLE_GAGNANT",
    "num": "2-4",
-   "p": 0.1637,
+   "p": 0.165,
    "odds": 42.61,
    "stake": 1.0,
    "div": 0.0,
@@ -4959,7 +4653,7 @@
    "race": "2026-07-06_R1C3",
    "market": "COUPLE_GAGNANT",
    "num": "3-6",
-   "p": 0.2123,
+   "p": 0.213,
    "odds": 23.15,
    "stake": 1.0,
    "div": 0.0,
@@ -4968,10 +4662,296 @@
   {
    "date": "2026-07-07",
    "race": "2026-07-07_R3C4",
+   "market": "SIMPLE_GAGNANT",
+   "num": 6,
+   "p": 0.5451,
+   "odds": 4.3,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-08",
+   "race": "2026-07-08_R4C6",
+   "market": "SIMPLE_GAGNANT",
+   "num": 5,
+   "p": 0.2547,
+   "odds": 10.0,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-08",
+   "race": "2026-07-08_R1C3",
    "market": "COUPLE_GAGNANT",
-   "num": "6-7",
-   "p": 0.1287,
-   "odds": 45.3,
+   "num": "7-9",
+   "p": 0.1383,
+   "odds": 33.98,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-09",
+   "race": "2026-07-09_R2C5",
+   "market": "COUPLE_GAGNANT",
+   "num": "4-5",
+   "p": 0.1253,
+   "odds": 75.07,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-09",
+   "race": "2026-07-09_R3C5",
+   "market": "COUPLE_GAGNANT",
+   "num": "9-12",
+   "p": 0.142,
+   "odds": 46.81,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-09",
+   "race": "2026-07-09_R1C3",
+   "market": "COUPLE_GAGNANT",
+   "num": "2-3",
+   "p": 0.1927,
+   "odds": 30.31,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-10",
+   "race": "2026-07-10_R6C3",
+   "market": "COUPLE_GAGNANT",
+   "num": "4-10",
+   "p": 0.124,
+   "odds": 40.41,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-10",
+   "race": "2026-07-10_R1C2",
+   "market": "SIMPLE_GAGNANT",
+   "num": 5,
+   "p": 0.2526,
+   "odds": 6.9,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-11",
+   "race": "2026-07-11_R1C4",
+   "market": "SIMPLE_GAGNANT",
+   "num": 9,
+   "p": 0.4059,
+   "odds": 8.5,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-13",
+   "race": "2026-07-13_R3C3",
+   "market": "COUPLE_GAGNANT",
+   "num": "1-2",
+   "p": 0.1703,
+   "odds": 53.54,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-13",
+   "race": "2026-07-13_R2C5",
+   "market": "COUPLE_GAGNANT",
+   "num": "7-11",
+   "p": 0.1017,
+   "odds": 81.4,
+   "stake": 1.0,
+   "div": 6.0,
+   "pnl": 5.0
+  },
+  {
+   "date": "2026-07-13",
+   "race": "2026-07-13_R2C7",
+   "market": "SIMPLE_GAGNANT",
+   "num": 3,
+   "p": 0.2309,
+   "odds": 18.0,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-14",
+   "race": "2026-07-14_R2C2",
+   "market": "COUPLE_GAGNANT",
+   "num": "2-5",
+   "p": 0.2113,
+   "odds": 50.13,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-14",
+   "race": "2026-07-14_R2C3",
+   "market": "SIMPLE_GAGNANT",
+   "num": 5,
+   "p": 0.2858,
+   "odds": 16.0,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-14",
+   "race": "2026-07-14_R2C5",
+   "market": "COUPLE_GAGNANT",
+   "num": "7-12",
+   "p": 0.165,
+   "odds": 34.87,
+   "stake": 1.0,
+   "div": 3.9,
+   "pnl": 2.9
+  },
+  {
+   "date": "2026-07-15",
+   "race": "2026-07-15_R3C4",
+   "market": "COUPLE_GAGNANT",
+   "num": "6-8",
+   "p": 0.115,
+   "odds": 83.32,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-16",
+   "race": "2026-07-16_R2C6",
+   "market": "COUPLE_GAGNANT",
+   "num": "13-14",
+   "p": 0.121,
+   "odds": 76.73,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-16",
+   "race": "2026-07-16_R5C7",
+   "market": "SIMPLE_PLACE",
+   "num": 1,
+   "p": 0.4955,
+   "odds": 12.0,
+   "stake": 1.0,
+   "div": 1.6,
+   "pnl": 0.6
+  },
+  {
+   "date": "2026-07-17",
+   "race": "2026-07-17_R2C6",
+   "market": "COUPLE_GAGNANT",
+   "num": "3-4",
+   "p": 0.1343,
+   "odds": 47.54,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-17",
+   "race": "2026-07-17_R4C6",
+   "market": "COUPLE_GAGNANT",
+   "num": "6-8",
+   "p": 0.176,
+   "odds": 54.37,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-17",
+   "race": "2026-07-17_R5C3",
+   "market": "SIMPLE_GAGNANT",
+   "num": 2,
+   "p": 0.1542,
+   "odds": 21.0,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-19",
+   "race": "2026-07-19_R5C2",
+   "market": "COUPLE_GAGNANT",
+   "num": "5-8",
+   "p": 0.173,
+   "odds": 48.47,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-20",
+   "race": "2026-07-20_R4C4",
+   "market": "COUPLE_GAGNANT",
+   "num": "8-12",
+   "p": 0.2287,
+   "odds": 33.03,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-21",
+   "race": "2026-07-21_R2C8",
+   "market": "COUPLE_GAGNANT",
+   "num": "6-8",
+   "p": 0.318,
+   "odds": 8.82,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-21",
+   "race": "2026-07-21_R4C4",
+   "market": "COUPLE_GAGNANT",
+   "num": "1-2",
+   "p": 0.2907,
+   "odds": 18.96,
+   "stake": 1.0,
+   "div": 0.0,
+   "pnl": -1.0
+  },
+  {
+   "date": "2026-07-21",
+   "race": "2026-07-21_R4C5",
+   "market": "COUPLE_GAGNANT",
+   "num": "4-8",
+   "p": 0.1897,
+   "odds": 11.47,
+   "stake": 1.0,
+   "div": 3.2,
+   "pnl": 2.2
+  },
+  {
+   "date": "2026-07-23",
+   "race": "2026-07-23_R4C4",
+   "market": "COUPLE_GAGNANT",
+   "num": "10-11",
+   "p": 0.225,
+   "odds": 39.04,
    "stake": 1.0,
    "div": 0.0,
    "pnl": -1.0
