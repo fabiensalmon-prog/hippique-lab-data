@@ -1,5 +1,5 @@
 {
- "version": "HL-V1.2.20261116",
+ "version": "HL-V1.2.20261117",
  "features": [
   "mus_form",
   "mus_cons",
@@ -995,7 +995,7 @@
   "min_stake": 1.0,
   "s4_min_stake": 3.0
  },
- "trained_at": "2026-11-16T20:30:36Z",
+ "trained_at": "2026-11-17T03:53:02Z",
  "top_features": {
   "TROT": [
    [
