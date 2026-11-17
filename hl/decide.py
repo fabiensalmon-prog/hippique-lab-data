@@ -32,7 +32,7 @@ def _kelly(p_low, div):
     return RULES["kelly"] * max(0.0, (b * p_low - (1 - p_low)) / b) if b > 0 else 0.0
 
 
-def analyse(rows, pf, params, race_key="", all_markets=False, max_per_race=1):
+def analyse(rows, pf, params, race_key="", all_markets=False, max_per_race=1, only_markets=None):
     """rows : partants (odds_ref = cote marché) ; pf : P fondamentale.
     -> dict(preds, cands, shadow). all_markets=True (backtest) évalue tous les marchés quelle que soit leur porte."""
     n = len(rows)
@@ -107,10 +107,13 @@ def analyse(rows, pf, params, race_key="", all_markets=False, max_per_race=1):
     # tous types confondus — gagnant, placé, couplé ou 2sur4 selon la course
     for c in cands:
         c["growth"] = growth(c)
+    alts = sorted([c for c in cands if c["growth"] > 0], key=lambda c: -c["growth"])
+    if only_markets is not None:                 # labo recentré : seuls ces marchés peuvent devenir des tickets
+        cands = [c for c in cands if c["market"] in only_markets]
     cands = sorted([c for c in cands if c["growth"] > 0], key=lambda c: -c["growth"])
     out["cands"] = cands[:max_per_race]
     out["alternatives"] = [dict(market=c["market"], num=c["num"], ev_low=round(c["ev_low"], 4), growth=round(c["growth"], 6))
-                           for c in cands[:6]]
+                           for c in alts[:6]]
     return out
 
 

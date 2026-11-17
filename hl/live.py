@@ -17,6 +17,8 @@ from .train import predict_any                           # noqa: E402
 from .decide import analyse, RULES                       # noqa: E402
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
+LAB_MARKETS = ("SIMPLE_GAGNANT",)   # labo recentré le 17/11/2026 (accord utilisateur)
+LAB_GROUPS = ("TROT",)
 PARIS = timezone(timedelta(hours=1))
 
 
@@ -66,7 +68,10 @@ def run_phase(phase, d):
         a = analyse(rows, pf, params, race_key=race["id"])
         # laboratoire : le modèle avec son poids estimé (ou un a priori de 0,25 sans modèle), tous les paris, portes ignorées
         lab_params = dict(params, alpha=params.get("alpha_fitted") if params.get("alpha_fitted") else 0.25)
-        a_lab = analyse(rows, pf, lab_params, race_key=race["id"], all_markets=True)
+        # depuis le 18/11/2026 : labo recentré sur le simple gagnant au trot (seul avantage mesuré) ; les autres
+        # marchés et disciplines restent calculés en « alternatives » pour le suivi, sans ticket
+        a_lab = analyse(rows, pf, lab_params, race_key=race["id"], all_markets=True,
+                        only_markets=LAB_MARKETS if race["group"] in LAB_GROUPS else ())
         if not a["market_ok"]:
             doc.update(status="PARTIELLE", decision=None, reason="Prédiction journalisée, rapports probables PMU incomplets")
         else:
