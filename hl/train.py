@@ -14,7 +14,7 @@ import numpy as np
 
 from .store import iter_races
 from .features import FeatureState, FEATURES
-from .model import (Design, fit_clogit, probs, split_probs, fit_stage2, combine, fit_harville, fit_sp_dividend,
+from .model import (Design, fit_clogit, probs, split_probs, fit_stage2, combine, fit_calib, fit_harville, fit_sp_dividend,
                     fit_pair_dividend, loglik)
 from .decide import analyse, size, RULES, MARKETS
 
@@ -226,8 +226,11 @@ def main():
         alpha, beta = fit_stage2([oos[r["id"]] for r in prev], [mkt(r) for r in prev], [r["winner_idx"] for r in prev])
         pcs = [combine(oos[r["id"]], mkt(r), alpha, beta) for r in prev[-3000:]]
         gamma, delta = fit_harville(pcs, [r["order"] for r in prev[-3000:]])
+        # calibration (19/11/2026) : corrige la surconfiance sur les favoris, estimée sur les 10 000 dernières courses hors échantillon
+        cal = prev[-10000:]
+        calib = fit_calib([combine(oos[r["id"]], mkt(r), alpha, beta) for r in cal], [r["winner_idx"] for r in cal])
     else:
-        alpha, beta, gamma, delta = 0.0, 1.0, 0.81, 0.65
+        alpha, beta, gamma, delta, calib = 0.0, 1.0, 0.81, 0.65, None
     mths = report["months"]
     tot = sum(x["races"] for x in mths)
     agg = lambda k: (sum(x[k] * x["races"] for x in mths if x[k] is not None) / tot) if tot else None
@@ -242,7 +245,7 @@ def main():
                         and (flat_out.get(mk, {}).get("roi") or -1) > 0) for mk in MARKETS}
     gate["markets"] = markets
     latest = dict(version="HL-V1.2." + time.strftime("%Y%m%d", time.gmtime()), features=FEATURES, groups=final,
-                  stage2=dict(alpha=alpha if gate["passed"] else 0.0, alpha_fitted=alpha, beta=beta, gamma=gamma, delta=delta,
+                  stage2=dict(alpha=alpha if gate["passed"] else 0.0, alpha_fitted=alpha, beta=beta, gamma=gamma, delta=delta, calib=calib,
                               markets=markets, **dividend_params(data)),
                   gate=gate, data_range=[data[0]["date"], data[-1]["date"]] if data else None, rules=RULES,
                   trained_at=report["built_at"])

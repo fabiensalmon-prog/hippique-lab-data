@@ -86,6 +86,27 @@ def combine(pf, pm, alpha, beta):
     return z / z.sum()
 
 
+def calibrate(p, calib):
+    """Correction de l'excès de confiance (surtout sur les gros favoris) : q ∝ exp(t·log p + c·(log p)²).
+    calib = [t, c] estimé hors échantillon (fit_calib) ; None -> p inchangé. Ajouté le 19/11/2026."""
+    if calib is None or len(calib) != 2:
+        return p
+    t, c = float(calib[0]), float(calib[1])
+    lp = np.log(np.clip(p, 1e-6, 1))
+    z = t * lp + c * lp ** 2
+    z = np.exp(z - z.max())
+    return z / z.sum()
+
+
+def fit_calib(p_list, winners):
+    """Estime [t, c] par maximum de vraisemblance sur des prédictions combinées hors échantillon."""
+    from scipy.optimize import minimize
+    def nll(v):
+        return -sum(math.log(max(1e-9, calibrate(p, v)[w])) for p, w in zip(p_list, winners))
+    r = minimize(nll, [1.0, 0.0], method="Nelder-Mead", options=dict(xatol=1e-4, fatol=1e-4, maxiter=400))
+    return [round(float(r.x[0]), 5), round(float(r.x[1]), 5)]
+
+
 def loglik(p_list, winners):
     return float(sum(math.log(max(1e-9, p[w])) for p, w in zip(p_list, winners)))
 

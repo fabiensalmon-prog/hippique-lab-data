@@ -6,7 +6,7 @@ si son ROI hors échantillon est positif sur assez de paris (porte par marché, 
 import math, zlib
 import numpy as np
 
-from .model import combine, place_probs, sp_expected, simulate_top, pair_probs, pair_expected
+from .model import combine, calibrate, place_probs, sp_expected, simulate_top, pair_probs, pair_expected
 
 RULES = dict(
     u_dec=0.10,          # incertitude relative sur la probabilité de décision
@@ -45,7 +45,7 @@ def analyse(rows, pf, params, race_key="", all_markets=False, max_per_race=1, on
         return out
     R = RULES
     pm = market_probs(odds)
-    pd = combine(pf, pm, params["alpha"], params["beta"])
+    pd = calibrate(combine(pf, pm, params["alpha"], params["beta"]), params.get("calib"))
     k = n_places(n)
     pp = place_probs(pd, k, params["gamma"], params["delta"]) if k else np.zeros(n)
     cands = []
