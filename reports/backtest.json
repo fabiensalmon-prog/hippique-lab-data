@@ -1543,7 +1543,7 @@
    "delta_rho_final": 0.001743138229332697
   }
  ],
- "built_at": "2026-11-22T03:12:30Z",
+ "built_at": "2026-11-22T11:20:13Z",
  "n_races": 124418,
  "summary": {
   "races_oos": 39684,
@@ -1653,7 +1653,7 @@
     "DEUX_SUR_QUATRE": false
    }
   },
-  "seconds": 904
+  "seconds": 898
  },
  "bets_sample": [
   {
